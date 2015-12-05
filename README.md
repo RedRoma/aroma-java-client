@@ -1,6 +1,6 @@
 # Banana Service Java Client
 
-[![Build Status](http://jenkins.sirwellington.tech/view/Banana/job/Banana%20Service/badge/icon)](http://jenkins.sirwellington.tech/view/Banana/job/Banana%20Service/)
+[![Build Status](http://jenkins.sirwellington.tech/view/Banana/job/Banana%20Java%20Client/badge/icon)](http://jenkins.sirwellington.tech/view/Banana/job/Banana%20Java%20Client/)
 
 The Java Client to the Famed Banana Service!
 
