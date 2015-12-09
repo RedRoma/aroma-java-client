@@ -40,15 +40,35 @@
     <!-- END OF POM METADATA -->
 
     <dependencies>
+          
+        <!--ALCHEMY-->
+        <dependency>
+            <groupId>tech.sirwellington.alchemy</groupId>
+            <artifactId>alchemy-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>tech.sirwellington.alchemy</groupId>
+            <artifactId>alchemy-arguments</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>tech.sirwellington.alchemy</groupId>
+            <artifactId>alchemy-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        
+        <!--BANANA DEPENDENCIES-->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>banana-thrift</artifactId>
             <version>1.1-SNAPSHOT</version>
         </dependency>
+
+        <!--LOGGING-->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
+      
     </dependencies>
 
     <build>
