@@ -22,4 +22,22 @@ package tech.aroma.banana.client;
  */
 public interface BananaService
 {
+    
+    void sendMessage(Urgency urgency, String message, Object... args);
+    
+    default void sendInformationalMessage(String message, Object...args)
+    {
+        this.sendMessage(Urgency.INFORMATIONAL, message, args);
+    }
+    
+    default void sendPressingMessage(String message, Object...args)
+    {
+        this.sendMessage(Urgency.PRESSING, message, args);
+    }
+    
+    default void sendCriticalMessage(String message, Object...args)
+    {
+        this.sendMessage(Urgency.CRITICAL, message, args);
+    }
+    
 }
