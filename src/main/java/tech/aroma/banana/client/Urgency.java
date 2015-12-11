@@ -22,7 +22,7 @@ import tech.sirwellington.alchemy.annotations.arguments.NonNull;
  * This class exists to give some Schema Isolation to Clients from any changes that happen in the Thrift Specification.
  */
 /**
- * Defines the Importance a Message is.
+ * Describes how important a message is.
  * 
  * @author SirWellington
  */
