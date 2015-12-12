@@ -31,7 +31,7 @@ public interface BananaService
         
         Request withUrgency(Urgency importance) throws IllegalArgumentException;
         
-        void send();
+        void send() throws IllegalArgumentException;
     }
     
 }
