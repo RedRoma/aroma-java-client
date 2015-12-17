@@ -44,8 +44,8 @@ public class UrgencyTest
         assertThat(Urgency.INFORMATIONAL.toThrift(),
                    is(tech.aroma.banana.thrift.Urgency.INFORMATIONAL));
         
-        assertThat(Urgency.PRESSING.toThrift(),
-                   is(tech.aroma.banana.thrift.Urgency.PRESSING));
+        assertThat(Urgency.WARNING.toThrift(),
+                   is(tech.aroma.banana.thrift.Urgency.WARNING));
         
         assertThat(Urgency.CRITICAL.toThrift(),
                    is(tech.aroma.banana.thrift.Urgency.CRITICAL));

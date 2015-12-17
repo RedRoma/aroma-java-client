@@ -36,9 +36,9 @@ public enum Urgency
     INFORMATIONAL(tech.aroma.banana.thrift.Urgency.INFORMATIONAL),
     
     /**
-     * Messages that are Pressing are important.
+     * Messages that are at Warning level are considered important.
      */
-    PRESSING(tech.aroma.banana.thrift.Urgency.PRESSING),
+    WARNING(tech.aroma.banana.thrift.Urgency.WARNING),
    
     /**
      * Critical messages typically indicate Show-Stopping events, such as a Database going down,
