@@ -16,10 +16,15 @@
 
 package tech.aroma.banana.client;
 
+import tech.sirwellington.alchemy.annotations.concurrency.ThreadSafe;
+import tech.sirwellington.alchemy.annotations.designs.FluidAPIDesign;
+
 /**
  *
  * @author SirWellington
  */
+@ThreadSafe
+@FluidAPIDesign
 public interface BananaService
 {
     
