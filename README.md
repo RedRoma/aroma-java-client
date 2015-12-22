@@ -5,7 +5,6 @@ Banana Service Java Client
 
 [![Build Status](http://jenkins.sirwellington.tech/view/Banana/job/Banana%20Java%20Client/badge/icon)](http://jenkins.sirwellington.tech/view/Banana/job/Banana%20Java%20Client/)
 
-
 The Java Client to the Famed Banana Service!
 
 The Banana Service is Service Notifications for Developers.
