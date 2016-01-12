@@ -62,6 +62,11 @@ public interface Banana
         return null;
     }
     
+    static Builder newBuilder()
+    {
+        return new Builder();
+    }
+    
     @BuilderPattern(role = BUILDER)
     static final class Builder 
     {
@@ -69,6 +74,11 @@ public interface Banana
         private String hostname = BananaServiceConstants.PRODUCTION_ENDPOINT.getHostname();
         private int port = BananaServiceConstants.PRODUCTION_ENDPOINT.getPort();
         private ExecutorService async;
+        
+        Builder() 
+        {
+            
+        }
         
         public Builder withEndpoint(@NonEmpty String hostname, int port) throws IllegalArgumentException
         {
