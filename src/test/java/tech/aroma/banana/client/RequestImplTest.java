@@ -151,7 +151,7 @@ public class RequestImplTest
         assertThat(request.urgency, is(urgency.toThrift()));
         
         checkThat(request.timeOfMessage)
-            .is(epochNowWithinDelta(200L));
+            .is(epochNowWithinDelta(1000L));
     }
 
     @Test
