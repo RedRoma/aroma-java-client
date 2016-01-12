@@ -17,6 +17,7 @@
 package tech.aroma.banana.client;
 
 import com.google.common.util.concurrent.MoreExecutors;
+import java.time.Instant;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Supplier;
 import org.apache.thrift.protocol.TProtocol;
@@ -44,7 +45,7 @@ import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
-import static tech.sirwellington.alchemy.arguments.assertions.TimeAssertions.epochNowWithinDelta;
+import static tech.sirwellington.alchemy.arguments.assertions.TimeAssertions.nowWithinDelta;
 import static tech.sirwellington.alchemy.generator.EnumGenerators.enumValueOf;
 import static tech.sirwellington.alchemy.test.junit.ThrowableAssertion.assertThrows;
 
@@ -136,8 +137,10 @@ public class BananaClientTest
         assertThat(requestMade, notNullValue());
         assertThat(requestMade.message, is(message));
         assertThat(requestMade.urgency, is(urgency.toThrift()));
-        checkThat(requestMade.timeOfMessage)
-            .is(epochNowWithinDelta(50L));
+        
+        Instant timeOfMessage = Instant.ofEpochMilli(requestMade.timeOfMessage);
+        checkThat(timeOfMessage)
+            .is(nowWithinDelta(200L));
         
         verify(transport, atLeastOnce()).close();
     }
