@@ -41,14 +41,14 @@ public class UrgencyTest
     @Test
     public void testToThrift()
     {
-        assertThat(Urgency.INFORMATIONAL.toThrift(),
-                   is(tech.aroma.banana.thrift.Urgency.INFORMATIONAL));
+        assertThat(Urgency.LOW.toThrift(),
+                   is(tech.aroma.banana.thrift.Urgency.LOW));
         
-        assertThat(Urgency.WARNING.toThrift(),
-                   is(tech.aroma.banana.thrift.Urgency.WARNING));
+        assertThat(Urgency.MEDIUM.toThrift(),
+                   is(tech.aroma.banana.thrift.Urgency.MEDIUM));
         
-        assertThat(Urgency.CRITICAL.toThrift(),
-                   is(tech.aroma.banana.thrift.Urgency.CRITICAL));
+        assertThat(Urgency.HIGH.toThrift(),
+                   is(tech.aroma.banana.thrift.Urgency.HIGH));
     }
 
 }

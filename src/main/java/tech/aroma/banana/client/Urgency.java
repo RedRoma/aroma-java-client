@@ -30,21 +30,21 @@ public enum Urgency
 {
   
     /**
-     * Messages that are Informational are like an FYI; they are not important but you may want to know
+     * LOW Messages are like an FYI; they are not important but you may want to know
      * about it. For example, a new user sign-up for your service, or a post was flagged by a user.
      */
-    INFORMATIONAL(tech.aroma.banana.thrift.Urgency.INFORMATIONAL),
+    LOW(tech.aroma.banana.thrift.Urgency.LOW),
     
     /**
-     * Messages that are at Warning level are considered important.
+     * MEDIUM Messages are considered Important.
      */
-    WARNING(tech.aroma.banana.thrift.Urgency.WARNING),
+    MEDIUM(tech.aroma.banana.thrift.Urgency.MEDIUM),
    
     /**
-     * Critical messages typically indicate Show-Stopping events, such as a Database going down,
+     * HIGH messages typically indicate Show-Stopping events, such as a Database going down,
      * or a network connection issue.
      */
-    CRITICAL(tech.aroma.banana.thrift.Urgency.CRITICAL);
+    HIGH(tech.aroma.banana.thrift.Urgency.HIGH);
 
     private final tech.aroma.banana.thrift.Urgency thriftUrgency;
 
