@@ -65,6 +65,12 @@
             <artifactId>alchemy-test</artifactId>
         </dependency>
         
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <scope>test</scope>
+        </dependency>
+        
         
         <!--=======================-->
         <!--ALCHEMY-->
@@ -102,7 +108,7 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
-      
+
     </dependencies>
 
     <build>
