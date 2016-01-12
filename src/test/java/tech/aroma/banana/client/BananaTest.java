@@ -33,6 +33,7 @@ import static tech.sirwellington.alchemy.generator.AlchemyGenerator.one;
 import static tech.sirwellington.alchemy.generator.NumberGenerators.negativeIntegers;
 import static tech.sirwellington.alchemy.test.junit.ThrowableAssertion.assertThrows;
 import static tech.sirwellington.alchemy.test.junit.runners.GenerateInteger.Type.RANGE;
+import static tech.sirwellington.alchemy.test.junit.runners.GenerateString.Type.HEXADECIMAL;
 
 /**
  *
@@ -48,6 +49,9 @@ public class BananaTest
     
     @GenerateInteger(value = RANGE, min = 80, max = 10_000)
     private int port;
+    
+    @GenerateString(HEXADECIMAL)
+    private String applicationToken;
     
     private ExecutorService executor;
     
@@ -122,5 +126,28 @@ public class BananaTest
             .isInstanceOf(IllegalArgumentException.class);
     }
     
+    @Test
+    public void testBuilderBuild()
+    {
+        builder.withEndpoint(hostname, port)
+            .withAsyncExecutorService(executor)
+            .withApplicationToken(applicationToken);
+        
+        Banana result = builder.build();
+        assertThat(result, notNullValue());
+    }
     
+    @DontRepeat
+    @Test
+    public void testBuilderBuildWithBadState()
+    {
+        assertThrows(() -> builder.build())
+            .isInstanceOf(IllegalStateException.class);
+        
+        //Missing application token
+        builder = builder.withAsyncExecutorService(executor);
+        assertThrows(() -> builder.build())
+            .isInstanceOf(IllegalStateException.class);
+
+    }
 }
