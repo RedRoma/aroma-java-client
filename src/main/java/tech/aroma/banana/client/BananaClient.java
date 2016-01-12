@@ -16,6 +16,8 @@
 
 package tech.aroma.banana.client;
 
+import java.time.Instant;
+import java.util.concurrent.ExecutorService;
 import java.util.function.Supplier;
 import org.apache.thrift.TException;
 import org.slf4j.Logger;
@@ -27,6 +29,7 @@ import tech.sirwellington.alchemy.annotations.arguments.Required;
 import tech.sirwellington.alchemy.annotations.concurrency.ThreadSafe;
 import tech.sirwellington.alchemy.thrift.clients.Clients;
 
+import static java.time.Instant.now;
 import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
 import static tech.sirwellington.alchemy.arguments.assertions.Assertions.notNull;
 
@@ -41,12 +44,16 @@ final class BananaClient implements Banana
     private final static Logger LOG = LoggerFactory.getLogger(BananaClient.class);
 
     private final Supplier<ApplicationService.Iface> applicationServiceProvider;
+    private final ExecutorService executor;
 
-    BananaClient(@Required Supplier<ApplicationService.Iface> applicationServiceProvider)
+    BananaClient(@Required Supplier<ApplicationService.Iface> applicationServiceProvider,
+                 @Required ExecutorService executor)
     {
-        checkThat(applicationServiceProvider).is(notNull());
+        checkThat(applicationServiceProvider, executor)
+            .are(notNull());
         
         this.applicationServiceProvider = applicationServiceProvider;
+        this.executor = executor;
     }
     
 
@@ -58,21 +65,30 @@ final class BananaClient implements Banana
 
     void sendMessage(@Required RequestImpl request)
     {
-        ApplicationService.Iface client = applicationServiceProvider.get();
-        checkThat(client)
-            .usingMessage("service provider returned null")
-            .is(notNull());
+        Instant now = now();
         
         SendMessageRequest sendMessageRequest = new SendMessageRequest()
             .setMessage(request.getMessage())
-            .setUrgency(request.getUrgency().toThrift());
+            .setUrgency(request.getUrgency().toThrift())
+            .setTimeOfMessage(now.toEpochMilli());
         
+        executor.submit(() -> sendMessageAsync(sendMessageRequest));
+    }
+    
+    private void sendMessageAsync(SendMessageRequest request)
+    {
+        ApplicationService.Iface client = applicationServiceProvider.get();
+        
+        checkThat(client)
+            .usingMessage("service provider returned null")
+            .is(notNull());
+
         try
         {
-            client.sendMessage(sendMessageRequest);
+            client.sendMessage(request);
             LOG.debug("Successfully sent message to Banana Application Service");
         }
-        catch(TException ex)
+        catch (TException ex)
         {
             //TODO: Decide if swallowing the exception is appropriate here
             LOG.error("Failed to send message to Banana Application Service", ex);
@@ -81,7 +97,6 @@ final class BananaClient implements Banana
         {
             Clients.attemptCloseSilently(client);
         }
-            
     }
 
 }
