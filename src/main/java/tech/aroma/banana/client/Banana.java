@@ -63,7 +63,7 @@ public interface Banana
     }
     
     @BuilderPattern(role = BUILDER)
-    static class Builder 
+    static final class Builder 
     {
         
         private String hostname = BananaServiceConstants.PRODUCTION_ENDPOINT.getHostname();
