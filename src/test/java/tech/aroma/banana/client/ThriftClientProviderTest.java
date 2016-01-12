@@ -25,6 +25,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import tech.aroma.banana.client.exceptions.BananaException;
 import tech.aroma.banana.thrift.application.service.ApplicationService;
 import tech.aroma.banana.thrift.endpoint.Endpoint;
@@ -53,6 +55,7 @@ import static tech.sirwellington.alchemy.test.junit.runners.GenerateInteger.Type
 @RunWith(AlchemyTestRunner.class)
 public class ThriftClientProviderTest 
 {
+    private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
     @GenerateURL
     private URL url;
@@ -101,7 +104,16 @@ public class ThriftClientProviderTest
     private void openServerAtPort(int port) throws IOException
     {
         executor = Executors.newSingleThreadExecutor();
+        try
+        {
         serverSocket = new ServerSocket(port);
+        }
+        catch(IOException ex)
+        {
+            LOG.error("Could not open port at {}", port);
+            throw ex;
+        }
+        
         executor.submit(() -> serverSocket.accept());
     }
     
