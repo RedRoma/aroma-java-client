@@ -23,6 +23,7 @@ import tech.aroma.banana.thrift.endpoint.TcpEndpoint;
 import tech.aroma.banana.thrift.service.BananaServiceConstants;
 import tech.sirwellington.alchemy.annotations.arguments.NonEmpty;
 import tech.sirwellington.alchemy.annotations.arguments.NonNull;
+import tech.sirwellington.alchemy.annotations.arguments.Optional;
 import tech.sirwellington.alchemy.annotations.concurrency.ThreadSafe;
 import tech.sirwellington.alchemy.annotations.designs.FluidAPIDesign;
 import tech.sirwellington.alchemy.annotations.designs.patterns.BuilderPattern;
@@ -49,9 +50,9 @@ public interface Banana
     
     interface Request
     {
-        Request message(String message, Object...args);
+        Request message(@NonNull String message, @Optional Object...args);
         
-        Request withUrgency(Urgency level) throws IllegalArgumentException;
+        Request withUrgency(@NonNull Urgency level) throws IllegalArgumentException;
         
         void send() throws IllegalArgumentException;
     }
