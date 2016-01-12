@@ -123,14 +123,17 @@ public interface Banana
         public Banana build() throws IllegalStateException
         {
             checkThat(hostname)
+                .throwing(IllegalStateException.class)
                 .usingMessage("missing hostname")
                 .is(nonEmptyString());
             
             checkThat(applicationToken)
+                .throwing(IllegalStateException.class)
                 .usingMessage("missing Application Token")
                 .is(nonEmptyString());
             
             checkThat(port)
+                .throwing(IllegalStateException.class)
                 .is(validPort());
             
             if (async == null)
