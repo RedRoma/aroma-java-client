@@ -25,8 +25,10 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import tech.aroma.banana.thrift.application.service.ApplicationService;
 import tech.aroma.banana.thrift.application.service.SendMessageRequest;
+import tech.aroma.banana.thrift.exceptions.OperationFailedException;
 import tech.sirwellington.alchemy.test.junit.runners.AlchemyTestRunner;
 import tech.sirwellington.alchemy.test.junit.runners.DontRepeat;
 import tech.sirwellington.alchemy.test.junit.runners.GenerateString;
@@ -37,6 +39,7 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
 import static tech.sirwellington.alchemy.arguments.assertions.TimeAssertions.epochNowWithinDelta;
 import static tech.sirwellington.alchemy.generator.EnumGenerators.enumValueOf;
@@ -112,6 +115,15 @@ public class BananaClientTest
         assertThat(requestMade.urgency, is(urgency.toThrift()));
         checkThat(requestMade.timeOfMessage)
             .is(epochNowWithinDelta(50L));
+    }
+    
+    @Test
+    public void testSendMessageWhenOperationFails() throws Exception
+    {
+        when(applicationService.sendMessage(Mockito.any()))
+            .thenThrow(new OperationFailedException());
+            
+        instance.sendMessage(request);
     }
 
 }
