@@ -25,6 +25,7 @@ import tech.aroma.banana.thrift.application.service.ApplicationService;
 import tech.aroma.banana.thrift.application.service.SendMessageRequest;
 import tech.sirwellington.alchemy.annotations.arguments.Required;
 import tech.sirwellington.alchemy.annotations.concurrency.ThreadSafe;
+import tech.sirwellington.alchemy.thrift.clients.Clients;
 
 import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
 import static tech.sirwellington.alchemy.arguments.assertions.Assertions.notNull;
@@ -57,8 +58,8 @@ final class BananaClient implements Banana
 
     void sendMessage(@Required RequestImpl request)
     {
-        ApplicationService.Iface service = applicationServiceProvider.get();
-        checkThat(service)
+        ApplicationService.Iface client = applicationServiceProvider.get();
+        checkThat(client)
             .usingMessage("service provider returned null")
             .is(notNull());
         
@@ -68,13 +69,17 @@ final class BananaClient implements Banana
         
         try
         {
-            service.sendMessage(sendMessageRequest);
+            client.sendMessage(sendMessageRequest);
             LOG.debug("Successfully sent message to Banana Application Service");
         }
         catch(TException ex)
         {
             //TODO: Decide if swallowing the exception is appropriate here
             LOG.error("Failed to send message to Banana Application Service", ex);
+        }
+        finally
+        {
+            Clients.attemptCloseSilently(client);
         }
             
     }
