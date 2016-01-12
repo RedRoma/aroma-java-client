@@ -53,7 +53,7 @@ final class BananaClient implements Banana
     @Override
     public Request begin()
     {
-        return new RequestImpl(this);
+        return new RequestImpl(this, "", Urgency.LOW);
     }
 
     void sendMessage(@Required RequestImpl request)
