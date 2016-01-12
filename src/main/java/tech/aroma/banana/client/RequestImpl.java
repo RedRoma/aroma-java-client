@@ -16,6 +16,11 @@
 
 package tech.aroma.banana.client;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.helpers.FormattingTuple;
 import org.slf4j.helpers.MessageFormatter;
 import tech.sirwellington.alchemy.annotations.access.Internal;
@@ -36,7 +41,8 @@ import static tech.sirwellington.alchemy.arguments.assertions.Assertions.notNull
 @Internal
 final class RequestImpl implements Banana.Request
 {
-
+    private static final Logger LOG = LoggerFactory.getLogger(RequestImpl.class);
+    
     private final BananaClient bananaClient;
 
     private final Urgency urgency;
@@ -71,7 +77,34 @@ final class RequestImpl implements Banana.Request
         }
         
         FormattingTuple arrayFormat = MessageFormatter.arrayFormat(message, args);
-        return arrayFormat.getMessage();
+        String formattedMessage = arrayFormat.getMessage();
+        
+        Throwable ex = arrayFormat.getThrowable();
+        
+        if(ex == null)
+        {
+            return formattedMessage;
+        }
+        else
+        {
+            return String.format("%s\n%s", formattedMessage, printThrowable(ex));
+        }
+    }
+    
+    private String printThrowable(Throwable ex)
+    {
+
+        try (StringWriter stringWriter = new StringWriter();
+             PrintWriter printWriter = new PrintWriter(stringWriter);)
+        {
+            ex.printStackTrace(printWriter);
+            return stringWriter.toString();
+        }
+        catch(IOException ioex)
+        {
+            LOG.info("Failed to close String and Print Writers", ioex);
+            return ex.getMessage();
+        }
     }
 
     @Override

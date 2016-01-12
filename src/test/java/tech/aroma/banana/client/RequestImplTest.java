@@ -31,6 +31,7 @@ import tech.sirwellington.alchemy.test.junit.runners.GenerateEnum;
 import tech.sirwellington.alchemy.test.junit.runners.GenerateString;
 import tech.sirwellington.alchemy.test.junit.runners.Repeat;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -102,6 +103,25 @@ public class RequestImplTest
     @Test
     public void testMessageFormatting()
     {
+        String first = one(alphabeticString(5));
+        String second = one(alphabeticString(5));
+        String third = one(alphabeticString(5));
+        
+        String formattedMessage = "First {} Second {} Third {}";
+        String expected = String.format("First %s Second %s Third %s", first, second, third);
+        
+        Banana.Request result = instance.message(formattedMessage, first, second, third);
+        assertThat(result, is(instanceOf(RequestImpl.class)));
+        
+        RequestImpl request = (RequestImpl) result;
+        assertThat(request.getMessage(), is(expected));
+        
+        request = (RequestImpl) instance.message(formattedMessage, first, second, third, ex);
+        assertThat(request.getMessage(), containsString(first));
+        assertThat(request.getMessage(), containsString(second));
+        assertThat(request.getMessage(), containsString(third));
+        assertThat(request.getMessage(), containsString(exceptionMessage));
+        assertThat(request.getMessage(), containsString(ex.getClass().getName()));
         
     }
 
