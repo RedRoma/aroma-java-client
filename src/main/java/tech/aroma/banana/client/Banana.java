@@ -18,12 +18,13 @@ package tech.aroma.banana.client;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import tech.aroma.banana.client.exceptions.BananaException;
 import tech.aroma.banana.thrift.endpoint.Endpoint;
 import tech.aroma.banana.thrift.endpoint.TcpEndpoint;
 import tech.aroma.banana.thrift.service.BananaServiceConstants;
 import tech.sirwellington.alchemy.annotations.arguments.NonEmpty;
-import tech.sirwellington.alchemy.annotations.arguments.NonNull;
 import tech.sirwellington.alchemy.annotations.arguments.Optional;
+import tech.sirwellington.alchemy.annotations.arguments.Required;
 import tech.sirwellington.alchemy.annotations.concurrency.ThreadSafe;
 import tech.sirwellington.alchemy.annotations.designs.FluidAPIDesign;
 import tech.sirwellington.alchemy.annotations.designs.patterns.BuilderPattern;
@@ -49,11 +50,11 @@ public interface Banana
     
     interface Request
     {
-        Request message(@NonNull String message, @Optional Object...args);
+        Request message(@Required String message, @Optional Object...args);
         
-        Request withUrgency(@NonNull Urgency level) throws IllegalArgumentException;
+        Request withUrgency(@Required Urgency level) throws IllegalArgumentException;
         
-        void send() throws IllegalArgumentException;
+        void send() throws IllegalArgumentException, BananaException;
     }
     
     static Banana create()
@@ -84,7 +85,7 @@ public interface Banana
             return this;
         }
         
-        public Builder withAsyncExecutorService(@NonNull ExecutorService executor) throws IllegalArgumentException
+        public Builder withAsyncExecutorService(@Required ExecutorService executor) throws IllegalArgumentException
         {
             checkThat(executor)
                 .is(notNull());
