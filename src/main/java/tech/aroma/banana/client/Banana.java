@@ -32,8 +32,7 @@ import static tech.sirwellington.alchemy.annotations.designs.patterns.BuilderPat
 import static tech.sirwellington.alchemy.annotations.designs.patterns.BuilderPattern.Role.PRODUCT;
 import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
 import static tech.sirwellington.alchemy.arguments.assertions.Assertions.notNull;
-import static tech.sirwellington.alchemy.arguments.assertions.NumberAssertions.greaterThan;
-import static tech.sirwellington.alchemy.arguments.assertions.NumberAssertions.lessThan;
+import static tech.sirwellington.alchemy.arguments.assertions.NetworkAssertions.validPort;
 import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.nonEmptyString;
 
 /**
@@ -77,9 +76,7 @@ public interface Banana
                 .is(nonEmptyString());
             
             checkThat(port)
-                .usingMessage("Invalid Port number")
-                .is(greaterThan(0))
-                .is(lessThan(Short.MAX_VALUE * 2));
+                .is(validPort());
                 
             this.hostname = hostname;
             this.port = port;
@@ -104,9 +101,7 @@ public interface Banana
                 .is(nonEmptyString());
             
             checkThat(port)
-                .usingMessage("missing port")
-                .is(greaterThan(0))
-                .is(lessThan(Short.MAX_VALUE * 2 ));
+                .is(validPort());
             
             if (async == null)
             {
@@ -117,7 +112,7 @@ public interface Banana
             Endpoint endpoint = new Endpoint();
             endpoint.setTcp(tcpEndpoint);
             
-            return null;
+            return null; 
             
         }
         
