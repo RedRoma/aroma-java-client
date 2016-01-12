@@ -27,10 +27,11 @@ import org.apache.thrift.transport.TTransportException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import tech.aroma.banana.client.exceptions.BananaNetworkException;
+import tech.aroma.banana.client.exceptions.BananaOperationFailedException;
 import tech.aroma.banana.thrift.application.service.ApplicationService;
 import tech.aroma.banana.thrift.endpoint.Endpoint;
+import tech.aroma.banana.thrift.endpoint.HttpThriftEndpoint;
 import tech.aroma.banana.thrift.endpoint.TcpEndpoint;
-import tech.aroma.banana.thrift.endpoint.ThriftHttpEndpoint;
 import tech.sirwellington.alchemy.annotations.access.Internal;
 import tech.sirwellington.alchemy.annotations.arguments.Required;
 import tech.sirwellington.alchemy.annotations.designs.patterns.FactoryPattern;
@@ -58,6 +59,9 @@ final class ThriftClientProvider implements Supplier<ApplicationService.Client>
     ThriftClientProvider(@Required Supplier<Endpoint> endpointSupplier)
     {
         checkThat(endpointSupplier).is(notNull());
+        checkThat(endpointSupplier.get())
+            .usingMessage("endpointSupplier returned null")
+            .is(notNull());
 
         this.endpointSupplier = endpointSupplier;
     }
@@ -75,12 +79,12 @@ final class ThriftClientProvider implements Supplier<ApplicationService.Client>
             return fromTcp(endpoint.getTcp());
         }
 
-        if (endpoint.isSetThriftHttp())
+        if (endpoint.isSetHttpThrift())
         {
-            return fromHttp(endpoint.getThriftHttp());
+            return fromHttp(endpoint.getHttpThrift());
         }
 
-        throw new IllegalStateException("Endpoint not supported: " + endpoint);
+        throw new BananaOperationFailedException("Endpoint not supported: " + endpoint);
     }
 
     private ApplicationService.Client fromTcp(TcpEndpoint tcp)
@@ -116,7 +120,7 @@ final class ThriftClientProvider implements Supplier<ApplicationService.Client>
         return new ApplicationService.Client(protocol);
     }
 
-    private ApplicationService.Client fromHttp(ThriftHttpEndpoint http)
+    private ApplicationService.Client fromHttp(HttpThriftEndpoint http)
     {
         checkThat(http)
             .usingMessage("missing HTTP Endpoint")
