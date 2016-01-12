@@ -51,7 +51,7 @@ import static tech.sirwellington.alchemy.test.junit.runners.GenerateInteger.Type
  *
  * @author SirWellington
  */
-@Repeat(100)
+@Repeat(10)
 @RunWith(AlchemyTestRunner.class)
 public class ThriftClientProviderTest 
 {
