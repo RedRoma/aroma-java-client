@@ -19,6 +19,8 @@ package tech.aroma.banana.client;
 import com.google.common.util.concurrent.MoreExecutors;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Supplier;
+import org.apache.thrift.protocol.TProtocol;
+import org.apache.thrift.transport.TTransport;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,6 +40,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
@@ -53,6 +56,12 @@ import static tech.sirwellington.alchemy.test.junit.ThrowableAssertion.assertThr
 @RunWith(AlchemyTestRunner.class)
 public class BananaClientTest 
 {
+    
+    @Mock
+    private TProtocol protocol;
+    
+    @Mock
+    private TTransport transport;
     
     @Mock
     private ApplicationService.Client applicationService;
@@ -75,12 +84,26 @@ public class BananaClientTest
     public void setUp()
     {
         urgency = enumValueOf(Urgency.class).get();
-        
+
         Supplier<ApplicationService.Iface> serviceProvider = () -> applicationService;
-        
+
         instance = new BananaClient(serviceProvider, executor);
 
         request = new RequestImpl(instance, message, urgency);
+
+        setupThriftTransports();
+    }
+
+    private void setupThriftTransports()
+    {
+
+        when(applicationService.getInputProtocol())
+            .thenReturn(protocol);
+        when(applicationService.getOutputProtocol())
+            .thenReturn(protocol);
+
+        when(protocol.getTransport())
+            .thenReturn(transport);
     }
     
     @DontRepeat
@@ -115,6 +138,8 @@ public class BananaClientTest
         assertThat(requestMade.urgency, is(urgency.toThrift()));
         checkThat(requestMade.timeOfMessage)
             .is(epochNowWithinDelta(50L));
+        
+        verify(transport, atLeastOnce()).close();
     }
     
     @Test
@@ -125,5 +150,6 @@ public class BananaClientTest
             
         instance.sendMessage(request);
     }
+
 
 }
