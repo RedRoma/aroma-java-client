@@ -19,6 +19,7 @@ package tech.aroma.banana.client;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import tech.aroma.banana.client.exceptions.BananaException;
+import tech.aroma.banana.thrift.authentication.ApplicationToken;
 import tech.aroma.banana.thrift.endpoint.Endpoint;
 import tech.aroma.banana.thrift.endpoint.TcpEndpoint;
 import tech.aroma.banana.thrift.service.BananaServiceConstants;
@@ -59,7 +60,10 @@ public interface Banana
     
     static Banana create()
     {
-        return null;
+        return newBuilder()
+            .withAsyncExecutorService(Executors.newSingleThreadExecutor())
+            .withApplicationToken("random token")
+            .build();
     }
     
     static Builder newBuilder()
@@ -73,11 +77,22 @@ public interface Banana
         
         private String hostname = BananaServiceConstants.PRODUCTION_ENDPOINT.getHostname();
         private int port = BananaServiceConstants.PRODUCTION_ENDPOINT.getPort();
+        private String applicationToken = "";
         private ExecutorService async;
         
         Builder() 
         {
             
+        }
+        
+        public Builder withApplicationToken(@Required String applicationToken) throws IllegalArgumentException
+        {
+            checkThat(applicationToken)
+                .are(nonEmptyString());
+            
+            this.applicationToken = applicationToken;
+            
+            return this;
         }
         
         public Builder withEndpoint(@NonEmpty String hostname, int port) throws IllegalArgumentException
@@ -111,6 +126,10 @@ public interface Banana
                 .usingMessage("missing hostname")
                 .is(nonEmptyString());
             
+            checkThat(applicationToken)
+                .usingMessage("missing Application Token")
+                .is(nonEmptyString());
+            
             checkThat(port)
                 .is(validPort());
             
@@ -119,12 +138,23 @@ public interface Banana
                 async = Executors.newSingleThreadExecutor();
             }
             
+            Endpoint endpoint = createEndpoint();
+            
+            ApplicationToken token = new ApplicationToken().setTokenId(applicationToken);
+            
+            ThriftClientProvider clientProvider = new ThriftClientProvider(() -> endpoint);
+            BananaClient banana = new BananaClient(() -> clientProvider.get(), async);
+            return banana;
+            
+        }
+
+        private Endpoint createEndpoint()
+        {
             TcpEndpoint tcpEndpoint = new TcpEndpoint(hostname, port);
+
             Endpoint endpoint = new Endpoint();
             endpoint.setTcp(tcpEndpoint);
-            
-            return null; 
-            
+            return endpoint;
         }
         
     }
