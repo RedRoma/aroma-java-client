@@ -19,10 +19,10 @@ package tech.aroma.banana.client;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import tech.aroma.banana.client.exceptions.BananaException;
+import tech.aroma.banana.thrift.application.service.ApplicationServiceConstants;
 import tech.aroma.banana.thrift.authentication.ApplicationToken;
 import tech.aroma.banana.thrift.endpoint.Endpoint;
 import tech.aroma.banana.thrift.endpoint.TcpEndpoint;
-import tech.aroma.banana.thrift.service.BananaServiceConstants;
 import tech.sirwellington.alchemy.annotations.arguments.NonEmpty;
 import tech.sirwellington.alchemy.annotations.arguments.Optional;
 import tech.sirwellington.alchemy.annotations.arguments.Required;
@@ -75,8 +75,8 @@ public interface Banana
     static final class Builder 
     {
         
-        private String hostname = BananaServiceConstants.PRODUCTION_ENDPOINT.getHostname();
-        private int port = BananaServiceConstants.PRODUCTION_ENDPOINT.getPort();
+        private String hostname = ApplicationServiceConstants.PRODUCTION_ENDPOINT.getHostname();
+        private int port = ApplicationServiceConstants.PRODUCTION_ENDPOINT.getPort();
         private String applicationToken = "";
         private ExecutorService async;
         
