@@ -146,7 +146,7 @@ public interface Banana
             ApplicationToken token = new ApplicationToken().setTokenId(applicationToken);
             
             ThriftClientProvider clientProvider = new ThriftClientProvider(() -> endpoint);
-            BananaClient banana = new BananaClient(() -> clientProvider.get(), async);
+            BananaClient banana = new BananaClient(() -> clientProvider.get(), async, token);
             return banana;
             
         }

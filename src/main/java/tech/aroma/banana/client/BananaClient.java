@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 import tech.aroma.banana.client.Banana.Request;
 import tech.aroma.banana.thrift.application.service.ApplicationService;
 import tech.aroma.banana.thrift.application.service.SendMessageRequest;
+import tech.aroma.banana.thrift.authentication.ApplicationToken;
 import tech.sirwellington.alchemy.annotations.arguments.Required;
 import tech.sirwellington.alchemy.annotations.concurrency.ThreadSafe;
 import tech.sirwellington.alchemy.thrift.clients.Clients;
@@ -32,6 +33,7 @@ import tech.sirwellington.alchemy.thrift.clients.Clients;
 import static java.time.Instant.now;
 import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
 import static tech.sirwellington.alchemy.arguments.assertions.Assertions.notNull;
+import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.nonEmptyString;
 
 /**
  *
@@ -45,15 +47,24 @@ final class BananaClient implements Banana
 
     private final Supplier<ApplicationService.Iface> applicationServiceProvider;
     private final ExecutorService executor;
+        private final ApplicationToken token;
+
 
     BananaClient(@Required Supplier<ApplicationService.Iface> applicationServiceProvider,
-                 @Required ExecutorService executor)
+                 @Required ExecutorService executor,
+                 @Required ApplicationToken token)
     {
-        checkThat(applicationServiceProvider, executor)
+        checkThat(applicationServiceProvider, executor, token)
             .are(notNull());
+
+        checkThat(token.tokenId)
+            .usingMessage("token is missing")
+            .is(nonEmptyString());
+            
         
         this.applicationServiceProvider = applicationServiceProvider;
         this.executor = executor;
+        this.token = token;
     }
     
 
@@ -68,6 +79,7 @@ final class BananaClient implements Banana
         Instant now = now();
         
         SendMessageRequest sendMessageRequest = new SendMessageRequest()
+            .setApplicationToken(token)
             .setMessage(request.getMessage())
             .setUrgency(request.getUrgency().toThrift())
             .setTimeOfMessage(now.toEpochMilli());

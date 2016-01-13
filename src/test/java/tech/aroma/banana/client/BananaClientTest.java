@@ -31,9 +31,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import tech.aroma.banana.thrift.application.service.ApplicationService;
 import tech.aroma.banana.thrift.application.service.SendMessageRequest;
+import tech.aroma.banana.thrift.authentication.ApplicationToken;
 import tech.aroma.banana.thrift.exceptions.OperationFailedException;
 import tech.sirwellington.alchemy.test.junit.runners.AlchemyTestRunner;
 import tech.sirwellington.alchemy.test.junit.runners.DontRepeat;
+import tech.sirwellington.alchemy.test.junit.runners.GeneratePojo;
 import tech.sirwellington.alchemy.test.junit.runners.GenerateString;
 import tech.sirwellington.alchemy.test.junit.runners.Repeat;
 
@@ -67,6 +69,9 @@ public class BananaClientTest
     @Mock
     private ApplicationService.Client applicationService;
     
+    @GeneratePojo
+    private ApplicationToken token;
+    
     private final ExecutorService executor = MoreExecutors.newDirectExecutorService();
     
     @Captor
@@ -88,7 +93,7 @@ public class BananaClientTest
 
         Supplier<ApplicationService.Iface> serviceProvider = () -> applicationService;
 
-        instance = new BananaClient(serviceProvider, executor);
+        instance = new BananaClient(serviceProvider, executor, token);
 
         request = new RequestImpl(instance, message, urgency);
 
@@ -111,10 +116,13 @@ public class BananaClientTest
     @Test
     public void testConstructor()
     {
-        assertThrows(() -> new BananaClient(() -> applicationService, null))
+        assertThrows(() -> new BananaClient(() -> applicationService, null, null))
             .isInstanceOf(IllegalArgumentException.class);
         
-        assertThrows(() -> new BananaClient(null, executor))
+        assertThrows(() -> new BananaClient(null, executor, null))
+            .isInstanceOf(IllegalArgumentException.class);
+        
+        assertThrows(() -> new BananaClient(null, null, token))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -137,6 +145,7 @@ public class BananaClientTest
         assertThat(requestMade, notNullValue());
         assertThat(requestMade.message, is(message));
         assertThat(requestMade.urgency, is(urgency.toThrift()));
+        assertThat(requestMade.applicationToken, is(token));
         
         Instant timeOfMessage = Instant.ofEpochMilli(requestMade.timeOfMessage);
         checkThat(timeOfMessage)

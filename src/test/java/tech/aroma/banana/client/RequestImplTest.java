@@ -26,8 +26,10 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import tech.aroma.banana.thrift.application.service.ApplicationService;
 import tech.aroma.banana.thrift.application.service.SendMessageRequest;
+import tech.aroma.banana.thrift.authentication.ApplicationToken;
 import tech.sirwellington.alchemy.test.junit.runners.AlchemyTestRunner;
 import tech.sirwellington.alchemy.test.junit.runners.GenerateEnum;
+import tech.sirwellington.alchemy.test.junit.runners.GeneratePojo;
 import tech.sirwellington.alchemy.test.junit.runners.GenerateString;
 import tech.sirwellington.alchemy.test.junit.runners.Repeat;
 
@@ -57,6 +59,9 @@ public class RequestImplTest
     @Mock
     private ApplicationService.Iface applicationService;
     
+    @GeneratePojo
+    private ApplicationToken token;
+    
     @Captor
     private ArgumentCaptor<SendMessageRequest> requestCaptor;
     
@@ -81,7 +86,7 @@ public class RequestImplTest
         ex = new RuntimeException(exceptionMessage);
         
         ExecutorService executor = MoreExecutors.newDirectExecutorService();
-        bananaClient = new BananaClient(() -> applicationService, executor);
+        bananaClient = new BananaClient(() -> applicationService, executor, token);
         
         instance = new RequestImpl(bananaClient, message, urgency);
     }
@@ -149,6 +154,7 @@ public class RequestImplTest
         assertThat(request, notNullValue());
         assertThat(request.message, is(message));
         assertThat(request.urgency, is(urgency.toThrift()));
+        assertThat(request.applicationToken, is(token));
         
         checkThat(request.timeOfMessage)
             .is(epochNowWithinDelta(1000L));
