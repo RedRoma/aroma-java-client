@@ -53,38 +53,39 @@ import static tech.sirwellington.alchemy.test.junit.runners.GenerateInteger.Type
  */
 @Repeat(10)
 @RunWith(AlchemyTestRunner.class)
-public class ThriftClientProviderTest 
+public class ThriftClientProviderTest
 {
+
     private final Logger LOG = LoggerFactory.getLogger(this.getClass());
 
     @GenerateURL
     private URL url;
-    
+
     private HttpThriftEndpoint http;
-    
+
     private String hostname = "localhost";
-    
+
     @GenerateInteger(value = RANGE, min = 1000, max = 10_000)
     private int port;
-    
+
     private TcpEndpoint tcp;
-    
+
     private Endpoint endpoint;
-    
+
     private ThriftClientProvider instance;
-    
+
     private ExecutorService executor;
     private ServerSocket serverSocket;
-    
+
     @Before
     public void setUp() throws IOException
     {
         setupEndpoint();
         openServerAtPort(port);
-        
+
         instance = new ThriftClientProvider(() -> endpoint);
     }
-    
+
     private void setupEndpoint()
     {
         endpoint = new Endpoint();
@@ -100,23 +101,23 @@ public class ThriftClientProviderTest
             endpoint.setTcp(tcp);
         }
     }
-    
+
     private void openServerAtPort(int port) throws IOException
     {
         executor = Executors.newSingleThreadExecutor();
         try
         {
-        serverSocket = new ServerSocket(port);
+            serverSocket = new ServerSocket(port);
         }
-        catch(IOException ex)
+        catch (IOException ex)
         {
             LOG.error("Could not open port at {}", port);
             throw ex;
         }
-        
+
         executor.submit(() -> serverSocket.accept());
     }
-    
+
     @After
     public void tearDown() throws IOException
     {
@@ -124,13 +125,13 @@ public class ThriftClientProviderTest
         {
             executor.shutdownNow();
         }
-        
-        if(serverSocket != null)
+
+        if (serverSocket != null)
         {
             serverSocket.close();
         }
     }
-    
+
     @DontRepeat
     @Test
     public void testConstructor() throws Exception
@@ -141,31 +142,31 @@ public class ThriftClientProviderTest
         assertThrows(() -> new ThriftClientProvider(() -> null))
             .isInstanceOf(IllegalArgumentException.class);
     }
-    
+
     @Test
     public void testGet()
     {
         ApplicationService.Client result = instance.get();
         assertThat(result, notNullValue());
     }
-    
+
     @Test
     public void testWithInvalidEndpointType()
     {
         HttpRestEndpoint rest = new HttpRestEndpoint(url.toString());
         endpoint.setHttpRest(rest);
-        
+
         assertThrows(() -> instance.get())
             .isInstanceOf(BananaException.class);
     }
-    
+
     @Test
     public void testWithBadUrl()
     {
         String badUrl = one(hexadecimalString(45));
         http = new HttpThriftEndpoint(badUrl);
         endpoint.setHttpThrift(http);
-        
+
         assertThrows(() -> instance.get())
             .isInstanceOf(IllegalArgumentException.class);
     }
