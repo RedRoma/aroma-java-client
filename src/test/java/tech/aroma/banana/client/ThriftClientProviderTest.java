@@ -63,7 +63,7 @@ public class ThriftClientProviderTest
 
     private HttpThriftEndpoint http;
 
-    private String hostname = "localhost";
+    private final String hostname = "localhost";
 
     @GenerateInteger(value = RANGE, min = 1000, max = 10_000)
     private int port;
