@@ -65,7 +65,7 @@ public class ThriftClientProviderTest
 
     private final String hostname = "localhost";
 
-    @GenerateInteger(value = RANGE, min = 1000, max = 10_000)
+    @GenerateInteger(value = RANGE, min = 7000, max = 10_000)
     private int port;
 
     private TcpEndpoint tcp;
