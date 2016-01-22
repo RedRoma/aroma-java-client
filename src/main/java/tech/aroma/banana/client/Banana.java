@@ -62,7 +62,7 @@ public interface Banana
     {
         return newBuilder()
             .withAsyncExecutorService(Executors.newSingleThreadExecutor())
-            .withApplicationToken("random token")
+            .withApplicationToken("Banana")
             .build();
     }
     
