@@ -34,6 +34,12 @@ import static java.time.Instant.now;
 import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
 import static tech.sirwellington.alchemy.arguments.assertions.Assertions.notNull;
 import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.nonEmptyString;
+import static java.time.Instant.now;
+import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
+import static java.time.Instant.now;
+import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
+import static java.time.Instant.now;
+import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
 
 /**
  *
@@ -80,7 +86,7 @@ final class BananaClient implements Banana
         
         SendMessageRequest sendMessageRequest = new SendMessageRequest()
             .setApplicationToken(token)
-            .setMessage(request.getMessage())
+            .setMessage(request.getText())
             .setUrgency(request.getUrgency().toThrift())
             .setTimeOfMessage(now.toEpochMilli());
         

@@ -27,7 +27,6 @@ import tech.sirwellington.alchemy.annotations.access.Internal;
 import tech.sirwellington.alchemy.annotations.arguments.Optional;
 import tech.sirwellington.alchemy.annotations.arguments.Required;
 import tech.sirwellington.alchemy.annotations.concurrency.Immutable;
-import tech.sirwellington.alchemy.arguments.Arguments;
 import tech.sirwellington.alchemy.arguments.assertions.Assertions;
 
 import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
@@ -50,19 +49,19 @@ final class RequestImpl implements Banana.Request
 
     private final Urgency urgency;
     private final String title;
-    private final String message;
+    private final String text;
 
     RequestImpl(@Required BananaClient bananaClient,
                 @Required String title,
-                @Required String message, 
+                @Required String text, 
                 @Required Urgency urgency)
     {
-        checkThat(bananaClient, title, message, urgency)
+        checkThat(bananaClient, title, text, urgency)
             .are(notNull());
         
         this.bananaClient = bananaClient;
         this.title = title;
-        this.message = message;
+        this.text = text;
         this.urgency = urgency;
     }
 
@@ -77,11 +76,11 @@ final class RequestImpl implements Banana.Request
             .usingMessage("title too long")
             .is(stringWithLengthLessThan(25));
         
-        return new RequestImpl(bananaClient, title, message, urgency);
+        return new RequestImpl(bananaClient, title, text, urgency);
     }
     
     @Override
-    public Banana.Request message(String message, @Optional Object... args)
+    public Banana.Request text(String message, @Optional Object... args)
     {
         checkThat(message)
             .usingMessage("message cannot be null")
@@ -132,9 +131,11 @@ final class RequestImpl implements Banana.Request
     @Override
     public Banana.Request withUrgency(@Required Urgency level) throws IllegalArgumentException
     {
-        Arguments.checkThat(level).usingMessage("urgency cannot be null").is(Assertions.notNull());
+        checkThat(level)
+            .usingMessage("urgency cannot be null")
+            .is(Assertions.notNull());
         
-        return new RequestImpl(bananaClient, title, message, level);
+        return new RequestImpl(bananaClient, title, text, level);
     }
 
     @Override
@@ -144,9 +145,9 @@ final class RequestImpl implements Banana.Request
     }
 
     @Internal
-    String getMessage()
+    String getText()
     {
-        return this.message;
+        return this.text;
     }
     
     @Internal
@@ -160,6 +161,5 @@ final class RequestImpl implements Banana.Request
     {
         return this.urgency;
     }
-
 
 }

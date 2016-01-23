@@ -47,6 +47,9 @@ import static tech.sirwellington.alchemy.generator.AlchemyGenerator.one;
 import static tech.sirwellington.alchemy.generator.EnumGenerators.enumValueOf;
 import static tech.sirwellington.alchemy.generator.StringGenerators.alphabeticString;
 import static tech.sirwellington.alchemy.test.junit.runners.GenerateString.Type.ALPHABETIC;
+import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
+import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
+import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
 
 /**
  *
@@ -99,13 +102,13 @@ public class RequestImplTest
     {
         String newMessage = one(alphabeticString(100));
         
-        Banana.Request result = instance.message(newMessage);
+        Banana.Request result = instance.text(newMessage);
         assertThat(result, is(instanceOf(RequestImpl.class)));
         assertThat(result, not(sameInstance(instance)));
         
         RequestImpl newRequest = (RequestImpl) result;
         assertThat(newRequest.getUrgency(), is(instance.getUrgency()));
-        assertThat(newRequest.getMessage(), is(newMessage));
+        assertThat(newRequest.getText(), is(newMessage));
     }
     
     @Test
@@ -118,18 +121,18 @@ public class RequestImplTest
         String formattedMessage = "First {} Second {} Third {}";
         String expected = String.format("First %s Second %s Third %s", first, second, third);
         
-        Banana.Request result = instance.message(formattedMessage, first, second, third);
+        Banana.Request result = instance.text(formattedMessage, first, second, third);
         assertThat(result, is(instanceOf(RequestImpl.class)));
         
         RequestImpl request = (RequestImpl) result;
-        assertThat(request.getMessage(), is(expected));
+        assertThat(request.getText(), is(expected));
         
-        request = (RequestImpl) instance.message(formattedMessage, first, second, third, ex);
-        assertThat(request.getMessage(), containsString(first));
-        assertThat(request.getMessage(), containsString(second));
-        assertThat(request.getMessage(), containsString(third));
-        assertThat(request.getMessage(), containsString(exceptionMessage));
-        assertThat(request.getMessage(), containsString(ex.getClass().getName()));
+        request = (RequestImpl) instance.text(formattedMessage, first, second, third, ex);
+        assertThat(request.getText(), containsString(first));
+        assertThat(request.getText(), containsString(second));
+        assertThat(request.getText(), containsString(third));
+        assertThat(request.getText(), containsString(exceptionMessage));
+        assertThat(request.getText(), containsString(ex.getClass().getName()));
         
     }
 
@@ -143,7 +146,7 @@ public class RequestImplTest
         
         RequestImpl newRequest = (RequestImpl) result;
         assertThat(newRequest.getUrgency(), is(newUrgency));
-        assertThat(newRequest.getMessage(), is(instance.getMessage()));
+        assertThat(newRequest.getText(), is(instance.getText()));
     }
 
     @Test
@@ -166,7 +169,7 @@ public class RequestImplTest
     @Test
     public void testGetMessage()
     {
-        String result = instance.getMessage();
+        String result = instance.getText();
         assertThat(result, is(message));
     }
 
@@ -195,7 +198,7 @@ public class RequestImplTest
         
         RequestImpl newRequest = (RequestImpl) result;
         assertThat(newRequest.getUrgency(), is(instance.getUrgency()));
-        assertThat(newRequest.getMessage(), is(message));
+        assertThat(newRequest.getText(), is(message));
         assertThat(newRequest.getTitle(), is(newTitle));
     }
 
