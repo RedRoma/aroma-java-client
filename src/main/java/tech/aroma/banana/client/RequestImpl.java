@@ -32,6 +32,9 @@ import tech.sirwellington.alchemy.arguments.assertions.Assertions;
 
 import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
 import static tech.sirwellington.alchemy.arguments.assertions.Assertions.notNull;
+import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.nonEmptyString;
+import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.stringWithLengthGreaterThanOrEqualTo;
+import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.stringWithLengthLessThan;
 
 /**
  *
@@ -46,18 +49,37 @@ final class RequestImpl implements Banana.Request
     private final BananaClient bananaClient;
 
     private final Urgency urgency;
+    private final String title;
     private final String message;
 
-    RequestImpl(@Required BananaClient bananaClient, @Required String message, @Required Urgency urgency)
+    RequestImpl(@Required BananaClient bananaClient,
+                @Required String title,
+                @Required String message, 
+                @Required Urgency urgency)
     {
-        checkThat(bananaClient, message, urgency)
+        checkThat(bananaClient, title, message, urgency)
             .are(notNull());
         
         this.bananaClient = bananaClient;
+        this.title = title;
         this.message = message;
         this.urgency = urgency;
     }
 
+    @Override
+    public Banana.Request titled(String title)
+    {
+        checkThat(title)
+            .usingMessage("title cannot be empty")
+            .is(nonEmptyString())
+            .usingMessage("title too short")
+            .is(stringWithLengthGreaterThanOrEqualTo(3))
+            .usingMessage("title too long")
+            .is(stringWithLengthLessThan(25));
+        
+        return new RequestImpl(bananaClient, title, message, urgency);
+    }
+    
     @Override
     public Banana.Request message(String message, @Optional Object... args)
     {
@@ -66,7 +88,7 @@ final class RequestImpl implements Banana.Request
             .is(notNull());
         
         String combinedMessage = combineStringAndArgs(message, args);
-        return new RequestImpl(bananaClient, combinedMessage, urgency);
+        return new RequestImpl(bananaClient, title, combinedMessage, urgency);
     }
 
     private String combineStringAndArgs(String message, Object... args)
@@ -112,7 +134,7 @@ final class RequestImpl implements Banana.Request
     {
         Arguments.checkThat(level).usingMessage("urgency cannot be null").is(Assertions.notNull());
         
-        return new RequestImpl(bananaClient, message, level);
+        return new RequestImpl(bananaClient, title, message, level);
     }
 
     @Override
@@ -128,9 +150,16 @@ final class RequestImpl implements Banana.Request
     }
     
     @Internal
+    String getTitle()
+    {
+        return this.title;
+    }
+    
+    @Internal
     Urgency getUrgency()
     {
         return this.urgency;
     }
+
 
 }

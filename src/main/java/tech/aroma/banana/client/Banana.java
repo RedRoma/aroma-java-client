@@ -53,6 +53,8 @@ public interface Banana
     {
         Request message(@Required String message, @Optional Object...args);
         
+        Request titled(@Required String title);
+        
         Request withUrgency(@Required Urgency level) throws IllegalArgumentException;
         
         void send() throws IllegalArgumentException, BananaException;

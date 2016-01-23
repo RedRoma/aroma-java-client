@@ -72,6 +72,9 @@ public class RequestImplTest
     @GenerateString
     private String message;
     
+    @GenerateString
+    private String title;
+    
     @GenerateEnum
     private Urgency urgency;
     
@@ -88,7 +91,7 @@ public class RequestImplTest
         ExecutorService executor = MoreExecutors.newDirectExecutorService();
         bananaClient = new BananaClient(() -> applicationService, executor, token);
         
-        instance = new RequestImpl(bananaClient, message, urgency);
+        instance = new RequestImpl(bananaClient, title, message, urgency);
     }
 
     @Test
@@ -172,6 +175,28 @@ public class RequestImplTest
     {
         Urgency result = instance.getUrgency();
         assertThat(result, is(urgency));
+    }
+    
+    @Test
+    public void testGetTitle()
+    {
+        String result = instance.getTitle();
+        assertThat(result, is(title));
+    }
+
+    @Test
+    public void testTitled()
+    {
+         String newTitle = one(alphabeticString(10));
+        
+        Banana.Request result = instance.titled(newTitle);
+        assertThat(result, is(instanceOf(RequestImpl.class)));
+        assertThat(result, not(sameInstance(instance)));
+        
+        RequestImpl newRequest = (RequestImpl) result;
+        assertThat(newRequest.getUrgency(), is(instance.getUrgency()));
+        assertThat(newRequest.getMessage(), is(message));
+        assertThat(newRequest.getTitle(), is(newTitle));
     }
 
 }

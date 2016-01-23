@@ -33,6 +33,7 @@ import tech.aroma.banana.thrift.application.service.ApplicationService;
 import tech.aroma.banana.thrift.application.service.SendMessageRequest;
 import tech.aroma.banana.thrift.authentication.ApplicationToken;
 import tech.aroma.banana.thrift.exceptions.OperationFailedException;
+import tech.sirwellington.alchemy.annotations.testing.TimeSensitive;
 import tech.sirwellington.alchemy.test.junit.runners.AlchemyTestRunner;
 import tech.sirwellington.alchemy.test.junit.runners.DontRepeat;
 import tech.sirwellington.alchemy.test.junit.runners.GeneratePojo;
@@ -84,6 +85,9 @@ public class BananaClientTest
     @GenerateString
     private String message;
     
+    @GenerateString
+    private String title;
+    
     private Urgency urgency;
     
     @Before
@@ -95,7 +99,7 @@ public class BananaClientTest
 
         instance = new BananaClient(serviceProvider, executor, token);
 
-        request = new RequestImpl(instance, message, urgency);
+        request = new RequestImpl(instance, title, message, urgency);
 
         setupThriftTransports();
     }
@@ -134,6 +138,7 @@ public class BananaClientTest
         assertThat(result, instanceOf(RequestImpl.class));
     }
 
+    @TimeSensitive
     @Test
     public void testSendMessage() throws Exception
     {
