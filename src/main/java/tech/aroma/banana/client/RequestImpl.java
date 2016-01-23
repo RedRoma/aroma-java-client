@@ -166,6 +166,6 @@ final class RequestImpl implements Banana.Request
     public String toString()
     {
         return "RequestImpl{" + "bananaClient=" + bananaClient + ", urgency=" + urgency + ", title=" + title + ", text=" + text + '}';
-    }RequestImpl
+    }
 
 }
