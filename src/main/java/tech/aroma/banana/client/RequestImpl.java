@@ -162,4 +162,10 @@ final class RequestImpl implements Banana.Request
         return this.urgency;
     }
 
+    @Override
+    public String toString()
+    {
+        return "RequestImpl{" + "bananaClient=" + bananaClient + ", urgency=" + urgency + ", title=" + title + ", text=" + text + '}';
+    }RequestImpl
+
 }
