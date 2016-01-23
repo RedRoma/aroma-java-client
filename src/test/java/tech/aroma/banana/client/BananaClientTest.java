@@ -47,12 +47,9 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
 import static tech.sirwellington.alchemy.arguments.assertions.TimeAssertions.nowWithinDelta;
 import static tech.sirwellington.alchemy.generator.EnumGenerators.enumValueOf;
 import static tech.sirwellington.alchemy.test.junit.ThrowableAssertion.assertThrows;
-import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
-import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
 import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
 
 /**
@@ -157,7 +154,7 @@ public class BananaClientTest
         
         Instant timeOfMessage = Instant.ofEpochMilli(requestMade.timeOfMessage);
         checkThat(timeOfMessage)
-            .is(nowWithinDelta(200L));
+            .is(nowWithinDelta(1000L));
         
         verify(transport, atLeastOnce()).close();
     }
