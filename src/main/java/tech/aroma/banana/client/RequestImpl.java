@@ -74,7 +74,7 @@ final class RequestImpl implements Banana.Request
             .usingMessage("title too short")
             .is(stringWithLengthGreaterThanOrEqualTo(3))
             .usingMessage("title too long")
-            .is(stringWithLengthLessThan(25));
+            .is(stringWithLengthLessThan(40));
         
         return new RequestImpl(bananaClient, title, text, urgency);
     }
