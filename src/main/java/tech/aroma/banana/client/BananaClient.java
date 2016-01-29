@@ -80,7 +80,8 @@ final class BananaClient implements Banana
         
         SendMessageRequest sendMessageRequest = new SendMessageRequest()
             .setApplicationToken(token)
-            .setMessage(request.getText())
+            .setBody(request.getText())
+            .setTitle(request.getTitle())
             .setUrgency(request.getUrgency().toThrift())
             .setTimeOfMessage(now.toEpochMilli());
         
