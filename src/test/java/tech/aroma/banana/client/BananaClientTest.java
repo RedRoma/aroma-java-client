@@ -47,10 +47,10 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
 import static tech.sirwellington.alchemy.arguments.assertions.TimeAssertions.nowWithinDelta;
 import static tech.sirwellington.alchemy.generator.EnumGenerators.enumValueOf;
 import static tech.sirwellington.alchemy.test.junit.ThrowableAssertion.assertThrows;
-import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
 
 /**
  *
@@ -83,7 +83,7 @@ public class BananaClientTest
     private BananaClient instance;
     
     @GenerateString
-    private String message;
+    private String body;
     
     @GenerateString
     private String title;
@@ -99,7 +99,7 @@ public class BananaClientTest
 
         instance = new BananaClient(serviceProvider, executor, token);
 
-        request = new RequestImpl(instance, title, message, urgency);
+        request = new RequestImpl(instance, title, body, urgency);
 
         setupThriftTransports();
     }
@@ -148,7 +148,8 @@ public class BananaClientTest
         
         SendMessageRequest requestMade = requestCaptor.getValue();
         assertThat(requestMade, notNullValue());
-        assertThat(requestMade.message, is(message));
+        assertThat(requestMade.body, is(body));
+        assertThat(requestMade.title, is(title));
         assertThat(requestMade.urgency, is(urgency.toThrift()));
         assertThat(requestMade.applicationToken, is(token));
         

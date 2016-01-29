@@ -47,9 +47,6 @@ import static tech.sirwellington.alchemy.generator.AlchemyGenerator.one;
 import static tech.sirwellington.alchemy.generator.EnumGenerators.enumValueOf;
 import static tech.sirwellington.alchemy.generator.StringGenerators.alphabeticString;
 import static tech.sirwellington.alchemy.test.junit.runners.GenerateString.Type.ALPHABETIC;
-import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
-import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
-import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
 
 /**
  *
@@ -73,7 +70,7 @@ public class RequestImplTest
     private RequestImpl instance;
     
     @GenerateString
-    private String message;
+    private String body;
     
     @GenerateString
     private String title;
@@ -94,7 +91,7 @@ public class RequestImplTest
         ExecutorService executor = MoreExecutors.newDirectExecutorService();
         bananaClient = new BananaClient(() -> applicationService, executor, token);
         
-        instance = new RequestImpl(bananaClient, title, message, urgency);
+        instance = new RequestImpl(bananaClient, title, body, urgency);
     }
 
     @Test
@@ -158,7 +155,8 @@ public class RequestImplTest
         
         SendMessageRequest request = requestCaptor.getValue();
         assertThat(request, notNullValue());
-        assertThat(request.message, is(message));
+        assertThat(request.body, is(body));
+        assertThat(request.title, is(title));
         assertThat(request.urgency, is(urgency.toThrift()));
         assertThat(request.applicationToken, is(token));
         
@@ -170,7 +168,7 @@ public class RequestImplTest
     public void testGetMessage()
     {
         String result = instance.getText();
-        assertThat(result, is(message));
+        assertThat(result, is(body));
     }
 
     @Test
@@ -198,7 +196,7 @@ public class RequestImplTest
         
         RequestImpl newRequest = (RequestImpl) result;
         assertThat(newRequest.getUrgency(), is(instance.getUrgency()));
-        assertThat(newRequest.getText(), is(message));
+        assertThat(newRequest.getText(), is(body));
         assertThat(newRequest.getTitle(), is(newTitle));
     }
 
