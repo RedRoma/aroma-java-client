@@ -16,6 +16,9 @@
 
 package tech.aroma.banana.client;
 
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.time.Instant;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Supplier;
@@ -83,6 +86,8 @@ final class BananaClient implements Banana
             .setBody(request.getText())
             .setTitle(request.getTitle())
             .setUrgency(request.getUrgency().toThrift())
+            .setHostname(getHostname())
+            .setIpv4Address(getIpv4Address())
             .setTimeOfMessage(now.toEpochMilli());
         
         executor.submit(() -> sendMessageAsync(sendMessageRequest));
@@ -109,6 +114,32 @@ final class BananaClient implements Banana
         finally
         {
             Clients.attemptCloseSilently(client);
+        }
+    }
+
+    private String getHostname()
+    {
+        try
+        {
+            return InetAddress.getLocalHost().getHostName();
+        }
+        catch (UnknownHostException ex)
+        {
+            LOG.warn("Could not determine Hostname", ex);
+            return "";
+        }
+    }
+
+    private String getIpv4Address()
+    {
+        try
+        {
+            return Inet4Address.getLocalHost().getHostAddress();
+        }
+        catch(UnknownHostException ex)
+        {
+            LOG.warn("Could not determine IPv4 Address", ex);
+            return "";
         }
     }
 
