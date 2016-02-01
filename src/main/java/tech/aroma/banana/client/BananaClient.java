@@ -47,7 +47,7 @@ final class BananaClient implements Banana
 
     private final Supplier<ApplicationService.Iface> applicationServiceProvider;
     private final ExecutorService executor;
-        private final ApplicationToken token;
+    private final ApplicationToken token;
 
 
     BananaClient(@Required Supplier<ApplicationService.Iface> applicationServiceProvider,
