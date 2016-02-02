@@ -16,7 +16,6 @@
 
 package tech.aroma.banana.client;
 
-import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.time.Instant;
@@ -134,7 +133,7 @@ final class BananaClient implements Banana
     {
         try
         {
-            return Inet4Address.getLocalHost().getHostAddress();
+            return InetAddress.getLocalHost().getHostAddress();
         }
         catch(UnknownHostException ex)
         {
