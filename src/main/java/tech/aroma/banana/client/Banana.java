@@ -87,6 +87,14 @@ public interface Banana
             
         }
         
+        /**
+         * Set the Token ID created from the Aroma App.
+         * 
+         * @param applicationToken
+         * @return
+         * 
+         * @throws IllegalArgumentException 
+         */
         public Builder withApplicationToken(@Required String applicationToken) throws IllegalArgumentException
         {
             checkThat(applicationToken)
