@@ -1,7 +1,7 @@
 Banana Service Java Client
 ==============================================
 
-[<img src="https://raw.githubusercontent.com/AromaTech/banana/develop/Graphics/Logo.png" width="300">](https://github.com/AromaTech/banana)
+[<img src="https://raw.githubusercontent.com/RedRoma/banana/develop/Graphics/Logo.png" width="300">](https://github.com/RedRoma/banana)
 
 [![Build Status](http://jenkins.sirwellington.tech/view/Banana/job/Banana%20Java%20Client/badge/icon)](http://jenkins.sirwellington.tech/view/Banana/job/Banana%20Java%20Client/)
 
