@@ -99,7 +99,7 @@
         
         
         <!--=======================-->
-        <!--BANANA DEPENDENCIES-->
+        <!--AROMA DEPENDENCIES-->
         <!--=======================-->
         <dependency>
             <groupId>${project.groupId}</groupId>
