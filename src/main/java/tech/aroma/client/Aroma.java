@@ -44,7 +44,7 @@ import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.n
 @ThreadSafe
 @BuilderPattern(role = PRODUCT)
 @FluidAPIDesign
-public interface Banana
+public interface Aroma
 {
     
     Request begin();
@@ -60,11 +60,20 @@ public interface Banana
         void send() throws IllegalArgumentException, BananaException;
     }
     
-    static Banana create()
+    static Aroma create()
     {
+        return create("Aroma");
+    }
+    
+    static Aroma create(@NonEmpty String applicationToken)
+    {
+        checkThat(applicationToken)
+            .usingMessage("Application Token cannot be empty")
+            .is(nonEmptyString());
+        
         return newBuilder()
             .withAsyncExecutorService(Executors.newSingleThreadExecutor())
-            .withApplicationToken("Banana")
+            .withApplicationToken(applicationToken)
             .build();
     }
     
@@ -130,7 +139,7 @@ public interface Banana
             return this;
         }
         
-        public Banana build() throws IllegalStateException
+        public Aroma build() throws IllegalStateException
         {
             checkThat(hostname)
                 .throwing(IllegalStateException.class)

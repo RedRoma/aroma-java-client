@@ -41,12 +41,12 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.verify;
-import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
 import static tech.sirwellington.alchemy.arguments.assertions.TimeAssertions.epochNowWithinDelta;
 import static tech.sirwellington.alchemy.generator.AlchemyGenerator.one;
 import static tech.sirwellington.alchemy.generator.EnumGenerators.enumValueOf;
 import static tech.sirwellington.alchemy.generator.StringGenerators.alphabeticString;
 import static tech.sirwellington.alchemy.test.junit.runners.GenerateString.Type.ALPHABETIC;
+import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
 
 /**
  *
@@ -99,7 +99,7 @@ public class RequestImplTest
     {
         String newMessage = one(alphabeticString(100));
         
-        Banana.Request result = instance.text(newMessage);
+        Aroma.Request result = instance.text(newMessage);
         assertThat(result, is(instanceOf(RequestImpl.class)));
         assertThat(result, not(sameInstance(instance)));
         
@@ -118,7 +118,7 @@ public class RequestImplTest
         String formattedMessage = "First {} Second {} Third {}";
         String expected = String.format("First %s Second %s Third %s", first, second, third);
         
-        Banana.Request result = instance.text(formattedMessage, first, second, third);
+        Aroma.Request result = instance.text(formattedMessage, first, second, third);
         assertThat(result, is(instanceOf(RequestImpl.class)));
         
         RequestImpl request = (RequestImpl) result;
@@ -137,7 +137,7 @@ public class RequestImplTest
     public void testWithUrgency()
     {
         Urgency newUrgency = enumValueOf(Urgency.class).get();
-        Banana.Request result = instance.withUrgency(newUrgency);
+        Aroma.Request result = instance.withUrgency(newUrgency);
         assertThat(result, is(instanceOf(RequestImpl.class)));
         assertThat(result, not(sameInstance(instance)));
         
@@ -190,7 +190,7 @@ public class RequestImplTest
     {
          String newTitle = one(alphabeticString(10));
         
-        Banana.Request result = instance.titled(newTitle);
+        Aroma.Request result = instance.titled(newTitle);
         assertThat(result, is(instanceOf(RequestImpl.class)));
         assertThat(result, not(sameInstance(instance)));
         

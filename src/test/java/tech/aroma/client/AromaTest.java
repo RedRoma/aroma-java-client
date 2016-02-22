@@ -33,7 +33,7 @@ import static tech.sirwellington.alchemy.generator.AlchemyGenerator.one;
 import static tech.sirwellington.alchemy.generator.NumberGenerators.negativeIntegers;
 import static tech.sirwellington.alchemy.test.junit.ThrowableAssertion.assertThrows;
 import static tech.sirwellington.alchemy.test.junit.runners.GenerateInteger.Type.RANGE;
-import static tech.sirwellington.alchemy.test.junit.runners.GenerateString.Type.HEXADECIMAL;
+import static tech.sirwellington.alchemy.test.junit.runners.GenerateString.Type.UUID;
 
 /**
  *
@@ -41,7 +41,7 @@ import static tech.sirwellington.alchemy.test.junit.runners.GenerateString.Type.
  */
 @Repeat(50)
 @RunWith(AlchemyTestRunner.class)
-public class BananaTest 
+public class AromaTest 
 {
     
     @GenerateString
@@ -50,47 +50,63 @@ public class BananaTest
     @GenerateInteger(value = RANGE, min = 80, max = 10_000)
     private int port;
     
-    @GenerateString(HEXADECIMAL)
+    @GenerateString(UUID)
     private String applicationToken;
     
     private ExecutorService executor;
     
-    private Banana instance;
-    private Banana.Builder builder;
+    private Aroma instance;
+    private Aroma.Builder builder;
+    
     
     @Before
     public void setUp()
     {
-        instance = Banana.create();
+        instance = Aroma.create();
         executor = MoreExecutors.newDirectExecutorService();
-        builder = Banana.newBuilder();
+        builder = Aroma.newBuilder();
     }
 
     @Test
     public void testBegin()
     {
-        Banana.Request request = instance.begin();
+        Aroma.Request request = instance.begin();
         assertThat(request, notNullValue());
     }
 
     @Test
     public void testCreate()
     {
-        Banana result = Banana.create();
+        Aroma result = Aroma.create();
         assertThat(result, notNullValue());
+    }
+    
+    @Test
+    public void testCreateWithAppToken()
+    {
+        Aroma result = Aroma.create(applicationToken);
+        assertThat(result, notNullValue());
+        result.begin();
+    }
+    
+    @Test
+    public void testCreateWithBadToken()
+    {
+        assertThrows(() -> Aroma.create(""))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     public void testNewBuilder()
     {
-        Banana.Builder result = Banana.newBuilder();
+        Aroma.Builder result = Aroma.newBuilder();
         assertThat(result, notNullValue());
     }
 
     @Test
     public void testBuilderWithExecutorService()
     {
-        Banana.Builder result = builder.withAsyncExecutorService(executor);
+        Aroma.Builder result = builder.withAsyncExecutorService(executor);
         assertThat(result, notNullValue());
     }    
     
@@ -98,14 +114,14 @@ public class BananaTest
     @Test
     public void testBuilderWithExecutorServiceWithBadArgs()
     {
-        Banana.Builder result = builder.withAsyncExecutorService(executor);
+        Aroma.Builder result = builder.withAsyncExecutorService(executor);
         assertThat(result, notNullValue());
     }    
     
     @Test
     public void testBuilderWithEndpoint()
     {
-        Banana.Builder result = builder.withEndpoint(hostname, port);
+        Aroma.Builder result = builder.withEndpoint(hostname, port);
         assertThat(result, notNullValue());
     }
   
@@ -133,7 +149,7 @@ public class BananaTest
             .withAsyncExecutorService(executor)
             .withApplicationToken(applicationToken);
         
-        Banana result = builder.build();
+        Aroma result = builder.build();
         assertThat(result, notNullValue());
     }
     

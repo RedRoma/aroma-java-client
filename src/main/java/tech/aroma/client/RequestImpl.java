@@ -29,11 +29,11 @@ import tech.sirwellington.alchemy.annotations.arguments.Required;
 import tech.sirwellington.alchemy.annotations.concurrency.Immutable;
 import tech.sirwellington.alchemy.arguments.assertions.Assertions;
 
-import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
 import static tech.sirwellington.alchemy.arguments.assertions.Assertions.notNull;
 import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.nonEmptyString;
 import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.stringWithLengthGreaterThanOrEqualTo;
 import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.stringWithLengthLessThan;
+import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
 
 /**
  *
@@ -41,7 +41,7 @@ import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.s
  */
 @Immutable
 @Internal
-final class RequestImpl implements Banana.Request
+final class RequestImpl implements Aroma.Request
 {
     private static final Logger LOG = LoggerFactory.getLogger(RequestImpl.class);
     
@@ -66,7 +66,7 @@ final class RequestImpl implements Banana.Request
     }
 
     @Override
-    public Banana.Request titled(String title)
+    public Aroma.Request titled(String title)
     {
         checkThat(title)
             .usingMessage("title cannot be empty")
@@ -80,7 +80,7 @@ final class RequestImpl implements Banana.Request
     }
     
     @Override
-    public Banana.Request text(String message, @Optional Object... args)
+    public Aroma.Request text(String message, @Optional Object... args)
     {
         checkThat(message)
             .usingMessage("message cannot be null")
@@ -129,7 +129,7 @@ final class RequestImpl implements Banana.Request
     }
 
     @Override
-    public Banana.Request withUrgency(@Required Urgency level) throws IllegalArgumentException
+    public Aroma.Request withUrgency(@Required Urgency level) throws IllegalArgumentException
     {
         checkThat(level)
             .usingMessage("urgency cannot be null")

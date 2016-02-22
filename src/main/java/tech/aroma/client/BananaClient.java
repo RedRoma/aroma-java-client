@@ -24,7 +24,7 @@ import java.util.function.Supplier;
 import org.apache.thrift.TException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import tech.aroma.client.Banana.Request;
+import tech.aroma.client.Aroma.Request;
 import tech.aroma.thrift.application.service.ApplicationService;
 import tech.aroma.thrift.application.service.SendMessageRequest;
 import tech.aroma.thrift.authentication.ApplicationToken;
@@ -42,7 +42,7 @@ import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.n
  * @author SirWellington
  */
 @ThreadSafe
-final class BananaClient implements Banana
+final class BananaClient implements Aroma
 {
 
     private final static Logger LOG = LoggerFactory.getLogger(BananaClient.class);

@@ -47,10 +47,10 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
 import static tech.sirwellington.alchemy.arguments.assertions.TimeAssertions.nowWithinDelta;
 import static tech.sirwellington.alchemy.generator.EnumGenerators.enumValueOf;
 import static tech.sirwellington.alchemy.test.junit.ThrowableAssertion.assertThrows;
+import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
 
 /**
  *
@@ -133,7 +133,7 @@ public class BananaClientTest
     @Test
     public void testBegin()
     {
-        Banana.Request result = instance.begin();
+        Aroma.Request result = instance.begin();
         assertThat(result, notNullValue());
         assertThat(result, instanceOf(RequestImpl.class));
     }
