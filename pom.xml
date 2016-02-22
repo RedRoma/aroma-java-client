@@ -13,7 +13,7 @@
     <name>${project.artifactId}</name>
     <packaging>jar</packaging>
 
-    <url>https://github.com/RedRoma/aroma-thrift</url>
+    <url>https://github.com/RedRoma/aroma-java-client</url>
     <description>
         Part of the Banana Service Project.
         Simplicity is paramount.
@@ -101,9 +101,9 @@
         <!--AROMA DEPENDENCIES-->
         <!--=======================-->
         <dependency>
-            <groupId>tech.aroma.banana</groupId>
-            <artifactId>banana-thrift</artifactId>
-            <version>1.6</version>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>aroma-thrift</artifactId>
+            <version>1.7-SNAPSHOT</version>
         </dependency>
 
 
