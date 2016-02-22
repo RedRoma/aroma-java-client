@@ -13,7 +13,7 @@
     <name>${project.artifactId}</name>
     <packaging>jar</packaging>
 
-    <url>https://github.com/AromaTech/banana-thrift</url>
+    <url>https://github.com/RedRoma/banana-thrift</url>
     <description>
         Part of the Banana Service Project.
         Simplicity is paramount.
@@ -22,13 +22,13 @@
 
     <issueManagement>
         <system>GitHub Issues</system>
-        <url>https://github.com/AromaTech/banana-java-client/issues</url>
+        <url>https://github.com/RedRoma/banana-java-client/issues</url>
     </issueManagement>
 
     <scm>
-        <connection>scm:git:git@github.com:AromaTech/banana-java-client.git</connection>
-        <developerConnection>scm:git:git@github.com:AromaTech/banana-java-client.git</developerConnection>
-        <url>git@github.com:AromaTech/banana-java-client-annotations.git</url>
+        <connection>scm:git:git@github.com:RedRoma/banana-java-client.git</connection>
+        <developerConnection>scm:git:git@github.com:RedRoma/banana-java-client.git</developerConnection>
+        <url>git@github.com:RedRoma/banana-java-client-annotations.git</url>
     </scm>
 
     <inceptionYear>2015</inceptionYear>
