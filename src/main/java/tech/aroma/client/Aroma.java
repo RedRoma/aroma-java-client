@@ -165,7 +165,7 @@ public interface Aroma
             ApplicationToken token = new ApplicationToken().setTokenId(applicationToken);
             
             ThriftClientProvider clientProvider = new ThriftClientProvider(() -> endpoint);
-            BananaClient banana = new BananaClient(() -> clientProvider.get(), async, token);
+            AromaClient banana = new AromaClient(() -> clientProvider.get(), async, token);
             return banana;
             
         }

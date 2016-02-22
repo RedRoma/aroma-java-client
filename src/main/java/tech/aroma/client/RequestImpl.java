@@ -29,11 +29,11 @@ import tech.sirwellington.alchemy.annotations.arguments.Required;
 import tech.sirwellington.alchemy.annotations.concurrency.Immutable;
 import tech.sirwellington.alchemy.arguments.assertions.Assertions;
 
+import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
 import static tech.sirwellington.alchemy.arguments.assertions.Assertions.notNull;
 import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.nonEmptyString;
 import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.stringWithLengthGreaterThanOrEqualTo;
 import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.stringWithLengthLessThan;
-import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
 
 /**
  *
@@ -45,13 +45,13 @@ final class RequestImpl implements Aroma.Request
 {
     private static final Logger LOG = LoggerFactory.getLogger(RequestImpl.class);
     
-    private final BananaClient bananaClient;
+    private final AromaClient bananaClient;
 
     private final Urgency urgency;
     private final String title;
     private final String text;
 
-    RequestImpl(@Required BananaClient bananaClient,
+    RequestImpl(@Required AromaClient bananaClient,
                 @Required String title,
                 @Required String text, 
                 @Required Urgency urgency)

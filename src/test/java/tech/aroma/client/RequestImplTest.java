@@ -41,12 +41,12 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.verify;
+import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
 import static tech.sirwellington.alchemy.arguments.assertions.TimeAssertions.epochNowWithinDelta;
 import static tech.sirwellington.alchemy.generator.AlchemyGenerator.one;
 import static tech.sirwellington.alchemy.generator.EnumGenerators.enumValueOf;
 import static tech.sirwellington.alchemy.generator.StringGenerators.alphabeticString;
 import static tech.sirwellington.alchemy.test.junit.runners.GenerateString.Type.ALPHABETIC;
-import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
 
 /**
  *
@@ -65,7 +65,7 @@ public class RequestImplTest
     @Captor
     private ArgumentCaptor<SendMessageRequest> requestCaptor;
     
-    private BananaClient bananaClient;
+    private AromaClient bananaClient;
     
     private RequestImpl instance;
     
@@ -89,7 +89,7 @@ public class RequestImplTest
         ex = new RuntimeException(exceptionMessage);
         
         ExecutorService executor = MoreExecutors.newDirectExecutorService();
-        bananaClient = new BananaClient(() -> applicationService, executor, token);
+        bananaClient = new AromaClient(() -> applicationService, executor, token);
         
         instance = new RequestImpl(bananaClient, title, body, urgency);
     }
