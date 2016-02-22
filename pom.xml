@@ -5,15 +5,15 @@
     <parent>
         <groupId>tech.aroma.banana</groupId>
         <artifactId>banana</artifactId>
-        <version>1.1-SNAPSHOT</version>
+        <version>1.3</version>
     </parent>
 
     <artifactId>banana-java-client</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <name>${project.artifactId}</name>
     <packaging>jar</packaging>
 
-    <url>https://github.com/AromaTech/banana-thrift</url>
+    <url>https://github.com/RedRoma/banana-thrift</url>
     <description>
         Part of the Banana Service Project.
         Simplicity is paramount.
@@ -22,13 +22,13 @@
 
     <issueManagement>
         <system>GitHub Issues</system>
-        <url>https://github.com/AromaTech/banana-java-client/issues</url>
+        <url>https://github.com/RedRoma/banana-java-client/issues</url>
     </issueManagement>
 
     <scm>
-        <connection>scm:git:git@github.com:AromaTech/banana-java-client.git</connection>
-        <developerConnection>scm:git:git@github.com:AromaTech/banana-java-client.git</developerConnection>
-        <url>git@github.com:AromaTech/banana-java-client-annotations.git</url>
+        <connection>scm:git:git@github.com:RedRoma/banana-java-client.git</connection>
+        <developerConnection>scm:git:git@github.com:RedRoma/banana-java-client.git</developerConnection>
+        <url>git@github.com:RedRoma/banana-java-client-annotations.git</url>
     </scm>
 
     <inceptionYear>2015</inceptionYear>
@@ -40,15 +40,82 @@
     <!-- END OF POM METADATA -->
 
     <dependencies>
+        
+        <!--=======================-->
+        <!--UNIT TESTING-->
+        <!--=======================-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-library</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>tech.sirwellington.alchemy</groupId>
+            <artifactId>alchemy-test</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <scope>test</scope>
+        </dependency>
+        
+        
+        <!--=======================-->
+        <!--ALCHEMY-->
+        <!--=======================-->
+        <dependency>
+            <groupId>tech.sirwellington.alchemy</groupId>
+            <artifactId>alchemy-annotations</artifactId>
+            <version>1.5</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>tech.sirwellington.alchemy</groupId>
+            <artifactId>alchemy-arguments</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>tech.sirwellington.alchemy</groupId>
+            <artifactId>alchemy-thrift</artifactId>
+        </dependency>
+        
+        
+        <!--=======================-->
+        <!--AROMA DEPENDENCIES-->
+        <!--=======================-->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>banana-thrift</artifactId>
-            <version>1.1-SNAPSHOT</version>
+            <version>1.6</version>
         </dependency>
+
+
+        <!--=======================-->
+        <!--LOGGING-->
+        <!--=======================-->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
+        
     </dependencies>
 
     <build>
