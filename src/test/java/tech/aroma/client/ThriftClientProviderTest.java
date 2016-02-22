@@ -27,7 +27,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import tech.aroma.banana.exceptions.BananaException;
+import tech.aroma.client.exceptions.BananaException;
 import tech.aroma.thrift.application.service.ApplicationService;
 import tech.aroma.thrift.endpoint.Endpoint;
 import tech.aroma.thrift.endpoint.HttpRestEndpoint;

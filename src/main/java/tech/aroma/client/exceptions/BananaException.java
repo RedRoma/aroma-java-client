@@ -15,7 +15,7 @@
  */
 
  
-package tech.aroma.banana.exceptions;
+package tech.aroma.client.exceptions;
 
 
 import org.slf4j.Logger;

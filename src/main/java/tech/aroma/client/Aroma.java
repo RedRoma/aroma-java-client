@@ -18,7 +18,7 @@ package tech.aroma.client;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import tech.aroma.banana.exceptions.BananaException;
+import tech.aroma.client.exceptions.BananaException;
 import tech.aroma.thrift.application.service.ApplicationServiceConstants;
 import tech.aroma.thrift.authentication.ApplicationToken;
 import tech.aroma.thrift.endpoint.Endpoint;
