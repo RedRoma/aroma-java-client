@@ -33,22 +33,22 @@ public enum Urgency
      * LOW Messages are like an FYI; they are not important but you may want to know
      * about it. For example, a new user sign-up for your service, or a post was flagged by a user.
      */
-    LOW(tech.aroma.banana.thrift.Urgency.LOW),
+    LOW(tech.aroma.thrift.Urgency.LOW),
     
     /**
      * MEDIUM Messages are considered Important.
      */
-    MEDIUM(tech.aroma.banana.thrift.Urgency.MEDIUM),
+    MEDIUM(tech.aroma.thrift.Urgency.MEDIUM),
    
     /**
      * HIGH messages typically indicate Show-Stopping events, such as a Database going down,
      * or a network connection issue.
      */
-    HIGH(tech.aroma.banana.thrift.Urgency.HIGH);
+    HIGH(tech.aroma.thrift.Urgency.HIGH);
 
-    private final tech.aroma.banana.thrift.Urgency thriftUrgency;
+    private final tech.aroma.thrift.Urgency thriftUrgency;
 
-    private Urgency(@NonNull tech.aroma.banana.thrift.Urgency thriftUrgency)
+    private Urgency(@NonNull tech.aroma.thrift.Urgency thriftUrgency)
     {
         this.thriftUrgency = thriftUrgency;
     }
@@ -58,7 +58,7 @@ public enum Urgency
      *
      * @return
      */
-    tech.aroma.banana.thrift.Urgency toThrift()
+    tech.aroma.thrift.Urgency toThrift()
     {
         return thriftUrgency;
     }
