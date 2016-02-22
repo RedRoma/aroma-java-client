@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package tech.aroma.banana.client;
+package tech.aroma.client;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -24,7 +24,7 @@ import java.util.function.Supplier;
 import org.apache.thrift.TException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import tech.aroma.banana.client.Banana.Request;
+import tech.aroma.client.Banana.Request;
 import tech.aroma.thrift.application.service.ApplicationService;
 import tech.aroma.thrift.application.service.SendMessageRequest;
 import tech.aroma.thrift.authentication.ApplicationToken;

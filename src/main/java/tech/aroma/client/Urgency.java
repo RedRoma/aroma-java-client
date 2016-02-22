@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package tech.aroma.banana.client;
+package tech.aroma.client;
 
 import tech.sirwellington.alchemy.annotations.arguments.NonNull;
 

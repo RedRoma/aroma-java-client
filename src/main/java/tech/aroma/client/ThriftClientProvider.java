@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package tech.aroma.banana.client;
+package tech.aroma.client;
 
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
@@ -26,8 +26,8 @@ import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransportException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import tech.aroma.banana.client.exceptions.BananaNetworkException;
-import tech.aroma.banana.client.exceptions.BananaOperationFailedException;
+import tech.aroma.banana.exceptions.BananaNetworkException;
+import tech.aroma.banana.exceptions.BananaOperationFailedException;
 import tech.aroma.thrift.application.service.ApplicationService;
 import tech.aroma.thrift.endpoint.Endpoint;
 import tech.aroma.thrift.endpoint.HttpThriftEndpoint;
