@@ -1,16 +1,46 @@
-Banana Service Java Client
+Aroma Java Client
 ==============================================
 
-[<img src="https://raw.githubusercontent.com/RedRoma/banana/develop/Graphics/Logo.png" width="300">](https://github.com/RedRoma/banana)
+[<img src="https://raw.githubusercontent.com/RedRoma/Aroma/develop/Graphics/Logo.png" width="300">](https://github.com/RedRoma/Aroma)
 
-[![Build Status](http://jenkins.sirwellington.tech/view/Banana/job/Banana%20Java%20Client/badge/icon)](http://jenkins.sirwellington.tech/view/Banana/job/Banana%20Java%20Client/)
+[![Build Status](http://jenkins.sirwellington.tech/view/Aroma/job/Aroma%20Java%20Client/badge/icon)](http://jenkins.sirwellington.tech/view/Aroma/job/Aroma%20Java%20Client/)
 
-The Java Client to the Famed Banana Service!
+The Java Client to the Famed Aroma Service!
 
-The Banana Service is Service Notifications for Developers.
+The Aroma Service is Service Notifications for Developers.
 
-Developers are able to be notified of Urgent events that occur
-within the Micro-Services.
+# Download
 
-The Banana Service can also be used to setup Service
-Health Checks and Alerts.
+To use, simply add the following maven dependency.
+
+>Not Released Yet
+## Release
+```xml
+<dependency>
+	<groupId>tech.aroma</groupId>
+	<artifactId></artifactId>
+	<version>1.1</version>
+</dependency>
+```
+
+## Snapshot
+
+>First add the Snapshot Repository
+```xml
+<repository>
+	<id>ossrh</id>
+    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+</repository>
+```
+
+```xml
+<dependency>
+	<groupId>tech.aroma</groupId>
+	<artifactId>aroma-java-client</artifactId>
+	<version>1.1-SNAPSHOT</version>
+</dependency>
+```
+
+# [Javadocs](http://www.javadoc.io/doc/tech.aroma/aroma-java-client/)
+
+# API

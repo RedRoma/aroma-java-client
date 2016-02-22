@@ -33,6 +33,7 @@ import tech.aroma.banana.thrift.endpoint.Endpoint;
 import tech.aroma.banana.thrift.endpoint.HttpRestEndpoint;
 import tech.aroma.banana.thrift.endpoint.HttpThriftEndpoint;
 import tech.aroma.banana.thrift.endpoint.TcpEndpoint;
+import tech.sirwellington.alchemy.annotations.testing.IntegrationTest;
 import tech.sirwellington.alchemy.test.junit.runners.AlchemyTestRunner;
 import tech.sirwellington.alchemy.test.junit.runners.DontRepeat;
 import tech.sirwellington.alchemy.test.junit.runners.GenerateInteger;
@@ -51,6 +52,7 @@ import static tech.sirwellington.alchemy.test.junit.runners.GenerateInteger.Type
  *
  * @author SirWellington
  */
+@IntegrationTest
 @Repeat(10)
 @RunWith(AlchemyTestRunner.class)
 public class ThriftClientProviderTest
@@ -97,7 +99,7 @@ public class ThriftClientProviderTest
         }
         else
         {
-            tcp = new TcpEndpoint("localhost", port);
+            tcp = new TcpEndpoint(hostname, port);
             endpoint.setTcp(tcp);
         }
     }
