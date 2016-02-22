@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>banana-java-client</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <name>${project.artifactId}</name>
     <packaging>jar</packaging>
 
