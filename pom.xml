@@ -15,9 +15,9 @@
 
     <url>https://github.com/RedRoma/aroma-java-client</url>
     <description>
-        Part of the Banana Service Project.
+        Part of the Aroma Project.
         Simplicity is paramount.
-        This is the Java Client for the Banana Service.
+        This is the Java Client for Aroma.
     </description>
 
     <issueManagement>
@@ -103,7 +103,7 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>aroma-thrift</artifactId>
-            <version>1.7-SNAPSHOT</version>
+            <version>1.7</version>
         </dependency>
 
 
