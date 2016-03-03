@@ -13,7 +13,7 @@ The Aroma Service is Service Notifications for Developers.
 
 To use, simply add the following maven dependency.
 
->Not Released Yet
+
 ## Release
 ```xml
 <dependency>
@@ -37,7 +37,7 @@ To use, simply add the following maven dependency.
 <dependency>
 	<groupId>tech.aroma</groupId>
 	<artifactId>aroma-java-client</artifactId>
-	<version>1.1-SNAPSHOT</version>
+	<version>1.2-SNAPSHOT</version>
 </dependency>
 ```
 
