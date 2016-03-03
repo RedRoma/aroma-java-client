@@ -14,35 +14,36 @@
  * limitations under the License.
  */
 
-package tech.aroma.banana.client.exceptions;
+package tech.aroma.client.exceptions;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
+ * Thrown when an Operation could not be completed.
+ * 
  * @author SirWellington
  */
-public class BananaNetworkException extends BananaOperationFailedException
+public class BananaOperationFailedException extends BananaException
 {
 
-    private final static Logger LOG = LoggerFactory.getLogger(BananaNetworkException.class);
+    private final static Logger LOG = LoggerFactory.getLogger(BananaOperationFailedException.class);
 
-    public BananaNetworkException()
+    public BananaOperationFailedException()
     {
     }
 
-    public BananaNetworkException(String message)
+    public BananaOperationFailedException(String message)
     {
         super(message);
     }
 
-    public BananaNetworkException(String message, Throwable cause)
+    public BananaOperationFailedException(String message, Throwable cause)
     {
         super(message, cause);
     }
 
-    public BananaNetworkException(Throwable cause)
+    public BananaOperationFailedException(Throwable cause)
     {
         super(cause);
     }

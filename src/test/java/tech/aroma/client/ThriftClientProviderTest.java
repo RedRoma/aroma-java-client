@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package tech.aroma.banana.client;
+package tech.aroma.client;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -27,12 +27,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import tech.aroma.banana.client.exceptions.BananaException;
-import tech.aroma.banana.thrift.application.service.ApplicationService;
-import tech.aroma.banana.thrift.endpoint.Endpoint;
-import tech.aroma.banana.thrift.endpoint.HttpRestEndpoint;
-import tech.aroma.banana.thrift.endpoint.HttpThriftEndpoint;
-import tech.aroma.banana.thrift.endpoint.TcpEndpoint;
+import tech.aroma.client.exceptions.BananaException;
+import tech.aroma.thrift.application.service.ApplicationService;
+import tech.aroma.thrift.endpoint.Endpoint;
+import tech.aroma.thrift.endpoint.HttpRestEndpoint;
+import tech.aroma.thrift.endpoint.HttpThriftEndpoint;
+import tech.aroma.thrift.endpoint.TcpEndpoint;
 import tech.sirwellington.alchemy.annotations.testing.IntegrationTest;
 import tech.sirwellington.alchemy.test.junit.runners.AlchemyTestRunner;
 import tech.sirwellington.alchemy.test.junit.runners.DontRepeat;

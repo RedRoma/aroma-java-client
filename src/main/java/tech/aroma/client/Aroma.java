@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package tech.aroma.banana.client;
+package tech.aroma.client;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import tech.aroma.banana.client.exceptions.BananaException;
-import tech.aroma.banana.thrift.application.service.ApplicationServiceConstants;
-import tech.aroma.banana.thrift.authentication.ApplicationToken;
-import tech.aroma.banana.thrift.endpoint.Endpoint;
-import tech.aroma.banana.thrift.endpoint.TcpEndpoint;
+import tech.aroma.client.exceptions.BananaException;
+import tech.aroma.thrift.application.service.ApplicationServiceConstants;
+import tech.aroma.thrift.authentication.ApplicationToken;
+import tech.aroma.thrift.endpoint.Endpoint;
+import tech.aroma.thrift.endpoint.TcpEndpoint;
 import tech.sirwellington.alchemy.annotations.arguments.NonEmpty;
 import tech.sirwellington.alchemy.annotations.arguments.Optional;
 import tech.sirwellington.alchemy.annotations.arguments.Required;
@@ -44,7 +44,7 @@ import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.n
 @ThreadSafe
 @BuilderPattern(role = PRODUCT)
 @FluidAPIDesign
-public interface Banana
+public interface Aroma
 {
     
     Request begin();
@@ -60,11 +60,20 @@ public interface Banana
         void send() throws IllegalArgumentException, BananaException;
     }
     
-    static Banana create()
+    static Aroma create()
     {
+        return create("Aroma");
+    }
+    
+    static Aroma create(@NonEmpty String applicationToken)
+    {
+        checkThat(applicationToken)
+            .usingMessage("Application Token cannot be empty")
+            .is(nonEmptyString());
+        
         return newBuilder()
             .withAsyncExecutorService(Executors.newSingleThreadExecutor())
-            .withApplicationToken("Banana")
+            .withApplicationToken(applicationToken)
             .build();
     }
     
@@ -130,7 +139,7 @@ public interface Banana
             return this;
         }
         
-        public Banana build() throws IllegalStateException
+        public Aroma build() throws IllegalStateException
         {
             checkThat(hostname)
                 .throwing(IllegalStateException.class)
@@ -156,7 +165,7 @@ public interface Banana
             ApplicationToken token = new ApplicationToken().setTokenId(applicationToken);
             
             ThriftClientProvider clientProvider = new ThriftClientProvider(() -> endpoint);
-            BananaClient banana = new BananaClient(() -> clientProvider.get(), async, token);
+            AromaClient banana = new AromaClient(() -> clientProvider.get(), async, token);
             return banana;
             
         }

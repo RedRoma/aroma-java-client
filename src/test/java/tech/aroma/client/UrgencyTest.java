@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package tech.aroma.banana.client;
+package tech.aroma.client;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -42,13 +42,13 @@ public class UrgencyTest
     public void testToThrift()
     {
         assertThat(Urgency.LOW.toThrift(),
-                   is(tech.aroma.banana.thrift.Urgency.LOW));
+                   is(tech.aroma.thrift.Urgency.LOW));
         
         assertThat(Urgency.MEDIUM.toThrift(),
-                   is(tech.aroma.banana.thrift.Urgency.MEDIUM));
+                   is(tech.aroma.thrift.Urgency.MEDIUM));
         
         assertThat(Urgency.HIGH.toThrift(),
-                   is(tech.aroma.banana.thrift.Urgency.HIGH));
+                   is(tech.aroma.thrift.Urgency.HIGH));
     }
 
 }

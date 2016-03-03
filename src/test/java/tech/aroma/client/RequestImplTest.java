@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package tech.aroma.banana.client;
+package tech.aroma.client;
 
 import com.google.common.util.concurrent.MoreExecutors;
 import java.util.concurrent.ExecutorService;
@@ -24,9 +24,9 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
-import tech.aroma.banana.thrift.application.service.ApplicationService;
-import tech.aroma.banana.thrift.application.service.SendMessageRequest;
-import tech.aroma.banana.thrift.authentication.ApplicationToken;
+import tech.aroma.thrift.application.service.ApplicationService;
+import tech.aroma.thrift.application.service.SendMessageRequest;
+import tech.aroma.thrift.authentication.ApplicationToken;
 import tech.sirwellington.alchemy.test.junit.runners.AlchemyTestRunner;
 import tech.sirwellington.alchemy.test.junit.runners.GenerateEnum;
 import tech.sirwellington.alchemy.test.junit.runners.GeneratePojo;
@@ -65,7 +65,7 @@ public class RequestImplTest
     @Captor
     private ArgumentCaptor<SendMessageRequest> requestCaptor;
     
-    private BananaClient bananaClient;
+    private AromaClient bananaClient;
     
     private RequestImpl instance;
     
@@ -89,7 +89,7 @@ public class RequestImplTest
         ex = new RuntimeException(exceptionMessage);
         
         ExecutorService executor = MoreExecutors.newDirectExecutorService();
-        bananaClient = new BananaClient(() -> applicationService, executor, token);
+        bananaClient = new AromaClient(() -> applicationService, executor, token);
         
         instance = new RequestImpl(bananaClient, title, body, urgency);
     }
@@ -99,7 +99,7 @@ public class RequestImplTest
     {
         String newMessage = one(alphabeticString(100));
         
-        Banana.Request result = instance.text(newMessage);
+        Aroma.Request result = instance.text(newMessage);
         assertThat(result, is(instanceOf(RequestImpl.class)));
         assertThat(result, not(sameInstance(instance)));
         
@@ -118,7 +118,7 @@ public class RequestImplTest
         String formattedMessage = "First {} Second {} Third {}";
         String expected = String.format("First %s Second %s Third %s", first, second, third);
         
-        Banana.Request result = instance.text(formattedMessage, first, second, third);
+        Aroma.Request result = instance.text(formattedMessage, first, second, third);
         assertThat(result, is(instanceOf(RequestImpl.class)));
         
         RequestImpl request = (RequestImpl) result;
@@ -137,7 +137,7 @@ public class RequestImplTest
     public void testWithUrgency()
     {
         Urgency newUrgency = enumValueOf(Urgency.class).get();
-        Banana.Request result = instance.withUrgency(newUrgency);
+        Aroma.Request result = instance.withUrgency(newUrgency);
         assertThat(result, is(instanceOf(RequestImpl.class)));
         assertThat(result, not(sameInstance(instance)));
         
@@ -190,7 +190,7 @@ public class RequestImplTest
     {
          String newTitle = one(alphabeticString(10));
         
-        Banana.Request result = instance.titled(newTitle);
+        Aroma.Request result = instance.titled(newTitle);
         assertThat(result, is(instanceOf(RequestImpl.class)));
         assertThat(result, not(sameInstance(instance)));
         

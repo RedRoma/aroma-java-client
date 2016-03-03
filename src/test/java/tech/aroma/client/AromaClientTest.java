@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package tech.aroma.banana.client;
+package tech.aroma.client;
 
 import com.google.common.util.concurrent.MoreExecutors;
 import java.time.Instant;
@@ -29,10 +29,10 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import tech.aroma.banana.thrift.application.service.ApplicationService;
-import tech.aroma.banana.thrift.application.service.SendMessageRequest;
-import tech.aroma.banana.thrift.authentication.ApplicationToken;
-import tech.aroma.banana.thrift.exceptions.OperationFailedException;
+import tech.aroma.thrift.application.service.ApplicationService;
+import tech.aroma.thrift.application.service.SendMessageRequest;
+import tech.aroma.thrift.authentication.ApplicationToken;
+import tech.aroma.thrift.exceptions.OperationFailedException;
 import tech.sirwellington.alchemy.annotations.testing.TimeSensitive;
 import tech.sirwellington.alchemy.test.junit.runners.AlchemyTestRunner;
 import tech.sirwellington.alchemy.test.junit.runners.DontRepeat;
@@ -58,7 +58,7 @@ import static tech.sirwellington.alchemy.test.junit.ThrowableAssertion.assertThr
  */
 @Repeat(100)
 @RunWith(AlchemyTestRunner.class)
-public class BananaClientTest 
+public class AromaClientTest 
 {
     
     @Mock
@@ -80,7 +80,7 @@ public class BananaClientTest
     
     private RequestImpl request;
     
-    private BananaClient instance;
+    private AromaClient instance;
     
     @GenerateString
     private String body;
@@ -97,7 +97,7 @@ public class BananaClientTest
 
         Supplier<ApplicationService.Iface> serviceProvider = () -> applicationService;
 
-        instance = new BananaClient(serviceProvider, executor, token);
+        instance = new AromaClient(serviceProvider, executor, token);
 
         request = new RequestImpl(instance, title, body, urgency);
 
@@ -120,20 +120,20 @@ public class BananaClientTest
     @Test
     public void testConstructor()
     {
-        assertThrows(() -> new BananaClient(() -> applicationService, null, null))
+        assertThrows(() -> new AromaClient(() -> applicationService, null, null))
             .isInstanceOf(IllegalArgumentException.class);
         
-        assertThrows(() -> new BananaClient(null, executor, null))
+        assertThrows(() -> new AromaClient(null, executor, null))
             .isInstanceOf(IllegalArgumentException.class);
         
-        assertThrows(() -> new BananaClient(null, null, token))
+        assertThrows(() -> new AromaClient(null, null, token))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     public void testBegin()
     {
-        Banana.Request result = instance.begin();
+        Aroma.Request result = instance.begin();
         assertThat(result, notNullValue());
         assertThat(result, instanceOf(RequestImpl.class));
     }

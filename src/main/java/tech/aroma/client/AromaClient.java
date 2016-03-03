@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package tech.aroma.banana.client;
+package tech.aroma.client;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -24,10 +24,10 @@ import java.util.function.Supplier;
 import org.apache.thrift.TException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import tech.aroma.banana.client.Banana.Request;
-import tech.aroma.banana.thrift.application.service.ApplicationService;
-import tech.aroma.banana.thrift.application.service.SendMessageRequest;
-import tech.aroma.banana.thrift.authentication.ApplicationToken;
+import tech.aroma.client.Aroma.Request;
+import tech.aroma.thrift.application.service.ApplicationService;
+import tech.aroma.thrift.application.service.SendMessageRequest;
+import tech.aroma.thrift.authentication.ApplicationToken;
 import tech.sirwellington.alchemy.annotations.arguments.Required;
 import tech.sirwellington.alchemy.annotations.concurrency.ThreadSafe;
 import tech.sirwellington.alchemy.thrift.clients.Clients;
@@ -42,19 +42,18 @@ import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.n
  * @author SirWellington
  */
 @ThreadSafe
-final class BananaClient implements Banana
+final class AromaClient implements Aroma
 {
 
-    private final static Logger LOG = LoggerFactory.getLogger(BananaClient.class);
+    private final static Logger LOG = LoggerFactory.getLogger(AromaClient.class);
 
     private final Supplier<ApplicationService.Iface> applicationServiceProvider;
     private final ExecutorService executor;
     private final ApplicationToken token;
 
-
-    BananaClient(@Required Supplier<ApplicationService.Iface> applicationServiceProvider,
-                 @Required ExecutorService executor,
-                 @Required ApplicationToken token)
+    AromaClient(@Required Supplier<ApplicationService.Iface> applicationServiceProvider,
+                @Required ExecutorService executor,
+                @Required ApplicationToken token)
     {
         checkThat(applicationServiceProvider, executor, token)
             .are(notNull());
@@ -62,13 +61,11 @@ final class BananaClient implements Banana
         checkThat(token.tokenId)
             .usingMessage("token is missing")
             .is(nonEmptyString());
-            
-        
+
         this.applicationServiceProvider = applicationServiceProvider;
         this.executor = executor;
         this.token = token;
     }
-    
 
     @Override
     public Request begin()
@@ -79,7 +76,7 @@ final class BananaClient implements Banana
     void sendMessage(@Required RequestImpl request)
     {
         Instant now = now();
-        
+
         SendMessageRequest sendMessageRequest = new SendMessageRequest()
             .setApplicationToken(token)
             .setBody(request.getText())
@@ -88,14 +85,14 @@ final class BananaClient implements Banana
             .setHostname(getHostname())
             .setIpv4Address(getIpv4Address())
             .setTimeOfMessage(now.toEpochMilli());
-        
+
         executor.submit(() -> sendMessageAsync(sendMessageRequest));
     }
-    
+
     private void sendMessageAsync(SendMessageRequest request)
     {
         ApplicationService.Iface client = applicationServiceProvider.get();
-        
+
         checkThat(client)
             .usingMessage("service provider returned null")
             .is(notNull());
@@ -135,7 +132,7 @@ final class BananaClient implements Banana
         {
             return InetAddress.getLocalHost().getHostAddress();
         }
-        catch(UnknownHostException ex)
+        catch (UnknownHostException ex)
         {
             LOG.warn("Could not determine IPv4 Address", ex);
             return "";
