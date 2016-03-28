@@ -36,7 +36,6 @@ import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
 import static tech.sirwellington.alchemy.arguments.assertions.Assertions.notNull;
 import static tech.sirwellington.alchemy.arguments.assertions.NetworkAssertions.validPort;
 import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.nonEmptyString;
-import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
 
 /**
  *
@@ -166,8 +165,8 @@ public interface Aroma
             ApplicationToken token = new ApplicationToken().setTokenId(applicationToken);
             
             ThriftClientProvider clientProvider = new ThriftClientProvider(() -> endpoint);
-            AromaClient banana = new AromaClient(() -> clientProvider.get(), async, token);
-            return banana;
+            AromaClient aroma = new AromaClient(() -> clientProvider.get(), async, token);
+            return aroma;
             
         }
 

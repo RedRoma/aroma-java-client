@@ -65,7 +65,7 @@ public class RequestImplTest
     @Captor
     private ArgumentCaptor<SendMessageRequest> requestCaptor;
     
-    private AromaClient bananaClient;
+    private AromaClient aromaClient;
     
     private RequestImpl instance;
     
@@ -89,9 +89,9 @@ public class RequestImplTest
         ex = new RuntimeException(exceptionMessage);
         
         ExecutorService executor = MoreExecutors.newDirectExecutorService();
-        bananaClient = new AromaClient(() -> applicationService, executor, token);
+        aromaClient = new AromaClient(() -> applicationService, executor, token);
         
-        instance = new RequestImpl(bananaClient, title, body, urgency);
+        instance = new RequestImpl(aromaClient, title, body, urgency);
     }
 
     @Test
