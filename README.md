@@ -41,6 +41,8 @@ To use, simply add the following maven dependency.
 </dependency>
 ```
 
-# [Javadocs](http://www.javadoc.io/doc/tech.aroma/aroma-java-client/)
+# Javadocs
+
+Javadocs can be found [here](http://www.javadoc.io/doc/tech.aroma/aroma-java-client/).
 
 # API
