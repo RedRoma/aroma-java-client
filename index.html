@@ -1,100 +1,114 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Aroma Java Client by RedRoma</title>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/github-dark.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/respond.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
     <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <!--[if lt IE 8]>
-    <link rel="stylesheet" href="stylesheets/ie.css">
-    <![endif]-->
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
+    <title>Aroma Java Client by RedRoma</title>
   </head>
+
   <body>
-      <div id="header">
-        <nav>
-          <li class="fork"><a href="https://github.com/RedRoma/aroma-java-client">View On GitHub</a></li>
-          <li class="downloads"><a href="https://github.com/RedRoma/aroma-java-client/zipball/master">ZIP</a></li>
-          <li class="downloads"><a href="https://github.com/RedRoma/aroma-java-client/tarball/master">TAR</a></li>
-          <li class="title">DOWNLOADS</li>
-        </nav>
-      </div><!-- end header -->
+    <header>
+      <div class="inner">
+        <h1>Aroma Java Client</h1>
+        <h2>The Official Java Client to the Aroma Service</h2>
+        <a href="https://github.com/RedRoma/aroma-java-client" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
 
-    <div class="wrapper">
-
-      <section>
-        <div id="title">
-          <h1>Aroma Java Client</h1>
-          <p>The Official Java Client to the Aroma Service</p>
-          <hr>
-          <span class="credits left">Project maintained by <a href="https://github.com/RedRoma">RedRoma</a></span>
-          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
-        </div>
-
-        <h1>
-<a id="aroma-java-client" class="anchor" href="#aroma-java-client" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Aroma Java Client</h1>
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a id="aroma-how-to-guide-for-java" class="anchor" href="#aroma-how-to-guide-for-java" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Aroma How-To Guide for Java</h1>
 
 <p><a href="https://github.com/RedRoma/Aroma"><img src="https://raw.githubusercontent.com/RedRoma/Aroma/develop/Graphics/Logo.png" width="300"></a></p>
 
-<p><a href="http://jenkins.sirwellington.tech/view/Aroma/job/Aroma%20Java%20Client/"><img src="http://jenkins.sirwellington.tech/view/Aroma/job/Aroma%20Java%20Client/badge/icon" alt="Build Status"></a></p>
-
-<p>The Java Client to the Famed Aroma Service!</p>
-
-<p>The Aroma Service is Service Notifications for Developers.</p>
-
-<h1>
-<a id="download" class="anchor" href="#download" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Download</h1>
-
-<p>To use, simply add the following maven dependency.</p>
-
-<blockquote>
-<p>Not Released Yet</p>
-
 <h2>
-<a id="release" class="anchor" href="#release" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Release</h2>
+<a id="maven" class="anchor" href="#maven" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Maven</h2>
 
-<div class="highlight highlight-text-xml"><pre>&lt;<span class="pl-ent">dependency</span>&gt;
-    &lt;<span class="pl-ent">groupId</span>&gt;tech.aroma&lt;/<span class="pl-ent">groupId</span>&gt;
-    &lt;<span class="pl-ent">artifactId</span>&gt;&lt;/<span class="pl-ent">artifactId</span>&gt;
-    &lt;<span class="pl-ent">version</span>&gt;1.1&lt;/<span class="pl-ent">version</span>&gt;
-&lt;/<span class="pl-ent">dependency</span>&gt;</pre></div>
-</blockquote>
-
-<h2>
-<a id="snapshot" class="anchor" href="#snapshot" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Snapshot</h2>
-
-<blockquote>
-<p>First add the Snapshot Repository</p>
-
-<div class="highlight highlight-text-xml"><pre>&lt;<span class="pl-ent">repository</span>&gt;
-    &lt;<span class="pl-ent">id</span>&gt;ossrh&lt;/<span class="pl-ent">id</span>&gt;
-    &lt;<span class="pl-ent">url</span>&gt;https://oss.sonatype.org/content/repositories/snapshots&lt;/<span class="pl-ent">url</span>&gt;
-&lt;/<span class="pl-ent">repository</span>&gt;</pre></div>
-</blockquote>
+<p>Add the following dependency to your pom to start using Aroma.</p>
 
 <div class="highlight highlight-text-xml"><pre>&lt;<span class="pl-ent">dependency</span>&gt;
     &lt;<span class="pl-ent">groupId</span>&gt;tech.aroma&lt;/<span class="pl-ent">groupId</span>&gt;
     &lt;<span class="pl-ent">artifactId</span>&gt;aroma-java-client&lt;/<span class="pl-ent">artifactId</span>&gt;
-    &lt;<span class="pl-ent">version</span>&gt;1.1-SNAPSHOT&lt;/<span class="pl-ent">version</span>&gt;
+    &lt;<span class="pl-ent">version</span>&gt;1.1&lt;/<span class="pl-ent">version</span>&gt;
 &lt;/<span class="pl-ent">dependency</span>&gt;</pre></div>
+
+<h2>
+<a id="grails" class="anchor" href="#grails" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Grails</h2>
+
+<p>Add the following line to your build.gradle file to start using Aroma.</p>
+
+<div class="highlight highlight-source-groovy"><pre>compile <span class="pl-c1">group</span>: <span class="pl-s"><span class="pl-pds">'</span>tech.aroma<span class="pl-pds">'</span></span>, <span class="pl-c1">name</span>: <span class="pl-s"><span class="pl-pds">'</span>aroma-java-client<span class="pl-pds">'</span></span>, <span class="pl-c1">version</span>: <span class="pl-s"><span class="pl-pds">'</span>1.1<span class="pl-pds">'</span></span></pre></div>
+
+<h1>
+<a id="connecting-with-aroma" class="anchor" href="#connecting-with-aroma" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Connecting with Aroma</h1>
+
+<p>To connect your Java application with Aroma, follow a few simple steps.</p>
+
+<h2>
+<a id="add-import-statement" class="anchor" href="#add-import-statement" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Add Import Statement</h2>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-k">import</span> <span class="pl-smi">tech.aroma.client.Aroma</span>;</pre></div>
+
+<h2>
+<a id="create-the-client" class="anchor" href="#create-the-client" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Create the Client</h2>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-smi">Aroma</span> aroma <span class="pl-k">=</span> <span class="pl-smi">Aroma</span><span class="pl-k">.</span>create(<span class="pl-c1">APP_TOKEN</span>);</pre></div>
+
+<h2>
+<a id="send-a-message" class="anchor" href="#send-a-message" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Send a Message</h2>
+
+<div class="highlight highlight-source-java"><pre>aroma<span class="pl-k">.</span>begin()
+     .titled(<span class="pl-s"><span class="pl-pds">"</span>New User<span class="pl-pds">"</span></span>)
+     .text(<span class="pl-s"><span class="pl-pds">"</span>Email: {}<span class="pl-pds">"</span></span>, 
+     .send();</pre></div>
+
+<h2>
+<a id="best-practices" class="anchor" href="#best-practices" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Best Practices</h2>
+
+<blockquote>
+<p>Try to only Send messages that are actually interesting. You don't want to bombard Aroma with too many diagnostic messages that are better suited for Logging.</p>
+
+<p>Set an Urgency to each message. Think of Urgency like you would a Log Severity Level. Using them allows you and your team to know just how important a message is.</p>
+</blockquote>
 
 <h1>
 <a id="javadocs" class="anchor" href="#javadocs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="http://www.javadoc.io/doc/tech.aroma/aroma-java-client/">Javadocs</a>
 </h1>
 
 <h1>
-<a id="api" class="anchor" href="#api" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>API</h1>
-      </section>
+<a id="project-link" class="anchor" href="#project-link" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><a href="https://github.com/RedRoma/aroma-java-client">Project Link</a>
+</h1>
+        </section>
 
+        <aside id="sidebar">
+          <a href="https://github.com/RedRoma/aroma-java-client/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/RedRoma/aroma-java-client/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/RedRoma/aroma-java-client"></a> is maintained by <a href="https://github.com/RedRoma">RedRoma</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
     </div>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-    
+
+  
   </body>
 </html>
