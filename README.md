@@ -3,7 +3,7 @@ Aroma Java Client
 
 [<img src="https://raw.githubusercontent.com/RedRoma/Aroma/develop/Graphics/Logo.png" width="300">](https://github.com/RedRoma/Aroma)
 
-[![Build Status](http://jenkins.sirwellington.tech/view/Aroma/job/Aroma%20Java%20Client/badge/icon)](http://jenkins.sirwellington.tech/view/Aroma/job/Aroma%20Java%20Client/)
+[![Build Status](http://jenkins.redroma.tech/view/Aroma/job/Aroma%20Java%20Client/badge/icon)](http://jenkins.redroma.tech/view/Aroma/job/Aroma%20Java%20Client/)
 
 The Java Client to the Famed Aroma Service!
 
