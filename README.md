@@ -18,7 +18,7 @@ To use, simply add the following maven dependency.
 ```xml
 <dependency>
 	<groupId>tech.aroma</groupId>
-	<artifactId></artifactId>
+	<artifactId>aroma-java-client</artifactId>
 	<version>1.1</version>
 </dependency>
 ```
