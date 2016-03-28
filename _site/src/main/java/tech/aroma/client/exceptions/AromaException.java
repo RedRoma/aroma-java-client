@@ -14,35 +14,32 @@
  * limitations under the License.
  */
 
+ 
 package tech.aroma.client.exceptions;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
- *
+ * The Parent of all Aroma Client Exceptions.
+ * 
  * @author SirWellington
  */
-public class BananaNetworkException extends BananaOperationFailedException
+public class AromaException extends RuntimeException
 {
 
-    private final static Logger LOG = LoggerFactory.getLogger(BananaNetworkException.class);
-
-    public BananaNetworkException()
+    public AromaException()
     {
     }
 
-    public BananaNetworkException(String message)
+    public AromaException(String message)
     {
         super(message);
     }
 
-    public BananaNetworkException(String message, Throwable cause)
+    public AromaException(String message, Throwable cause)
     {
         super(message, cause);
     }
 
-    public BananaNetworkException(Throwable cause)
+    public AromaException(Throwable cause)
     {
         super(cause);
     }
