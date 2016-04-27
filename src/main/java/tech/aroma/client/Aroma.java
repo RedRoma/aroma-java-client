@@ -107,7 +107,7 @@ public interface Aroma
         public Builder withApplicationToken(@Required String applicationToken) throws IllegalArgumentException
         {
             checkThat(applicationToken)
-                .are(nonEmptyString());
+                .is(nonEmptyString());
             
             this.applicationToken = applicationToken;
             
