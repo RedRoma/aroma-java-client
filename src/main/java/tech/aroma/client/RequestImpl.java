@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Aroma Tech.
+ * Copyright 2016 RedRoma, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@ import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.s
 final class RequestImpl implements Aroma.Request
 {
     private static final Logger LOG = LoggerFactory.getLogger(RequestImpl.class);
-    
+
     private final AromaClient aromaClient;
 
     private final Urgency urgency;
@@ -53,12 +53,12 @@ final class RequestImpl implements Aroma.Request
 
     RequestImpl(@Required AromaClient aromaClient,
                 @Required String title,
-                @Required String text, 
+                @Required String text,
                 @Required Urgency urgency)
     {
         checkThat(aromaClient, title, text, urgency)
             .are(notNull());
-        
+
         this.aromaClient = aromaClient;
         this.title = title;
         this.text = text;
@@ -75,17 +75,17 @@ final class RequestImpl implements Aroma.Request
             .is(stringWithLengthGreaterThanOrEqualTo(3))
             .usingMessage("title too long")
             .is(stringWithLengthLessThan(40));
-        
+
         return new RequestImpl(aromaClient, title, text, urgency);
     }
-    
+
     @Override
     public Aroma.Request text(String message, @Optional Object... args)
     {
         checkThat(message)
             .usingMessage("message cannot be null")
             .is(notNull());
-        
+
         String combinedMessage = combineStringAndArgs(message, args);
         return new RequestImpl(aromaClient, title, combinedMessage, urgency);
     }
@@ -96,12 +96,12 @@ final class RequestImpl implements Aroma.Request
         {
             return message;
         }
-        
+
         FormattingTuple arrayFormat = MessageFormatter.arrayFormat(message, args);
         String formattedMessage = arrayFormat.getMessage();
-        
+
         Throwable ex = arrayFormat.getThrowable();
-        
+
         if(ex == null)
         {
             return formattedMessage;
@@ -111,7 +111,7 @@ final class RequestImpl implements Aroma.Request
             return String.format("%s\n%s", formattedMessage, printThrowable(ex));
         }
     }
-    
+
     private String printThrowable(Throwable ex)
     {
 
@@ -134,7 +134,7 @@ final class RequestImpl implements Aroma.Request
         checkThat(level)
             .usingMessage("urgency cannot be null")
             .is(Assertions.notNull());
-        
+
         return new RequestImpl(aromaClient, title, text, level);
     }
 
@@ -149,13 +149,13 @@ final class RequestImpl implements Aroma.Request
     {
         return this.text;
     }
-    
+
     @Internal
     String getTitle()
     {
         return this.title;
     }
-    
+
     @Internal
     Urgency getUrgency()
     {
