@@ -80,7 +80,7 @@ Aroma aroma = Aroma.create(APP_TOKEN);
 ```java
 aroma.begin()
      .titled("New User")
-     .text("Email: {}",
+     .text("Email: {}", user.email)
      .send();
 ```
 
