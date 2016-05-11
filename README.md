@@ -19,7 +19,7 @@ To use, simply add the following maven dependency.
 <dependency>
 	<groupId>tech.aroma</groupId>
 	<artifactId>aroma-java-client</artifactId>
-	<version>1.1</version>
+	<version>1.2</version>
 </dependency>
 ```
 
@@ -37,7 +37,7 @@ To use, simply add the following maven dependency.
 <dependency>
 	<groupId>tech.aroma</groupId>
 	<artifactId>aroma-java-client</artifactId>
-	<version>1.2-SNAPSHOT</version>
+	<version>1.3-SNAPSHOT</version>
 </dependency>
 ```
 
