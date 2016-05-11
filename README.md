@@ -46,26 +46,6 @@ To use, simply add the following maven dependency.
 
 By following a few simple steps, you can connect your Java application with Aroma and start viewing messages on your iPhone.
 
-
-## Maven
-
-Add the following dependency to your pom to start using Aroma.
-
-```xml
-<dependency>
-	<groupId>tech.aroma</groupId>
-	<artifactId>aroma-java-client</artifactId>
-	<version>1.2</version>
-</dependency>
-```
-
-## Gradle
-
-Add the following line to your build.gradle file to start using Aroma.
-```groovy
-compile group: 'tech.aroma', name: 'aroma-java-client', version: '1.2'
-```
-
 ## Add Import Statement
 ```java
 import tech.aroma.client.Aroma;
