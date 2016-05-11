@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Aroma Tech.
+ * Copyright 2016 RedRoma, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ package tech.aroma.client;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import tech.aroma.client.exceptions.BananaException;
+import tech.aroma.client.exceptions.AromaException;
 import tech.aroma.thrift.application.service.ApplicationServiceConstants;
 import tech.aroma.thrift.authentication.ApplicationToken;
 import tech.aroma.thrift.endpoint.Endpoint;
@@ -57,7 +57,7 @@ public interface Aroma
         
         Request withUrgency(@Required Urgency level) throws IllegalArgumentException;
         
-        void send() throws IllegalArgumentException, BananaException;
+        void send() throws IllegalArgumentException, AromaException;
     }
     
     static Aroma create()
@@ -85,7 +85,11 @@ public interface Aroma
     @BuilderPattern(role = BUILDER)
     static final class Builder 
     {
-        
+        static Builder create()
+        {
+            return new Builder();
+        }
+
         private String hostname = ApplicationServiceConstants.PRODUCTION_ENDPOINT.getHostname();
         private int port = ApplicationServiceConstants.PRODUCTION_ENDPOINT.getPort();
         private String applicationToken = "";
@@ -107,7 +111,7 @@ public interface Aroma
         public Builder withApplicationToken(@Required String applicationToken) throws IllegalArgumentException
         {
             checkThat(applicationToken)
-                .are(nonEmptyString());
+                .is(nonEmptyString());
             
             this.applicationToken = applicationToken;
             
@@ -165,8 +169,8 @@ public interface Aroma
             ApplicationToken token = new ApplicationToken().setTokenId(applicationToken);
             
             ThriftClientProvider clientProvider = new ThriftClientProvider(() -> endpoint);
-            AromaClient banana = new AromaClient(() -> clientProvider.get(), async, token);
-            return banana;
+            AromaClient aroma = new AromaClient(() -> clientProvider.get(), async, token);
+            return aroma;
             
         }
 

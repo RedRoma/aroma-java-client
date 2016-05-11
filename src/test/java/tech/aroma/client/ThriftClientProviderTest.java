@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Aroma Tech.
+ * Copyright 2016 RedRoma, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import tech.aroma.client.exceptions.BananaException;
+import tech.aroma.client.exceptions.AromaException;
 import tech.aroma.thrift.application.service.ApplicationService;
 import tech.aroma.thrift.endpoint.Endpoint;
 import tech.aroma.thrift.endpoint.HttpRestEndpoint;
@@ -159,7 +159,7 @@ public class ThriftClientProviderTest
         endpoint.setHttpRest(rest);
 
         assertThrows(() -> instance.get())
-            .isInstanceOf(BananaException.class);
+            .isInstanceOf(AromaException.class);
     }
 
     @Test

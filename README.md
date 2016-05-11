@@ -1,25 +1,25 @@
 Aroma Java Client
 ==============================================
 
-[<img src="https://raw.githubusercontent.com/RedRoma/Aroma/develop/Graphics/Logo.png" width="300">](https://github.com/RedRoma/Aroma)
+[<img src="https://raw.githubusercontent.com/RedRoma/Aroma/develop/Graphics/Logo.png" width="300">](http://aroma.redroma.tech/)
 
-[![Build Status](http://jenkins.sirwellington.tech/view/Aroma/job/Aroma%20Java%20Client/badge/icon)](http://jenkins.sirwellington.tech/view/Aroma/job/Aroma%20Java%20Client/)
+[![Build Status](http://jenkins.redroma.tech/view/Aroma/job/Aroma%20Java%20Client/badge/icon)](http://jenkins.redroma.tech/view/Aroma/job/Aroma%20Java%20Client/)
 
 The Java Client to the Famed Aroma Service!
 
-The Aroma Service is Service Notifications for Developers.
+COMMAND your Software, with Aroma.
 
 # Download
 
 To use, simply add the following maven dependency.
 
->Not Released Yet
+
 ## Release
 ```xml
 <dependency>
 	<groupId>tech.aroma</groupId>
-	<artifactId></artifactId>
-	<version>1.1</version>
+	<artifactId>aroma-java-client</artifactId>
+	<version>1.2</version>
 </dependency>
 ```
 
@@ -37,10 +37,42 @@ To use, simply add the following maven dependency.
 <dependency>
 	<groupId>tech.aroma</groupId>
 	<artifactId>aroma-java-client</artifactId>
-	<version>1.1-SNAPSHOT</version>
+	<version>1.3-SNAPSHOT</version>
 </dependency>
 ```
 
-# [Javadocs](http://www.javadoc.io/doc/tech.aroma/aroma-java-client/)
 
-# API
+# Connecting with Aroma
+
+By following a few simple steps, you can connect your Java application with Aroma and start viewing messages on your iPhone.
+
+## Add Import Statement
+```java
+import tech.aroma.client.Aroma;
+```
+
+## Create the Client
+```java
+Aroma aroma = Aroma.create(APP_TOKEN);
+```
+
+## Send a Message
+```java
+aroma.begin()
+     .titled("New User")
+     .text("Email: {}", user.email)
+     .send();
+```
+
+That's really all there is to it.
+
+## Best Practices
+
+### Send Important Messages
+>Try to only Send messages that are actually interesting. You don't want to bombard Aroma with too many diagnostic messages that are better suited for Logging.
+
+### Set the Urgency
+>Set an Urgency to each message. Think of Urgency like you would a Log Severity Level. Using them allows you and your team to know just how important a message is.
+
+
+# [Javadocs](http://www.javadoc.io/doc/tech.aroma/aroma-java-client/)

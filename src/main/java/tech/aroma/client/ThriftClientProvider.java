@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Aroma Tech.
+ * Copyright 2016 RedRoma, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,8 +26,8 @@ import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransportException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import tech.aroma.client.exceptions.BananaNetworkException;
-import tech.aroma.client.exceptions.BananaOperationFailedException;
+import tech.aroma.client.exceptions.AromaNetworkException;
+import tech.aroma.client.exceptions.AromaOperationFailedException;
 import tech.aroma.thrift.application.service.ApplicationService;
 import tech.aroma.thrift.endpoint.Endpoint;
 import tech.aroma.thrift.endpoint.HttpThriftEndpoint;
@@ -42,6 +42,9 @@ import static tech.sirwellington.alchemy.arguments.assertions.Assertions.notNull
 import static tech.sirwellington.alchemy.arguments.assertions.NetworkAssertions.validPort;
 import static tech.sirwellington.alchemy.arguments.assertions.NetworkAssertions.validURL;
 import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.nonEmptyString;
+import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
+import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
+import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
 
 /**
  *
@@ -84,7 +87,7 @@ final class ThriftClientProvider implements Supplier<ApplicationService.Client>
             return fromHttp(endpoint.getHttpThrift());
         }
 
-        throw new BananaOperationFailedException("Endpoint not supported: " + endpoint);
+        throw new AromaOperationFailedException("Endpoint not supported: " + endpoint);
     }
 
     private ApplicationService.Client fromTcp(TcpEndpoint tcp)
@@ -113,7 +116,7 @@ final class ThriftClientProvider implements Supplier<ApplicationService.Client>
         catch (TTransportException ex)
         {
             LOG.error("Failed to open TCP Port at {}", tcp, ex);
-            throw new BananaNetworkException("Failed to connect to: " + tcp, ex);
+            throw new AromaNetworkException("Failed to connect to: " + tcp, ex);
         }
 
         TProtocol protocol = new TBinaryProtocol(socket);
@@ -138,7 +141,7 @@ final class ThriftClientProvider implements Supplier<ApplicationService.Client>
         catch (TTransportException ex)
         {
             LOG.error("Failed to create connection to Endpoint: {}", url);
-            throw new BananaNetworkException("Failed to connect to: " + url, ex);
+            throw new AromaNetworkException("Failed to connect to: " + url, ex);
         }
 
         TProtocol protocol = new TJSONProtocol(client);

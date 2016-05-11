@@ -5,11 +5,11 @@
     <parent>
         <groupId>tech.aroma</groupId>
         <artifactId>aroma</artifactId>
-        <version>1.4</version>
+        <version>1.5</version>
     </parent>
 
     <artifactId>aroma-java-client</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
     <name>${project.artifactId}</name>
     <packaging>jar</packaging>
 
@@ -17,7 +17,7 @@
     <description>
         Part of the Aroma Project.
         Simplicity is paramount.
-        This is the Java Client for Aroma.
+        This is the official Java Client for Aroma.
     </description>
 
     <issueManagement>
@@ -103,7 +103,7 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>aroma-thrift</artifactId>
-            <version>1.7</version>
+            <version>1.9</version>
         </dependency>
 
 

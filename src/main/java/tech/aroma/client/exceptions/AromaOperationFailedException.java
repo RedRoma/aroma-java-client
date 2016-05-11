@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Aroma Tech.
+ * Copyright 2016 RedRoma, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,34 +16,29 @@
 
 package tech.aroma.client.exceptions;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Thrown when an Operation could not be completed.
  * 
  * @author SirWellington
  */
-public class BananaOperationFailedException extends BananaException
+public class AromaOperationFailedException extends AromaException
 {
 
-    private final static Logger LOG = LoggerFactory.getLogger(BananaOperationFailedException.class);
-
-    public BananaOperationFailedException()
+    public AromaOperationFailedException()
     {
     }
 
-    public BananaOperationFailedException(String message)
+    public AromaOperationFailedException(String message)
     {
         super(message);
     }
 
-    public BananaOperationFailedException(String message, Throwable cause)
+    public AromaOperationFailedException(String message, Throwable cause)
     {
         super(message, cause);
     }
 
-    public BananaOperationFailedException(Throwable cause)
+    public AromaOperationFailedException(Throwable cause)
     {
         super(cause);
     }

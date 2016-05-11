@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Aroma Tech.
+ * Copyright 2016 RedRoma, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -100,12 +100,12 @@ final class AromaClient implements Aroma
         try
         {
             client.sendMessage(request);
-            LOG.debug("Successfully sent message to Banana Application Service");
+            LOG.debug("Successfully sent message to the Aroma Application Service");
         }
         catch (TException ex)
         {
             //TODO: Decide if swallowing the exception is appropriate here
-            LOG.error("Failed to send message to Banana Application Service", ex);
+            LOG.error("Failed to send message to the Aroma Application Service", ex);
         }
         finally
         {
