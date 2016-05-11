@@ -85,7 +85,11 @@ public interface Aroma
     @BuilderPattern(role = BUILDER)
     static final class Builder 
     {
-        
+        static Builder create()
+        {
+            return new Builder();
+        }
+
         private String hostname = ApplicationServiceConstants.PRODUCTION_ENDPOINT.getHostname();
         private int port = ApplicationServiceConstants.PRODUCTION_ENDPOINT.getPort();
         private String applicationToken = "";
