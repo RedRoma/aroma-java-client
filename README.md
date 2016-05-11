@@ -7,7 +7,7 @@ Aroma Java Client
 
 The Java Client to the Famed Aroma Service!
 
-The Aroma Service is Service Notifications for Developers.
+COMMAND your Software, with Aroma.
 
 # Download
 
@@ -41,8 +41,58 @@ To use, simply add the following maven dependency.
 </dependency>
 ```
 
-# Javadocs
 
-Javadocs can be found [here](http://www.javadoc.io/doc/tech.aroma/aroma-java-client/).
+# Connecting with Aroma
 
-# API
+By following a few simple steps, you can connect your Java application with Aroma and start viewing messages on your iPhone.
+
+
+## Maven
+
+Add the following dependency to your pom to start using Aroma.
+
+```xml
+<dependency>
+	<groupId>tech.aroma</groupId>
+	<artifactId>aroma-java-client</artifactId>
+	<version>1.2</version>
+</dependency>
+```
+
+## Gradle
+
+Add the following line to your build.gradle file to start using Aroma.
+```groovy
+compile group: 'tech.aroma', name: 'aroma-java-client', version: '1.2'
+```
+
+## Add Import Statement
+```java
+import tech.aroma.client.Aroma;
+```
+
+## Create the Client
+```java
+Aroma aroma = Aroma.create(APP_TOKEN);
+```
+
+## Send a Message
+```java
+aroma.begin()
+     .titled("New User")
+     .text("Email: {}",
+     .send();
+```
+
+That's really all there is to it.
+
+## Best Practices
+
+### Send Important Messages
+>Try to only Send messages that are actually interesting. You don't want to bombard Aroma with too many diagnostic messages that are better suited for Logging.
+
+### Set the Urgency
+>Set an Urgency to each message. Think of Urgency like you would a Log Severity Level. Using them allows you and your team to know just how important a message is.
+
+
+# [Javadocs](http://www.javadoc.io/doc/tech.aroma/aroma-java-client/)
