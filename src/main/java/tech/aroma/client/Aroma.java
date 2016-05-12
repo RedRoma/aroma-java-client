@@ -36,6 +36,7 @@ import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
 import static tech.sirwellington.alchemy.arguments.assertions.Assertions.notNull;
 import static tech.sirwellington.alchemy.arguments.assertions.NetworkAssertions.validPort;
 import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.nonEmptyString;
+import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
 
 /**
  * Send Messages from your Application using this interface. 
@@ -84,7 +85,7 @@ public interface Aroma
          * @return
          * @throws IllegalArgumentException 
          */
-        Request withUrgency(@Required Priority priority) throws IllegalArgumentException;
+        Request withPriority(@Required Priority priority) throws IllegalArgumentException;
         
         /**
          * Sends the Message to Aroma. This method must be called, or else the message won't be sent.

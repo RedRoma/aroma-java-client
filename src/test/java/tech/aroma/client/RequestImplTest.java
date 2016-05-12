@@ -47,7 +47,6 @@ import static tech.sirwellington.alchemy.generator.AlchemyGenerator.one;
 import static tech.sirwellington.alchemy.generator.EnumGenerators.enumValueOf;
 import static tech.sirwellington.alchemy.generator.StringGenerators.alphabeticString;
 import static tech.sirwellington.alchemy.test.junit.runners.GenerateString.Type.ALPHABETIC;
-import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
 
 /**
  *
@@ -77,7 +76,7 @@ public class RequestImplTest
     private String title;
     
     @GenerateEnum
-    private Priority urgency;
+    private Priority priority;
     
     @GenerateString(ALPHABETIC)
     private String exceptionMessage;
@@ -92,7 +91,7 @@ public class RequestImplTest
         ExecutorService executor = MoreExecutors.newDirectExecutorService();
         aromaClient = new AromaClient(() -> applicationService, executor, token);
         
-        instance = new RequestImpl(aromaClient, title, body, urgency);
+        instance = new RequestImpl(aromaClient, title, body, priority);
     }
 
     @Test
@@ -138,7 +137,7 @@ public class RequestImplTest
     public void testWithPriority()
     {
         Priority newPriority = enumValueOf(Priority.class).get();
-        Aroma.Request result = instance.withUrgency(newPriority);
+        Aroma.Request result = instance.withPriority(newPriority);
         assertThat(result, is(instanceOf(RequestImpl.class)));
         assertThat(result, not(sameInstance(instance)));
         
@@ -158,7 +157,7 @@ public class RequestImplTest
         assertThat(request, notNullValue());
         assertThat(request.body, is(body));
         assertThat(request.title, is(title));
-        assertThat(request.urgency, is(urgency.toThrift()));
+        assertThat(request.urgency, is(priority.toThrift()));
         assertThat(request.applicationToken, is(token));
         
         checkThat(request.timeOfMessage)
@@ -173,10 +172,10 @@ public class RequestImplTest
     }
 
     @Test
-    public void testGetUrgency()
+    public void testGetPriority()
     {
         Priority result = instance.getPriority();
-        assertThat(result, is(urgency));
+        assertThat(result, is(priority));
     }
     
     @Test

@@ -23,6 +23,8 @@ import tech.sirwellington.alchemy.test.junit.runners.AlchemyTestRunner;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 
 /**
@@ -30,7 +32,7 @@ import static org.junit.Assert.assertThat;
  * @author SirWellington
  */
 @RunWith(AlchemyTestRunner.class)
-public class UrgencyTest 
+public class PriorityTest 
 {
 
     @Before

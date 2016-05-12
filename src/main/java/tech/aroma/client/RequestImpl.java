@@ -34,6 +34,7 @@ import static tech.sirwellington.alchemy.arguments.assertions.Assertions.notNull
 import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.nonEmptyString;
 import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.stringWithLengthGreaterThanOrEqualTo;
 import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.stringWithLengthLessThan;
+import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
 
 /**
  *
@@ -129,7 +130,7 @@ final class RequestImpl implements Aroma.Request
     }
 
     @Override
-    public Aroma.Request withUrgency(@Required Priority priority) throws IllegalArgumentException
+    public Aroma.Request withPriority(@Required Priority priority) throws IllegalArgumentException
     {
         checkThat(priority)
             .usingMessage("priority cannot be null")
