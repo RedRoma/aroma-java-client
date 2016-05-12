@@ -83,6 +83,7 @@ final class AromaClient implements Aroma
             .setTitle(request.getTitle())
             .setUrgency(request.getPriority().toThrift())
             .setHostname(getHostname())
+            .setDeviceName(getHostname())
             .setIpv4Address(getIpv4Address())
             .setTimeOfMessage(now.toEpochMilli());
 
