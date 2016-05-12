@@ -95,6 +95,14 @@ public interface Aroma
         void send() throws IllegalArgumentException, AromaException;
     }
     
+    /**
+     * Creates a default Aroma Client using the specified application token.
+     * 
+     * @param applicationToken
+     * @return 
+     * @see <a href="http://aroma.redroma.tech/how-to">http://aroma.redroma.tech/how-to</a>
+     * @see <a href="http://redroma.github.io/aroma-java-client/">http://redroma.github.io/aroma-java-client/</a>
+     */
     static Aroma create(@NonEmpty String applicationToken)
     {
         checkThat(applicationToken)
