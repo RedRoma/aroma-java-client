@@ -38,7 +38,10 @@ import static tech.sirwellington.alchemy.arguments.assertions.NetworkAssertions.
 import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.nonEmptyString;
 
 /**
- *
+ * Send Messages from your Application using this interface. 
+ * 
+ * Begin a new message with {@link Aroma#begin() } and finish with {@link Aroma.Request#send() };
+ * 
  * @author SirWellington
  */
 @ThreadSafe
@@ -47,12 +50,31 @@ import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.n
 public interface Aroma
 {
     
+    /**
+     * Begin a new Aroma Message.
+     * 
+     * @return 
+     */
     Request begin();
+    
     
     interface Request
     {
-        Request text(@Required String message, @Optional Object...args);
+        /**
+         * Set the Body of the Message.
+         * 
+         * @param message
+         * @param args
+         * @return 
+         */
+        Request withBody(@Required String message, @Optional Object...args);
         
+        /**
+         * Set the Title of the Message.
+         * 
+         * @param title
+         * @return 
+         */
         Request titled(@Required String title);
         
         Request withUrgency(@Required Urgency level) throws IllegalArgumentException;

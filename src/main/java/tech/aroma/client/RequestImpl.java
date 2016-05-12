@@ -34,6 +34,7 @@ import static tech.sirwellington.alchemy.arguments.assertions.Assertions.notNull
 import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.nonEmptyString;
 import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.stringWithLengthGreaterThanOrEqualTo;
 import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.stringWithLengthLessThan;
+import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
 
 /**
  *
@@ -80,7 +81,7 @@ final class RequestImpl implements Aroma.Request
     }
 
     @Override
-    public Aroma.Request text(String message, @Optional Object... args)
+    public Aroma.Request withBody(String message, @Optional Object... args)
     {
         checkThat(message)
             .usingMessage("message cannot be null")

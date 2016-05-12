@@ -47,6 +47,7 @@ import static tech.sirwellington.alchemy.generator.AlchemyGenerator.one;
 import static tech.sirwellington.alchemy.generator.EnumGenerators.enumValueOf;
 import static tech.sirwellington.alchemy.generator.StringGenerators.alphabeticString;
 import static tech.sirwellington.alchemy.test.junit.runners.GenerateString.Type.ALPHABETIC;
+import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
 
 /**
  *
@@ -99,7 +100,7 @@ public class RequestImplTest
     {
         String newMessage = one(alphabeticString(100));
         
-        Aroma.Request result = instance.text(newMessage);
+        Aroma.Request result = instance.withBody(newMessage);
         assertThat(result, is(instanceOf(RequestImpl.class)));
         assertThat(result, not(sameInstance(instance)));
         
@@ -118,13 +119,13 @@ public class RequestImplTest
         String formattedMessage = "First {} Second {} Third {}";
         String expected = String.format("First %s Second %s Third %s", first, second, third);
         
-        Aroma.Request result = instance.text(formattedMessage, first, second, third);
+        Aroma.Request result = instance.withBody(formattedMessage, first, second, third);
         assertThat(result, is(instanceOf(RequestImpl.class)));
         
         RequestImpl request = (RequestImpl) result;
         assertThat(request.getText(), is(expected));
         
-        request = (RequestImpl) instance.text(formattedMessage, first, second, third, ex);
+        request = (RequestImpl) instance.withBody(formattedMessage, first, second, third, ex);
         assertThat(request.getText(), containsString(first));
         assertThat(request.getText(), containsString(second));
         assertThat(request.getText(), containsString(third));
