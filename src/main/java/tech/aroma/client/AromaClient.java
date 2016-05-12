@@ -50,6 +50,10 @@ final class AromaClient implements Aroma
     private final Supplier<ApplicationService.Iface> applicationServiceProvider;
     private final ExecutorService executor;
     private final ApplicationToken token;
+    
+    private final String operatingSystem = getNameOfOS();
+    private final String hostname = getHostname();
+    private final String deviceName = getHostname();
 
     AromaClient(@Required Supplier<ApplicationService.Iface> applicationServiceProvider,
                 @Required ExecutorService executor,
@@ -82,8 +86,9 @@ final class AromaClient implements Aroma
             .setBody(request.getText())
             .setTitle(request.getTitle())
             .setUrgency(request.getPriority().toThrift())
-            .setHostname(getHostname())
-            .setDeviceName(getHostname())
+            .setHostname(hostname)
+            .setDeviceName(deviceName)
+            .setOperatingSystemName(operatingSystem)
             .setIpv4Address(getIpv4Address())
             .setTimeOfMessage(now.toEpochMilli());
 
@@ -138,6 +143,12 @@ final class AromaClient implements Aroma
             LOG.warn("Could not determine IPv4 Address", ex);
             return "";
         }
+    }
+    
+    private String getNameOfOS()
+    {
+        String os = System.getProperty("os.name");
+        return os != null ? os : "";
     }
 
 }
