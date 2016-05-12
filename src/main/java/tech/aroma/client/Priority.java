@@ -16,6 +16,7 @@
 
 package tech.aroma.client;
 
+import tech.aroma.thrift.Urgency;
 import tech.sirwellington.alchemy.annotations.arguments.Required;
 
 /*
@@ -33,22 +34,23 @@ public enum Priority
      * LOW Messages are like an FYI; they are not important but you may want to know
      * about it. For example, a new user sign-up for your service, or a post was flagged by a user.
      */
-    LOW(tech.aroma.thrift.Urgency.LOW),
+    LOW(Urgency.LOW),
     
     /**
      * MEDIUM Messages are considered Important.
      */
-    MEDIUM(tech.aroma.thrift.Urgency.MEDIUM),
+    MEDIUM(Urgency.MEDIUM),
    
     /**
      * HIGH messages typically indicate Show-Stopping events, such as a Database going down,
-     * or a network connection issue.
+     * or a network connection issue. It could also be a great thing, such as a customer spending a
+     * significant amount of money in your App.
      */
-    HIGH(tech.aroma.thrift.Urgency.HIGH);
+    HIGH(Urgency.HIGH);
 
-    private final tech.aroma.thrift.Urgency thriftUrgency;
+    private final Urgency thriftUrgency;
 
-    private Priority(@Required tech.aroma.thrift.Urgency thriftUrgency)
+    private Priority(@Required Urgency thriftUrgency)
     {
         this.thriftUrgency = thriftUrgency;
     }
@@ -58,7 +60,7 @@ public enum Priority
      *
      * @return
      */
-    tech.aroma.thrift.Urgency toThrift()
+    Urgency toThrift()
     {
         return thriftUrgency;
     }

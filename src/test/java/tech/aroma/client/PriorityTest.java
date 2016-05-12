@@ -19,10 +19,9 @@ package tech.aroma.client;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import tech.aroma.thrift.Urgency;
 import tech.sirwellington.alchemy.test.junit.runners.AlchemyTestRunner;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -44,13 +43,13 @@ public class PriorityTest
     public void testToThrift()
     {
         assertThat(Priority.LOW.toThrift(),
-                   is(tech.aroma.thrift.Urgency.LOW));
+                   is(Urgency.LOW));
         
         assertThat(Priority.MEDIUM.toThrift(),
-                   is(tech.aroma.thrift.Urgency.MEDIUM));
+                   is(Urgency.MEDIUM));
         
         assertThat(Priority.HIGH.toThrift(),
-                   is(tech.aroma.thrift.Urgency.HIGH));
+                   is(Urgency.HIGH));
     }
 
 }
