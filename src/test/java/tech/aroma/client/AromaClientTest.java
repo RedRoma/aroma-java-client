@@ -89,18 +89,18 @@ public class AromaClientTest
     @GenerateString
     private String title;
     
-    private Urgency urgency;
+    private Priority priority;
     
     @Before
     public void setUp()
     {
-        urgency = enumValueOf(Urgency.class).get();
+        priority = enumValueOf(Priority.class).get();
 
         Supplier<ApplicationService.Iface> serviceProvider = () -> applicationService;
 
         instance = new AromaClient(serviceProvider, executor, token);
 
-        request = new RequestImpl(instance, title, body, urgency);
+        request = new RequestImpl(instance, title, body, priority);
 
         setupThriftTransports();
     }
@@ -151,7 +151,7 @@ public class AromaClientTest
         assertThat(requestMade, notNullValue());
         assertThat(requestMade.body, is(body));
         assertThat(requestMade.title, is(title));
-        assertThat(requestMade.urgency, is(urgency.toThrift()));
+        assertThat(requestMade.urgency, is(priority.toThrift()));
         assertThat(requestMade.applicationToken, is(token));
         
         Instant timeOfMessage = Instant.ofEpochMilli(requestMade.timeOfMessage);

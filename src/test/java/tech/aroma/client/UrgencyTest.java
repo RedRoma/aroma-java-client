@@ -41,13 +41,13 @@ public class UrgencyTest
     @Test
     public void testToThrift()
     {
-        assertThat(Urgency.LOW.toThrift(),
+        assertThat(Priority.LOW.toThrift(),
                    is(tech.aroma.thrift.Urgency.LOW));
         
-        assertThat(Urgency.MEDIUM.toThrift(),
+        assertThat(Priority.MEDIUM.toThrift(),
                    is(tech.aroma.thrift.Urgency.MEDIUM));
         
-        assertThat(Urgency.HIGH.toThrift(),
+        assertThat(Priority.HIGH.toThrift(),
                    is(tech.aroma.thrift.Urgency.HIGH));
     }
 

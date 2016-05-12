@@ -16,7 +16,7 @@
 
 package tech.aroma.client;
 
-import tech.sirwellington.alchemy.annotations.arguments.NonNull;
+import tech.sirwellington.alchemy.annotations.arguments.Required;
 
 /*
  * This class exists to give some Schema Isolation to Clients from any changes that happen in the Thrift Specification.
@@ -26,7 +26,7 @@ import tech.sirwellington.alchemy.annotations.arguments.NonNull;
  * 
  * @author SirWellington
  */
-public enum Urgency
+public enum Priority
 {
   
     /**
@@ -48,7 +48,7 @@ public enum Urgency
 
     private final tech.aroma.thrift.Urgency thriftUrgency;
 
-    private Urgency(@NonNull tech.aroma.thrift.Urgency thriftUrgency)
+    private Priority(@Required tech.aroma.thrift.Urgency thriftUrgency)
     {
         this.thriftUrgency = thriftUrgency;
     }

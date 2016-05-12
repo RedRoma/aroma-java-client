@@ -77,7 +77,7 @@ public class RequestImplTest
     private String title;
     
     @GenerateEnum
-    private Urgency urgency;
+    private Priority urgency;
     
     @GenerateString(ALPHABETIC)
     private String exceptionMessage;
@@ -105,7 +105,7 @@ public class RequestImplTest
         assertThat(result, not(sameInstance(instance)));
         
         RequestImpl newRequest = (RequestImpl) result;
-        assertThat(newRequest.getUrgency(), is(instance.getUrgency()));
+        assertThat(newRequest.getPriority(), is(instance.getPriority()));
         assertThat(newRequest.getText(), is(newMessage));
     }
     
@@ -135,15 +135,15 @@ public class RequestImplTest
     }
 
     @Test
-    public void testWithUrgency()
+    public void testWithPriority()
     {
-        Urgency newUrgency = enumValueOf(Urgency.class).get();
-        Aroma.Request result = instance.withUrgency(newUrgency);
+        Priority newPriority = enumValueOf(Priority.class).get();
+        Aroma.Request result = instance.withUrgency(newPriority);
         assertThat(result, is(instanceOf(RequestImpl.class)));
         assertThat(result, not(sameInstance(instance)));
         
         RequestImpl newRequest = (RequestImpl) result;
-        assertThat(newRequest.getUrgency(), is(newUrgency));
+        assertThat(newRequest.getPriority(), is(newPriority));
         assertThat(newRequest.getText(), is(instance.getText()));
     }
 
@@ -175,7 +175,7 @@ public class RequestImplTest
     @Test
     public void testGetUrgency()
     {
-        Urgency result = instance.getUrgency();
+        Priority result = instance.getPriority();
         assertThat(result, is(urgency));
     }
     
@@ -196,7 +196,7 @@ public class RequestImplTest
         assertThat(result, not(sameInstance(instance)));
         
         RequestImpl newRequest = (RequestImpl) result;
-        assertThat(newRequest.getUrgency(), is(instance.getUrgency()));
+        assertThat(newRequest.getPriority(), is(instance.getPriority()));
         assertThat(newRequest.getText(), is(body));
         assertThat(newRequest.getTitle(), is(newTitle));
     }

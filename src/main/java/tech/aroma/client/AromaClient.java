@@ -38,6 +38,18 @@ import static tech.sirwellington.alchemy.arguments.assertions.Assertions.notNull
 import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.nonEmptyString;
 import static java.time.Instant.now;
 import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
+import static java.time.Instant.now;
+import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
+import static java.time.Instant.now;
+import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
+import static java.time.Instant.now;
+import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
+import static java.time.Instant.now;
+import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
+import static java.time.Instant.now;
+import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
+import static java.time.Instant.now;
+import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
 
 /**
  *
@@ -72,7 +84,7 @@ final class AromaClient implements Aroma
     @Override
     public Request begin()
     {
-        return new RequestImpl(this, "", "", Urgency.LOW);
+        return new RequestImpl(this, "", "", Priority.LOW);
     }
 
     void sendMessage(@Required RequestImpl request)
@@ -83,7 +95,7 @@ final class AromaClient implements Aroma
             .setApplicationToken(token)
             .setBody(request.getText())
             .setTitle(request.getTitle())
-            .setUrgency(request.getUrgency().toThrift())
+            .setUrgency(request.getPriority().toThrift())
             .setHostname(getHostname())
             .setIpv4Address(getIpv4Address())
             .setTimeOfMessage(now.toEpochMilli());

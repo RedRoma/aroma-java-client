@@ -34,7 +34,6 @@ import static tech.sirwellington.alchemy.arguments.assertions.Assertions.notNull
 import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.nonEmptyString;
 import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.stringWithLengthGreaterThanOrEqualTo;
 import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.stringWithLengthLessThan;
-import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
 
 /**
  *
@@ -48,22 +47,22 @@ final class RequestImpl implements Aroma.Request
 
     private final AromaClient aromaClient;
 
-    private final Urgency urgency;
+    private final Priority priority;
     private final String title;
     private final String text;
 
     RequestImpl(@Required AromaClient aromaClient,
                 @Required String title,
                 @Required String text,
-                @Required Urgency urgency)
+                @Required Priority priority)
     {
-        checkThat(aromaClient, title, text, urgency)
+        checkThat(aromaClient, title, text, priority)
             .are(notNull());
 
         this.aromaClient = aromaClient;
         this.title = title;
         this.text = text;
-        this.urgency = urgency;
+        this.priority = priority;
     }
 
     @Override
@@ -77,7 +76,7 @@ final class RequestImpl implements Aroma.Request
             .usingMessage("title too long")
             .is(stringWithLengthLessThan(40));
 
-        return new RequestImpl(aromaClient, title, text, urgency);
+        return new RequestImpl(aromaClient, title, text, priority);
     }
 
     @Override
@@ -88,7 +87,7 @@ final class RequestImpl implements Aroma.Request
             .is(notNull());
 
         String combinedMessage = combineStringAndArgs(message, args);
-        return new RequestImpl(aromaClient, title, combinedMessage, urgency);
+        return new RequestImpl(aromaClient, title, combinedMessage, priority);
     }
 
     private String combineStringAndArgs(String message, Object... args)
@@ -130,13 +129,13 @@ final class RequestImpl implements Aroma.Request
     }
 
     @Override
-    public Aroma.Request withUrgency(@Required Urgency level) throws IllegalArgumentException
+    public Aroma.Request withUrgency(@Required Priority priority) throws IllegalArgumentException
     {
-        checkThat(level)
-            .usingMessage("urgency cannot be null")
+        checkThat(priority)
+            .usingMessage("priority cannot be null")
             .is(Assertions.notNull());
 
-        return new RequestImpl(aromaClient, title, text, level);
+        return new RequestImpl(aromaClient, title, text, priority);
     }
 
     @Override
@@ -158,15 +157,15 @@ final class RequestImpl implements Aroma.Request
     }
 
     @Internal
-    Urgency getUrgency()
+    Priority getPriority()
     {
-        return this.urgency;
+        return this.priority;
     }
 
     @Override
     public String toString()
     {
-        return "RequestImpl{" + "aromaClient=" + aromaClient + ", urgency=" + urgency + ", title=" + title + ", text=" + text + '}';
+        return "RequestImpl{" + "aromaClient=" + aromaClient + ", priority=" + priority + ", title=" + title + ", text=" + text + '}';
     }
 
 }
