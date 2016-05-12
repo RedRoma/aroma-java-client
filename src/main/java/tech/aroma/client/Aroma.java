@@ -77,8 +77,21 @@ public interface Aroma
          */
         Request titled(@Required String title);
         
+        /**
+         * Set the Priority or Urgency of the Message.
+         * 
+         * @param level
+         * @return
+         * @throws IllegalArgumentException 
+         */
         Request withUrgency(@Required Urgency level) throws IllegalArgumentException;
         
+        /**
+         * Sends the Message to Aroma. This method must be called, or else the message won't be sent.
+         * 
+         * @throws IllegalArgumentException
+         * @throws AromaException 
+         */
         void send() throws IllegalArgumentException, AromaException;
     }
     
