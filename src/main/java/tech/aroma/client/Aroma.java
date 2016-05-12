@@ -98,7 +98,7 @@ public interface Aroma
     /**
      * Creates a default Aroma Client using the specified application token.
      * 
-     * @param applicationToken
+     * @param applicationToken The unique Application Token created from the Aroma App.
      * @return 
      * @see <a href="http://aroma.redroma.tech/how-to">http://aroma.redroma.tech/how-to</a>
      * @see <a href="http://redroma.github.io/aroma-java-client/">http://redroma.github.io/aroma-java-client/</a>
