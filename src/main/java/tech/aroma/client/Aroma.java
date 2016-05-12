@@ -95,11 +95,6 @@ public interface Aroma
         void send() throws IllegalArgumentException, AromaException;
     }
     
-    static Aroma create()
-    {
-        return create("Aroma");
-    }
-    
     static Aroma create(@NonEmpty String applicationToken)
     {
         checkThat(applicationToken)

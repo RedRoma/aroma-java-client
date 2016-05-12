@@ -62,7 +62,7 @@ public class AromaTest
     @Before
     public void setUp()
     {
-        instance = Aroma.create();
+        instance = Aroma.create(applicationToken);
         executor = MoreExecutors.newDirectExecutorService();
         builder = Aroma.newBuilder();
     }
@@ -77,7 +77,7 @@ public class AromaTest
     @Test
     public void testCreate()
     {
-        Aroma result = Aroma.create();
+        Aroma result = Aroma.create(applicationToken);
         assertThat(result, notNullValue());
     }
     
