@@ -115,14 +115,25 @@ public interface Aroma
             .build();
     }
     
+    /**
+     * Use a Builder to create a more fine-tuned {@linkplain Aroma Aroma Client}.
+     * @return 
+     */
     static Builder newBuilder()
     {
         return new Builder();
     }
     
+    /**
+     * Use a Builder to create a more fine-tuned {@linkplain Aroma Aroma Client}.
+     */
     @BuilderPattern(role = BUILDER)
     static final class Builder 
     {
+        /**
+         * Create a new Builder.
+         * @return 
+         */
         static Builder create()
         {
             return new Builder();
@@ -156,6 +167,16 @@ public interface Aroma
             return this;
         }
         
+        /**
+         * If you are using your own Aroma Server, you can set a custom endpoint for your Client to communicate with
+         * here.
+         * 
+         * @param hostname
+         * @param port
+         * 
+         * @return
+         * @throws IllegalArgumentException 
+         */
         public Builder withEndpoint(@NonEmpty String hostname, int port) throws IllegalArgumentException
         {
             checkThat(hostname)
@@ -170,7 +191,15 @@ public interface Aroma
             
             return this;
         }
-        
+
+        /**
+         * Set an {@link ExecutorService} to be used for making asynchronous requests. Note that if one isn't specified, a
+         * {@linkplain Executors#newSingleThreadExecutor() Single-Threaded Executor} is used instead.
+         *
+         * @param executor
+         * @return
+         * @throws IllegalArgumentException 
+         */
         public Builder withAsyncExecutorService(@Required ExecutorService executor) throws IllegalArgumentException
         {
             checkThat(executor)
@@ -181,6 +210,12 @@ public interface Aroma
             return this;
         }
         
+        /**
+         * Creates the Aroma Client.
+         * 
+         * @return
+         * @throws IllegalStateException 
+         */
         public Aroma build() throws IllegalStateException
         {
             checkThat(hostname)
