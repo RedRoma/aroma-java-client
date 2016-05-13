@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.helpers.FormattingTuple;
 import org.slf4j.helpers.MessageFormatter;
+import tech.aroma.thrift.application.service.ApplicationServiceConstants;
 import tech.sirwellington.alchemy.annotations.access.Internal;
 import tech.sirwellington.alchemy.annotations.arguments.Optional;
 import tech.sirwellington.alchemy.annotations.arguments.Required;
@@ -74,7 +75,7 @@ final class RequestImpl implements Aroma.Request
             .usingMessage("title too short")
             .is(stringWithLengthGreaterThanOrEqualTo(3))
             .usingMessage("title too long")
-            .is(stringWithLengthLessThan(40));
+            .is(stringWithLengthLessThan(ApplicationServiceConstants.MAX_TITLE_LENGTH));
 
         return new RequestImpl(aromaClient, title, text, priority);
     }
