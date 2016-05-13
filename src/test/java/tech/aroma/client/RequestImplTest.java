@@ -25,6 +25,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import tech.aroma.thrift.application.service.ApplicationService;
+import tech.aroma.thrift.application.service.ApplicationServiceConstants;
 import tech.aroma.thrift.application.service.SendMessageRequest;
 import tech.aroma.thrift.authentication.ApplicationToken;
 import tech.sirwellington.alchemy.test.junit.runners.AlchemyTestRunner;
@@ -45,7 +46,9 @@ import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
 import static tech.sirwellington.alchemy.arguments.assertions.TimeAssertions.epochNowWithinDelta;
 import static tech.sirwellington.alchemy.generator.AlchemyGenerator.one;
 import static tech.sirwellington.alchemy.generator.EnumGenerators.enumValueOf;
+import static tech.sirwellington.alchemy.generator.NumberGenerators.integers;
 import static tech.sirwellington.alchemy.generator.StringGenerators.alphabeticString;
+import static tech.sirwellington.alchemy.test.junit.ThrowableAssertion.assertThrows;
 import static tech.sirwellington.alchemy.test.junit.runners.GenerateString.Type.ALPHABETIC;
 
 /**
@@ -188,8 +191,8 @@ public class RequestImplTest
     @Test
     public void testTitled()
     {
-         String newTitle = one(alphabeticString(10));
-        
+        String newTitle = one(alphabeticString(10));
+
         Aroma.Request result = instance.titled(newTitle);
         assertThat(result, is(instanceOf(RequestImpl.class)));
         assertThat(result, not(sameInstance(instance)));
@@ -200,4 +203,15 @@ public class RequestImplTest
         assertThat(newRequest.getTitle(), is(newTitle));
     }
 
+    @Test
+    public void testWithLongTitle()
+    {
+        int length = one(integers(ApplicationServiceConstants.MAX_TITLE_LENGTH + 1, 
+                                  ApplicationServiceConstants.MAX_TITLE_LENGTH * 2));
+        
+        String longTitle = one(alphabeticString(length));
+        
+        assertThrows(() -> instance.titled(longTitle));
+    }
+    
 }
