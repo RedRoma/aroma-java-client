@@ -18,7 +18,7 @@
 package tech.aroma.client.exceptions;
 
 /**
- * The Parent of all Aroma Client Exceptions.
+ * Thrown when a Message failed to be sent.
  * 
  * @author SirWellington
  */
