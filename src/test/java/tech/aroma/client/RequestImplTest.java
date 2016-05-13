@@ -29,6 +29,7 @@ import tech.aroma.thrift.application.service.ApplicationServiceConstants;
 import tech.aroma.thrift.application.service.SendMessageRequest;
 import tech.aroma.thrift.authentication.ApplicationToken;
 import tech.sirwellington.alchemy.test.junit.runners.AlchemyTestRunner;
+import tech.sirwellington.alchemy.test.junit.runners.DontRepeat;
 import tech.sirwellington.alchemy.test.junit.runners.GenerateEnum;
 import tech.sirwellington.alchemy.test.junit.runners.GeneratePojo;
 import tech.sirwellington.alchemy.test.junit.runners.GenerateString;
@@ -222,4 +223,10 @@ public class RequestImplTest
         assertThrows(() -> instance.titled(shortTitle));
     }
     
+    @DontRepeat
+    @Test
+    public void testWithEmptyTitle()
+    {
+        assertThrows(() -> instance.titled(""));
+    }
 }
