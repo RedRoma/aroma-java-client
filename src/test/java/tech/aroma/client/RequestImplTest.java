@@ -210,8 +210,16 @@ public class RequestImplTest
                                   ApplicationServiceConstants.MAX_TITLE_LENGTH * 2));
         
         String longTitle = one(alphabeticString(length));
-        
         assertThrows(() -> instance.titled(longTitle));
+    }
+    
+    @Test
+    public void testWithShortTitle()
+    {
+        int length = one(integers(1, 2));
+        
+        String shortTitle = one(alphabeticString(length));
+        assertThrows(() -> instance.titled(shortTitle));
     }
     
 }
