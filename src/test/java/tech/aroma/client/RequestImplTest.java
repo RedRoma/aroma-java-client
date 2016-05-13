@@ -58,43 +58,44 @@ import static tech.sirwellington.alchemy.test.junit.runners.GenerateString.Type.
  */
 @Repeat(100)
 @RunWith(AlchemyTestRunner.class)
-public class RequestImplTest 
+public class RequestImplTest
 {
+
     @Mock
     private ApplicationService.Iface applicationService;
-    
+
     @GeneratePojo
     private ApplicationToken token;
-    
+
     @Captor
     private ArgumentCaptor<SendMessageRequest> requestCaptor;
-    
+
     private AromaClient aromaClient;
-    
+
     private RequestImpl instance;
-    
+
     @GenerateString
     private String body;
-    
+
     @GenerateString
     private String title;
-    
+
     @GenerateEnum
     private Priority priority;
-    
+
     @GenerateString(ALPHABETIC)
     private String exceptionMessage;
-    
+
     private Exception ex;
-    
+
     @Before
     public void setUp()
     {
         ex = new RuntimeException(exceptionMessage);
-        
+
         ExecutorService executor = MoreExecutors.newDirectExecutorService();
         aromaClient = new AromaClient(() -> applicationService, executor, token);
-        
+
         instance = new RequestImpl(aromaClient, title, body, priority);
     }
 
@@ -102,39 +103,39 @@ public class RequestImplTest
     public void testMessage()
     {
         String newMessage = one(alphabeticString(100));
-        
+
         Aroma.Request result = instance.withBody(newMessage);
         assertThat(result, is(instanceOf(RequestImpl.class)));
         assertThat(result, not(sameInstance(instance)));
-        
+
         RequestImpl newRequest = (RequestImpl) result;
         assertThat(newRequest.getPriority(), is(instance.getPriority()));
         assertThat(newRequest.getText(), is(newMessage));
     }
-    
+
     @Test
     public void testMessageFormatting()
     {
         String first = one(alphabeticString(5));
         String second = one(alphabeticString(5));
         String third = one(alphabeticString(5));
-        
+
         String formattedMessage = "First {} Second {} Third {}";
         String expected = String.format("First %s Second %s Third %s", first, second, third);
-        
+
         Aroma.Request result = instance.withBody(formattedMessage, first, second, third);
         assertThat(result, is(instanceOf(RequestImpl.class)));
-        
+
         RequestImpl request = (RequestImpl) result;
         assertThat(request.getText(), is(expected));
-        
+
         request = (RequestImpl) instance.withBody(formattedMessage, first, second, third, ex);
         assertThat(request.getText(), containsString(first));
         assertThat(request.getText(), containsString(second));
         assertThat(request.getText(), containsString(third));
         assertThat(request.getText(), containsString(exceptionMessage));
         assertThat(request.getText(), containsString(ex.getClass().getName()));
-        
+
     }
 
     @Test
@@ -144,7 +145,7 @@ public class RequestImplTest
         Aroma.Request result = instance.withPriority(newPriority);
         assertThat(result, is(instanceOf(RequestImpl.class)));
         assertThat(result, not(sameInstance(instance)));
-        
+
         RequestImpl newRequest = (RequestImpl) result;
         assertThat(newRequest.getPriority(), is(newPriority));
         assertThat(newRequest.getText(), is(instance.getText()));
@@ -154,16 +155,16 @@ public class RequestImplTest
     public void testSend() throws Exception
     {
         instance.send();
-        
+
         verify(applicationService).sendMessage(requestCaptor.capture());
-        
+
         SendMessageRequest request = requestCaptor.getValue();
         assertThat(request, notNullValue());
         assertThat(request.body, is(body));
         assertThat(request.title, is(title));
         assertThat(request.urgency, is(priority.toThrift()));
         assertThat(request.applicationToken, is(token));
-        
+
         checkThat(request.timeOfMessage)
             .is(epochNowWithinDelta(1000L));
     }
@@ -181,7 +182,7 @@ public class RequestImplTest
         Priority result = instance.getPriority();
         assertThat(result, is(priority));
     }
-    
+
     @Test
     public void testGetTitle()
     {
@@ -197,7 +198,7 @@ public class RequestImplTest
         Aroma.Request result = instance.titled(newTitle);
         assertThat(result, is(instanceOf(RequestImpl.class)));
         assertThat(result, not(sameInstance(instance)));
-        
+
         RequestImpl newRequest = (RequestImpl) result;
         assertThat(newRequest.getPriority(), is(instance.getPriority()));
         assertThat(newRequest.getText(), is(body));
@@ -207,22 +208,22 @@ public class RequestImplTest
     @Test
     public void testWithLongTitle()
     {
-        int length = one(integers(ApplicationServiceConstants.MAX_TITLE_LENGTH + 1, 
+        int length = one(integers(ApplicationServiceConstants.MAX_TITLE_LENGTH + 1,
                                   ApplicationServiceConstants.MAX_TITLE_LENGTH * 2));
-        
+
         String longTitle = one(alphabeticString(length));
         assertThrows(() -> instance.titled(longTitle));
     }
-    
+
     @Test
     public void testWithShortTitle()
     {
         int length = one(integers(1, 2));
-        
+
         String shortTitle = one(alphabeticString(length));
         assertThrows(() -> instance.titled(shortTitle));
     }
-    
+
     @DontRepeat
     @Test
     public void testWithEmptyTitle()
