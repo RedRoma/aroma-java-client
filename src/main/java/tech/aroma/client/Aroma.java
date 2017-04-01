@@ -16,19 +16,19 @@
 
 package tech.aroma.client;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import tech.aroma.client.exceptions.AromaException;
 import tech.aroma.thrift.application.service.ApplicationServiceConstants;
 import tech.aroma.thrift.authentication.ApplicationToken;
 import tech.aroma.thrift.endpoint.Endpoint;
 import tech.aroma.thrift.endpoint.TcpEndpoint;
-import tech.sirwellington.alchemy.annotations.arguments.NonEmpty;
-import tech.sirwellington.alchemy.annotations.arguments.Optional;
-import tech.sirwellington.alchemy.annotations.arguments.Required;
+import tech.sirwellington.alchemy.annotations.arguments.*;
 import tech.sirwellington.alchemy.annotations.concurrency.ThreadSafe;
 import tech.sirwellington.alchemy.annotations.designs.FluidAPIDesign;
 import tech.sirwellington.alchemy.annotations.designs.patterns.BuilderPattern;
+import tech.sirwellington.alchemy.arguments.Checks;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static tech.sirwellington.alchemy.annotations.designs.patterns.BuilderPattern.Role.BUILDER;
 import static tech.sirwellington.alchemy.annotations.designs.patterns.BuilderPattern.Role.PRODUCT;
@@ -93,6 +93,100 @@ public interface Aroma
          * @throws AromaException 
          */
         void send() throws IllegalArgumentException, AromaException;
+    }
+
+    /**
+     * Convenience method to send a message with {@linkplain Priority#LOW Low Priority}.
+     *
+     * @param title Title of the message
+     */
+    default void sendLowPriorityMessage(@NonEmpty String title)
+    {
+        sendLowPriorityMessage(title, "");
+    }
+
+    /**
+     * Convenience method to send a message with {@linkplain Priority#LOW Low Priority}.
+     *
+     * @param title Title of the message
+     * @param body Body of the message
+     * @param args Any arguments for the body.
+     */
+    default void sendLowPriorityMessage(@NonEmpty String title, @NonEmpty String body, Object... args)
+    {
+        sendMessage(Priority.LOW, title, body, args);
+    }
+
+    /**
+     * Convenience method to send a message with {@linkplain Priority#MEDIUM Medium Priority}.
+     *
+     * @param title Title of the message
+     */
+    default void sendMediumPriorityMessage(@NonEmpty String title)
+    {
+        sendMediumPriorityMessage(title, "");
+    }
+
+    /**
+     * Convenience method to send a message with {@linkplain Priority#MEDIUM Medium Priority}.
+     *
+     * @param title Title of the message
+     * @param body Body of the message
+     * @param args Any arguments for the body
+     */
+    default void sendMediumPriorityMessage(@NonEmpty String title, @NonEmpty String body, Object... args)
+    {
+        sendMessage(Priority.MEDIUM, title, body, args);
+    }
+
+    /**
+     * Convenience method to send a message with {@linkplain Priority#HIGH High Priority}.
+     *
+     * @param title Title of the message
+     */
+    default void sendHighPriorityMessage(@NonEmpty String title)
+    {
+        sendHighPriorityMessage(title, "");
+    }
+
+    /**
+     * Convenience method to send a message with {@linkplain Priority#HIGH High Priority}.
+     *
+     * @param title Title of the message
+     * @param body Body of the message
+     * @param args Any arguments for the body
+     */
+    default void sendHighPriorityMessage(@NonEmpty String title, @NonEmpty String body, Object... args)
+    {
+        sendMessage(Priority.HIGH, title, body, args);
+    }
+
+    /**
+     * Convenience method to quickly send a method in one function call.
+     *
+     * @param priority The priority of the message
+     * @param title The message title
+     * @param body The body of the message
+     * @param args Any string arguments passed
+     */
+    default void sendMessage(@Required Priority priority, @NonEmpty String title, @NonEmpty String body, Object... args)
+    {
+        checkThat(priority)
+                .is(notNull());
+
+        checkThat(title)
+                .usingMessage("title cannot be empty")
+                .is(nonEmptyString());
+
+        Request request = begin().withPriority(priority)
+                                .titled(title);
+
+        if (!Checks.Internal.isNullOrEmpty(body))
+        {
+            request = request.withBody(body, args);
+        }
+
+        request.send();
     }
     
     /**

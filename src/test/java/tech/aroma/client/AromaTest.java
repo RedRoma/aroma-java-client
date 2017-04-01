@@ -17,19 +17,17 @@
 package tech.aroma.client;
 
 import com.google.common.util.concurrent.MoreExecutors;
-import java.util.concurrent.ExecutorService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import tech.sirwellington.alchemy.test.junit.runners.AlchemyTestRunner;
-import tech.sirwellington.alchemy.test.junit.runners.DontRepeat;
-import tech.sirwellington.alchemy.test.junit.runners.GenerateInteger;
-import tech.sirwellington.alchemy.test.junit.runners.GenerateString;
-import tech.sirwellington.alchemy.test.junit.runners.Repeat;
+import tech.sirwellington.alchemy.test.junit.runners.*;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import java.util.concurrent.ExecutorService;
+
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertThat;
 import static tech.sirwellington.alchemy.generator.AlchemyGenerator.one;
+import static tech.sirwellington.alchemy.generator.EnumGenerators.enumValueOf;
 import static tech.sirwellington.alchemy.generator.NumberGenerators.negativeIntegers;
 import static tech.sirwellington.alchemy.test.junit.ThrowableAssertion.assertThrows;
 import static tech.sirwellington.alchemy.test.junit.runners.GenerateInteger.Type.RANGE;
@@ -43,7 +41,7 @@ import static tech.sirwellington.alchemy.test.junit.runners.GenerateString.Type.
 @RunWith(AlchemyTestRunner.class)
 public class AromaTest 
 {
-    
+
     @GenerateString
     private String hostname;
     
@@ -52,7 +50,14 @@ public class AromaTest
     
     @GenerateString(UUID)
     private String applicationToken;
-    
+
+    @GenerateString
+    private String title;
+
+    @GenerateString
+    private String body;
+
+
     private ExecutorService executor;
     
     private Aroma instance;
@@ -72,6 +77,75 @@ public class AromaTest
     {
         Aroma.Request request = instance.begin();
         assertThat(request, notNullValue());
+    }
+
+    @Test
+    public void sendLowPriorityMessage() throws Exception
+    {
+
+        instance.sendLowPriorityMessage(title);
+
+        assertThrows(() -> instance.sendLowPriorityMessage(null))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    public void sendLowPriorityMessage1() throws Exception
+    {
+        instance.sendLowPriorityMessage(title, body);
+
+        assertThrows(() -> instance.sendLowPriorityMessage(null, null))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    public void sendMediumPriorityMessage() throws Exception
+    {
+
+        instance.sendMediumPriorityMessage(title);
+
+        assertThrows(() -> instance.sendMediumPriorityMessage(null))
+                .isInstanceOf(IllegalArgumentException.class);
+
+    }
+
+    @Test
+    public void sendMediumPriorityMessage1() throws Exception
+    {
+        instance.sendMediumPriorityMessage(title, body);
+
+        assertThrows(() -> instance.sendMediumPriorityMessage(null, null))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    public void sendHighPriorityMessage() throws Exception
+    {
+        instance.sendHighPriorityMessage(title);
+
+        assertThrows(() -> instance.sendHighPriorityMessage(null))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    public void sendHighPriorityMessage1() throws Exception
+    {
+        instance.sendHighPriorityMessage(title, body);
+
+        assertThrows(() -> instance.sendHighPriorityMessage(null, null))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    public void sendMessage() throws Exception
+    {
+
+        Priority priority = enumValueOf(Priority.class).get();
+
+        instance.sendMessage(priority, title, body);
+
+        assertThrows(() -> instance.sendMessage(null, title, body))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
