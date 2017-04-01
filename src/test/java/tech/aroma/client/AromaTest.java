@@ -170,6 +170,17 @@ public class AromaTest
             .isInstanceOf(IllegalArgumentException.class);
     }
 
+    @DontRepeat
+    @Test
+    public void testNoOpInstance()
+    {
+        Aroma instance = Aroma.noOpInstance();
+
+        assertThat(instance, notNullValue());
+
+        instance.sendMediumPriorityMessage(title, body);
+    }
+
     @Test
     public void testNewBuilder()
     {

@@ -208,6 +208,18 @@ public interface Aroma
             .withApplicationToken(applicationToken)
             .build();
     }
+
+    /**
+     * Creates an Aroma Client that does absolutely nothing with the messages sent.
+     *
+     * This is useful for testing purposes when you don't want messages sent over the wire.
+     *
+     * @return
+     */
+    static Aroma noOpInstance()
+    {
+        return AromaDoNothingClient.INSTANCE;
+    }
     
     /**
      * Use a Builder to create a more fine-tuned {@linkplain Aroma Aroma Client}.
