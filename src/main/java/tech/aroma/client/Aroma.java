@@ -216,7 +216,7 @@ public interface Aroma
      *
      * @return
      */
-    static Aroma noOpInstance()
+    static Aroma createNoOpInstance()
     {
         return AromaDoNothingClient.INSTANCE;
     }

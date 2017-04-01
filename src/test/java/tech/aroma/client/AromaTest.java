@@ -172,9 +172,9 @@ public class AromaTest
 
     @DontRepeat
     @Test
-    public void testNoOpInstance()
+    public void testCreateNoOpInstance()
     {
-        Aroma instance = Aroma.noOpInstance();
+        Aroma instance = Aroma.createNoOpInstance();
 
         assertThat(instance, notNullValue());
 
