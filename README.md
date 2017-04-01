@@ -65,6 +65,13 @@ aroma.begin()
      .send();
 ```
 
+### Shorthand
+You can also send messages using a one-shot shorthand way.
+
+```java
+aroma.sendLowPriorityMessage("New User", "Email: {}", user.email);
+```
+
 That's really all there is to it.
 
 ## Best Practices
