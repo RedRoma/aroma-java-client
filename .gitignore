@@ -14,5 +14,6 @@ hs_err_pid*
 /nbproject/
 /_site/target/
 
+# IntelliJ
 .idea/
 *.iml
