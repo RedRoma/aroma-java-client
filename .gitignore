@@ -13,3 +13,6 @@ hs_err_pid*
 /target/
 /nbproject/
 /_site/target/
+
+.idea/
+*.iml
