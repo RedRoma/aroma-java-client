@@ -56,7 +56,7 @@ import static tech.sirwellington.alchemy.test.junit.ThrowableAssertion.assertThr
  *
  * @author SirWellington
  */
-@Repeat(100)
+@Repeat
 @RunWith(AlchemyTestRunner.class)
 public class AromaClientTest 
 {

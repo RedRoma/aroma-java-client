@@ -5,7 +5,7 @@
     <parent>
         <groupId>tech.aroma</groupId>
         <artifactId>aroma</artifactId>
-        <version>1.6-SNAPSHOT</version>
+        <version>1.7</version>
     </parent>
 
     <artifactId>aroma-java-client</artifactId>
@@ -103,7 +103,7 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>aroma-thrift</artifactId>
-            <version>1.10-SNAPSHOT</version>
+            <version>1.10</version>
         </dependency>
 
 
