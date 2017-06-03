@@ -16,35 +16,37 @@
 
 package tech.aroma.client
 
-import java.time.Instant
-import java.util.concurrent.ExecutorService
-import java.util.function.Supplier
-
 import com.google.common.util.concurrent.MoreExecutors
+import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.whenever
 import org.apache.thrift.protocol.TProtocol
 import org.apache.thrift.transport.TTransport
-import org.junit.Before
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.*
-import tech.aroma.thrift.authentication.ApplicationToken
-import tech.aroma.thrift.exceptions.OperationFailedException
-import tech.sirwellington.alchemy.annotations.testing.TimeSensitive
-import tech.sirwellington.alchemy.test.junit.runners.*
-
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.Matchers.instanceOf
 import org.junit.Assert.assertThat
-import org.mockito.Mockito.*
+import org.junit.Before
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.ArgumentCaptor
+import org.mockito.Captor
+import org.mockito.Mock
+import org.mockito.Mockito.atLeastOnce
+import org.mockito.Mockito.verify
 import tech.aroma.thrift.Urgency
-import tech.aroma.thrift.application.service.*
-import tech.aroma.thrift.authentication.service.AuthenticationService
-import tech.sirwellington.alchemy.arguments.Arguments.*
+import tech.aroma.thrift.application.service.ApplicationService
+import tech.aroma.thrift.application.service.SendMessageRequest
+import tech.aroma.thrift.authentication.ApplicationToken
+import tech.aroma.thrift.exceptions.OperationFailedException
+import tech.sirwellington.alchemy.annotations.testing.TimeSensitive
+import tech.sirwellington.alchemy.arguments.Arguments.checkThat
 import tech.sirwellington.alchemy.arguments.assertions.TimeAssertions.nowWithinDelta
 import tech.sirwellington.alchemy.generator.EnumGenerators.enumValueOf
-import tech.sirwellington.alchemy.test.junit.ThrowableAssertion.*
+import tech.sirwellington.alchemy.test.junit.runners.AlchemyTestRunner
+import tech.sirwellington.alchemy.test.junit.runners.GeneratePojo
+import tech.sirwellington.alchemy.test.junit.runners.GenerateString
+import tech.sirwellington.alchemy.test.junit.runners.Repeat
+import java.time.Instant
 
 /**
  * @author SirWellington
@@ -109,22 +111,6 @@ class AromaClientTest
                 .thenReturn(transport)
     }
 
-    @DontRepeat
-    @Test
-    fun testConstructor()
-    {
-        val provider = Provider { applicationService as ApplicationService.Iface }
-
-        assertThrows { AromaClient(provider, null!!, null!!) }
-                .isInstanceOf(IllegalArgumentException::class.java)
-
-        assertThrows { AromaClient(null!!, executor, null!!) }
-                .isInstanceOf(IllegalArgumentException::class.java)
-
-        assertThrows { AromaClient(null!!, null!!, token!!) }
-                .isInstanceOf(IllegalArgumentException::class.java)
-    }
-
     @Test
     fun testBegin()
     {
@@ -160,7 +146,7 @@ class AromaClientTest
     @Throws(Exception::class)
     fun testSendMessageWhenOperationFails()
     {
-        whenever<SendMessageResponse>(applicationService.sendMessage(Mockito.any()))
+        whenever(applicationService.sendMessage(any()))
                 .thenThrow(OperationFailedException())
 
         instance.sendMessage(request)

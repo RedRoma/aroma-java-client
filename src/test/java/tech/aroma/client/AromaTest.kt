@@ -85,7 +85,7 @@ class AromaTest
 
         instance.sendLowPriorityMessage(title)
 
-        assertThrows { instance.sendLowPriorityMessage(null!!) }
+        assertThrows { instance.sendLowPriorityMessage("") }
                 .isInstanceOf(IllegalArgumentException::class.java)
     }
 
@@ -95,7 +95,7 @@ class AromaTest
     {
         instance.sendLowPriorityMessage(title, body)
 
-        assertThrows { instance.sendLowPriorityMessage(null!!, null!!) }
+        assertThrows { instance.sendLowPriorityMessage("", "") }
                 .isInstanceOf(IllegalArgumentException::class.java)
     }
 
@@ -106,7 +106,7 @@ class AromaTest
 
         instance.sendMediumPriorityMessage(title)
 
-        assertThrows { instance.sendMediumPriorityMessage(null!!) }
+        assertThrows { instance.sendMediumPriorityMessage("") }
                 .isInstanceOf(IllegalArgumentException::class.java)
 
     }
