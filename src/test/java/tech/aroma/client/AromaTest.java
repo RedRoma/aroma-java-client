@@ -66,9 +66,9 @@ public class AromaTest
     @Before
     public void setUp()
     {
-        instance = Aroma.create(applicationToken);
+        instance = Aroma.Companion.create(applicationToken);
         executor = MoreExecutors.newDirectExecutorService();
-        builder = Aroma.newBuilder();
+        builder = Aroma.Companion.newBuilder();
     }
 
     @Test
@@ -150,14 +150,14 @@ public class AromaTest
     @Test
     public void testCreate()
     {
-        Aroma result = Aroma.create(applicationToken);
+        Aroma result = Aroma.Companion.create(applicationToken);
         assertThat(result, notNullValue());
     }
 
     @Test
     public void testCreateWithAppToken()
     {
-        Aroma result = Aroma.create(applicationToken);
+        Aroma result = Aroma.Companion.create(applicationToken);
         assertThat(result, notNullValue());
         result.begin();
     }
@@ -165,7 +165,7 @@ public class AromaTest
     @Test
     public void testCreateWithBadToken()
     {
-        assertThrows(() -> Aroma.create(""))
+        assertThrows(() -> Aroma.Companion.create(""))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -173,7 +173,7 @@ public class AromaTest
     @Test
     public void testCreateNoOpInstance()
     {
-        Aroma instance = Aroma.createNoOpInstance();
+        Aroma instance = Aroma.Companion.createNoOpInstance();
 
         assertThat(instance, notNullValue());
 
@@ -183,7 +183,7 @@ public class AromaTest
     @Test
     public void testNewBuilder()
     {
-        Aroma.Builder result = Aroma.newBuilder();
+        Aroma.Builder result = Aroma.Companion.newBuilder();
         assertThat(result, notNullValue());
     }
 
