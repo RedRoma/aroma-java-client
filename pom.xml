@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -39,14 +40,15 @@
 
     <properties>
         <!--Java Compiler Properties-->
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+        <kotlin.version>1.1.3-eap-34</kotlin.version>
     </properties>
 
     <!-- END OF POM METADATA -->
 
     <dependencies>
-        
+
         <!--=======================-->
         <!--UNIT TESTING-->
         <!--=======================-->
@@ -76,14 +78,14 @@
             <artifactId>guava</artifactId>
             <scope>test</scope>
         </dependency>
-        
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <scope>test</scope>
         </dependency>
-        
-        
+
+
         <!--=======================-->
         <!--ALCHEMY-->
         <!--=======================-->
@@ -91,18 +93,18 @@
             <groupId>tech.sirwellington.alchemy</groupId>
             <artifactId>alchemy-annotations</artifactId>
         </dependency>
-        
+
         <dependency>
             <groupId>tech.sirwellington.alchemy</groupId>
             <artifactId>alchemy-arguments</artifactId>
         </dependency>
-        
+
         <dependency>
             <groupId>tech.sirwellington.alchemy</groupId>
             <artifactId>alchemy-thrift</artifactId>
         </dependency>
-        
-        
+
+
         <!--=======================-->
         <!--AROMA DEPENDENCIES-->
         <!--=======================-->
@@ -120,13 +122,106 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
-        
+
+        <!--=======================-->
+        <!--KOTLIN-->
+        <!--=======================-->
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib-jre7</artifactId>
+            <version>${kotlin.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-test</artifactId>
+            <version>${kotlin.version}</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
+
+    <repositories>
+        <repository>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>bintray.kotlin.eap</id>
+            <name>Bintray Kotlin 1.1 EAP Repository</name>
+            <url>http://dl.bintray.com/kotlin/kotlin-eap-1.1</url>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>bintray.kotlin.eap</id>
+            <name>Bintray Kotlin 1.1 EAP Repository</name>
+            <url>http://dl.bintray.com/kotlin/kotlin-eap-1.1</url>
+        </pluginRepository>
+    </pluginRepositories>
 
     <build>
         <plugins>
             <!-- These are Defined in the Parent Pom. -->
 
+            <!--=======================-->
+            <!--KOTLIN-->
+            <!--=======================-->
+            <plugin>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-maven-plugin</artifactId>
+                <version>${kotlin.version}</version>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>test-compile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>test-compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <jvmTarget>1.7</jvmTarget>
+                </configuration>
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>testCompile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
