@@ -16,26 +16,21 @@
 
 package tech.aroma.client
 
-import java.net.InetAddress
-import java.net.UnknownHostException
-import java.time.Instant
-import java.util.concurrent.ExecutorService
-import java.util.function.Supplier
-
 import org.apache.thrift.TException
-import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import tech.aroma.thrift.application.service.ApplicationService
 import tech.aroma.thrift.application.service.SendMessageRequest
 import tech.aroma.thrift.authentication.ApplicationToken
 import tech.sirwellington.alchemy.annotations.arguments.Required
 import tech.sirwellington.alchemy.annotations.concurrency.ThreadSafe
-import tech.sirwellington.alchemy.thrift.clients.Clients
-
-import java.time.Instant.now
-import tech.sirwellington.alchemy.arguments.Arguments.*
+import tech.sirwellington.alchemy.arguments.Arguments.checkThat
 import tech.sirwellington.alchemy.arguments.assertions.Assertions.notNull
-import tech.sirwellington.alchemy.arguments.assertions.StringAssertions.*
+import tech.sirwellington.alchemy.arguments.assertions.StringAssertions.nonEmptyString
+import tech.sirwellington.alchemy.thrift.clients.Clients
+import java.net.InetAddress
+import java.net.UnknownHostException
+import java.time.Instant.now
+import java.util.concurrent.ExecutorService
 
 /**
  * @author SirWellington
@@ -43,7 +38,7 @@ import tech.sirwellington.alchemy.arguments.assertions.StringAssertions.*
 @ThreadSafe
 internal class AromaClient: Aroma
 {
-    private val applicationServiceProvider: Supplier<ApplicationService.Iface>
+    private val applicationServiceProvider: Provider<ApplicationService.Iface>
     private val executor: ExecutorService
     private val token: ApplicationToken
 
@@ -51,7 +46,7 @@ internal class AromaClient: Aroma
     private val hostname = getHostname()
     private val deviceName = getHostname()
 
-    internal constructor(@Required applicationServiceProvider: Supplier<ApplicationService.Iface>,
+    internal constructor(@Required applicationServiceProvider: Provider<ApplicationService.Iface>,
                          @Required executor: ExecutorService,
                          @Required token: ApplicationToken)
     {

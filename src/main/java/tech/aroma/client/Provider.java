@@ -14,35 +14,12 @@
  * limitations under the License.
  */
 
-package tech.aroma.client.exceptions;
-
+package tech.aroma.client;
 
 /**
- * Thrown when the {@linkplain tech.aroma.client.Aroma Aroma Client} cannot access the network.
- *
  * @author SirWellington
  */
-public class AromaNetworkException extends AromaOperationFailedException
+interface Provider<T>
 {
-
-
-    public AromaNetworkException()
-    {
-    }
-
-    public AromaNetworkException(String message)
-    {
-        super(message);
-    }
-
-    public AromaNetworkException(String message, Throwable cause)
-    {
-        super(message, cause);
-    }
-
-    public AromaNetworkException(Throwable cause)
-    {
-        super(cause);
-    }
-
+    T get();
 }

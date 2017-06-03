@@ -30,6 +30,7 @@ import tech.aroma.thrift.endpoint.*;
 import tech.sirwellington.alchemy.annotations.access.Internal;
 import tech.sirwellington.alchemy.annotations.arguments.Required;
 import tech.sirwellington.alchemy.annotations.designs.patterns.FactoryPattern;
+import tech.sirwellington.alchemy.arguments.assertions.Assertions;
 
 import static tech.sirwellington.alchemy.annotations.designs.patterns.FactoryPattern.Role.FACTORY;
 import static tech.sirwellington.alchemy.arguments.Arguments.*;
@@ -43,19 +44,19 @@ import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.*
  */
 @Internal
 @FactoryPattern(role = FACTORY)
-final class ThriftClientProvider implements Supplier<ApplicationService.Client>
+final class ThriftClientProvider implements Provider<ApplicationService.Client>
 {
 
     private final static Logger LOG = LoggerFactory.getLogger(ThriftClientProvider.class);
 
-    private final Supplier<Endpoint> endpointSupplier;
+    private final Provider<Endpoint> endpointSupplier;
 
-    ThriftClientProvider(@Required Supplier<Endpoint> endpointSupplier)
+    ThriftClientProvider(@Required Provider<Endpoint> endpointSupplier)
     {
-        checkThat(endpointSupplier).is(notNull());
+        checkThat(endpointSupplier).is(Assertions.<Provider<Endpoint>>notNull());
         checkThat(endpointSupplier.get())
                 .usingMessage("endpointSupplier returned null")
-                .is(notNull());
+                .is(Assertions.<Endpoint>notNull());
 
         this.endpointSupplier = endpointSupplier;
     }
@@ -66,7 +67,7 @@ final class ThriftClientProvider implements Supplier<ApplicationService.Client>
         Endpoint endpoint = endpointSupplier.get();
         checkThat(endpoint)
                 .usingMessage("missing endpoint")
-                .is(notNull());
+                .is(Assertions.<Endpoint>notNull());
 
         if (endpoint.isSetTcp())
         {
@@ -85,7 +86,7 @@ final class ThriftClientProvider implements Supplier<ApplicationService.Client>
     {
         checkThat(tcp)
                 .usingMessage("missing TCP Endpoint")
-                .is(notNull());
+                .is(Assertions.<TcpEndpoint>notNull());
 
         String hostname = tcp.hostname;
         int port = tcp.port;
@@ -118,7 +119,7 @@ final class ThriftClientProvider implements Supplier<ApplicationService.Client>
     {
         checkThat(http)
                 .usingMessage("missing HTTP Endpoint")
-                .is(notNull());
+                .is(Assertions.<HttpThriftEndpoint>notNull());
 
         String url = http.url;
         checkThat(url)

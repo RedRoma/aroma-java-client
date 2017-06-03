@@ -20,6 +20,7 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 import tech.aroma.client.exceptions.AromaException
+import tech.aroma.thrift.application.service.ApplicationService
 import tech.aroma.thrift.application.service.ApplicationServiceConstants
 import tech.aroma.thrift.authentication.ApplicationToken
 import tech.aroma.thrift.endpoint.Endpoint
@@ -310,17 +311,17 @@ interface Aroma
                     .throwing<IllegalStateException>(IllegalStateException::class.java)
                     .`is`(validPort())
 
-            if (async == null)
-            {
-                async = Executors.newSingleThreadExecutor()
-            }
+            val executor = async ?: Executors.newSingleThreadExecutor()
 
             val endpoint = createEndpoint()
 
             val token = ApplicationToken().setTokenId(applicationToken)
 
-            val clientProvider = ThriftClientProvider { endpoint }
-            val aroma = AromaClient({ clientProvider.get() }, async, token)
+            val thriftClientProvider = ThriftClientProvider { endpoint }
+            val clientProvider =  Provider<ApplicationService.Iface> {
+                thriftClientProvider.get()
+            }
+            val aroma = AromaClient(clientProvider, executor, token)
             return aroma
 
         }
