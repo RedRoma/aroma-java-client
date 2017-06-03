@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
- 
+
 package tech.aroma.client.exceptions;
 
 /**
  * Thrown when a Message failed to be sent.
- * 
+ *
  * @author SirWellington
  */
 public class AromaException extends RuntimeException

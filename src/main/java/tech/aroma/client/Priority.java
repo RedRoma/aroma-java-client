@@ -19,31 +19,32 @@ package tech.aroma.client;
 import tech.aroma.thrift.Urgency;
 import tech.sirwellington.alchemy.annotations.arguments.Required;
 
-import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
+import static tech.sirwellington.alchemy.arguments.Arguments.*;
 import static tech.sirwellington.alchemy.arguments.assertions.Assertions.notNull;
 
 /*
  * This class exists to give some Schema Isolation to Clients from any changes that happen in the Thrift Specification.
  */
+
 /**
  * Describes how important a message is.
- * 
+ *
  * @author SirWellington
  */
 public enum Priority
 {
-  
+
     /**
      * LOW Messages are like an FYI; they are not important but you may want to know
      * about it. For example, a new user sign-up for your service, or a post was flagged by a user.
      */
     LOW(Urgency.LOW),
-    
+
     /**
      * MEDIUM Messages are considered Important.
      */
     MEDIUM(Urgency.MEDIUM),
-   
+
     /**
      * HIGH messages typically indicate Show-Stopping events, such as a Database going down,
      * or a network connection issue. It could also be a great thing, such as a customer spending a
@@ -56,10 +57,10 @@ public enum Priority
     private Priority(@Required Urgency thriftUrgency)
     {
         checkThat(thriftUrgency).is(notNull());
-        
+
         this.thriftUrgency = thriftUrgency;
     }
-    
+
     /**
      * Map to the underlying Thrift version.
      *

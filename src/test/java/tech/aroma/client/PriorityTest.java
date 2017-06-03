@@ -27,11 +27,10 @@ import static org.junit.Assert.assertThat;
 
 
 /**
- *
  * @author SirWellington
  */
 @RunWith(AlchemyTestRunner.class)
-public class PriorityTest 
+public class PriorityTest
 {
 
     @Before
@@ -44,10 +43,10 @@ public class PriorityTest
     {
         assertThat(Priority.LOW.toThrift(),
                    is(Urgency.LOW));
-        
+
         assertThat(Priority.MEDIUM.toThrift(),
                    is(Urgency.MEDIUM));
-        
+
         assertThat(Priority.HIGH.toThrift(),
                    is(Urgency.HIGH));
     }

@@ -18,33 +18,27 @@ package tech.aroma.client;
 
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
-import org.apache.thrift.protocol.TBinaryProtocol;
-import org.apache.thrift.protocol.TJSONProtocol;
-import org.apache.thrift.protocol.TProtocol;
-import org.apache.thrift.transport.THttpClient;
-import org.apache.thrift.transport.TSocket;
-import org.apache.thrift.transport.TTransportException;
+
+import org.apache.thrift.protocol.*;
+import org.apache.thrift.transport.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import tech.aroma.client.exceptions.AromaNetworkException;
 import tech.aroma.client.exceptions.AromaOperationFailedException;
 import tech.aroma.thrift.application.service.ApplicationService;
-import tech.aroma.thrift.endpoint.Endpoint;
-import tech.aroma.thrift.endpoint.HttpThriftEndpoint;
-import tech.aroma.thrift.endpoint.TcpEndpoint;
+import tech.aroma.thrift.endpoint.*;
 import tech.sirwellington.alchemy.annotations.access.Internal;
 import tech.sirwellington.alchemy.annotations.arguments.Required;
 import tech.sirwellington.alchemy.annotations.designs.patterns.FactoryPattern;
 
 import static tech.sirwellington.alchemy.annotations.designs.patterns.FactoryPattern.Role.FACTORY;
-import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
+import static tech.sirwellington.alchemy.arguments.Arguments.*;
 import static tech.sirwellington.alchemy.arguments.assertions.Assertions.notNull;
 import static tech.sirwellington.alchemy.arguments.assertions.NetworkAssertions.validPort;
 import static tech.sirwellington.alchemy.arguments.assertions.NetworkAssertions.validURL;
-import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.nonEmptyString;
+import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.*;
 
 /**
- *
  * @author SirWellington
  */
 @Internal
@@ -60,8 +54,8 @@ final class ThriftClientProvider implements Supplier<ApplicationService.Client>
     {
         checkThat(endpointSupplier).is(notNull());
         checkThat(endpointSupplier.get())
-            .usingMessage("endpointSupplier returned null")
-            .is(notNull());
+                .usingMessage("endpointSupplier returned null")
+                .is(notNull());
 
         this.endpointSupplier = endpointSupplier;
     }
@@ -71,8 +65,8 @@ final class ThriftClientProvider implements Supplier<ApplicationService.Client>
     {
         Endpoint endpoint = endpointSupplier.get();
         checkThat(endpoint)
-            .usingMessage("missing endpoint")
-            .is(notNull());
+                .usingMessage("missing endpoint")
+                .is(notNull());
 
         if (endpoint.isSetTcp())
         {
@@ -90,18 +84,18 @@ final class ThriftClientProvider implements Supplier<ApplicationService.Client>
     private ApplicationService.Client fromTcp(TcpEndpoint tcp)
     {
         checkThat(tcp)
-            .usingMessage("missing TCP Endpoint")
-            .is(notNull());
+                .usingMessage("missing TCP Endpoint")
+                .is(notNull());
 
         String hostname = tcp.hostname;
         int port = tcp.port;
 
         checkThat(hostname)
-            .usingMessage("missing hostname")
-            .is(nonEmptyString());
+                .usingMessage("missing hostname")
+                .is(nonEmptyString());
 
         checkThat(port)
-            .is(validPort());
+                .is(validPort());
 
         long timeout = TimeUnit.SECONDS.toMillis(45);
         TSocket socket = new TSocket(hostname, port, (int) timeout);
@@ -123,12 +117,12 @@ final class ThriftClientProvider implements Supplier<ApplicationService.Client>
     private ApplicationService.Client fromHttp(HttpThriftEndpoint http)
     {
         checkThat(http)
-            .usingMessage("missing HTTP Endpoint")
-            .is(notNull());
+                .usingMessage("missing HTTP Endpoint")
+                .is(notNull());
 
         String url = http.url;
         checkThat(url)
-            .is(validURL());
+                .is(validURL());
 
         THttpClient client;
         try

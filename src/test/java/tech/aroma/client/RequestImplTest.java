@@ -16,44 +16,30 @@
 
 package tech.aroma.client;
 
-import com.google.common.util.concurrent.MoreExecutors;
 import java.util.concurrent.ExecutorService;
+
+import com.google.common.util.concurrent.MoreExecutors;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
-import org.mockito.Mock;
-import tech.aroma.thrift.application.service.ApplicationService;
-import tech.aroma.thrift.application.service.ApplicationServiceConstants;
-import tech.aroma.thrift.application.service.SendMessageRequest;
+import org.mockito.*;
+import tech.aroma.thrift.application.service.*;
 import tech.aroma.thrift.authentication.ApplicationToken;
-import tech.sirwellington.alchemy.test.junit.runners.AlchemyTestRunner;
-import tech.sirwellington.alchemy.test.junit.runners.DontRepeat;
-import tech.sirwellington.alchemy.test.junit.runners.GenerateEnum;
-import tech.sirwellington.alchemy.test.junit.runners.GeneratePojo;
-import tech.sirwellington.alchemy.test.junit.runners.GenerateString;
-import tech.sirwellington.alchemy.test.junit.runners.Repeat;
+import tech.sirwellington.alchemy.test.junit.runners.*;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.sameInstance;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.verify;
-import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.*;
+import static tech.sirwellington.alchemy.arguments.Arguments.*;
 import static tech.sirwellington.alchemy.arguments.assertions.TimeAssertions.epochNowWithinDelta;
 import static tech.sirwellington.alchemy.generator.AlchemyGenerator.one;
 import static tech.sirwellington.alchemy.generator.EnumGenerators.enumValueOf;
 import static tech.sirwellington.alchemy.generator.NumberGenerators.integers;
 import static tech.sirwellington.alchemy.generator.StringGenerators.alphabeticString;
-import static tech.sirwellington.alchemy.test.junit.ThrowableAssertion.assertThrows;
+import static tech.sirwellington.alchemy.test.junit.ThrowableAssertion.*;
 import static tech.sirwellington.alchemy.test.junit.runners.GenerateString.Type.ALPHABETIC;
 
 /**
- *
  * @author SirWellington
  */
 @Repeat(100)
@@ -166,7 +152,7 @@ public class RequestImplTest
         assertThat(request.applicationToken, is(token));
 
         checkThat(request.timeOfMessage)
-            .is(epochNowWithinDelta(1000L));
+                .is(epochNowWithinDelta(1000L));
     }
 
     @Test

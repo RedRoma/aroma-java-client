@@ -16,9 +16,8 @@
 
 package tech.aroma.client;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.io.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.helpers.FormattingTuple;
@@ -30,14 +29,11 @@ import tech.sirwellington.alchemy.annotations.arguments.Required;
 import tech.sirwellington.alchemy.annotations.concurrency.Immutable;
 import tech.sirwellington.alchemy.arguments.assertions.Assertions;
 
-import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
+import static tech.sirwellington.alchemy.arguments.Arguments.*;
 import static tech.sirwellington.alchemy.arguments.assertions.Assertions.notNull;
-import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.nonEmptyString;
-import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.stringWithLengthGreaterThanOrEqualTo;
-import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.stringWithLengthLessThan;
+import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.*;
 
 /**
- *
  * @author SirWellington
  */
 @Immutable
@@ -58,7 +54,7 @@ final class RequestImpl implements Aroma.Request
                 @Required Priority priority)
     {
         checkThat(aromaClient, title, text, priority)
-            .are(notNull());
+                .are(notNull());
 
         this.aromaClient = aromaClient;
         this.title = title;
@@ -70,12 +66,12 @@ final class RequestImpl implements Aroma.Request
     public Aroma.Request titled(String title)
     {
         checkThat(title)
-            .usingMessage("title cannot be empty")
-            .is(nonEmptyString())
-            .usingMessage("title too short")
-            .is(stringWithLengthGreaterThanOrEqualTo(3))
-            .usingMessage("title too long")
-            .is(stringWithLengthLessThan(ApplicationServiceConstants.MAX_TITLE_LENGTH));
+                .usingMessage("title cannot be empty")
+                .is(nonEmptyString())
+                .usingMessage("title too short")
+                .is(stringWithLengthGreaterThanOrEqualTo(3))
+                .usingMessage("title too long")
+                .is(stringWithLengthLessThan(ApplicationServiceConstants.MAX_TITLE_LENGTH));
 
         return new RequestImpl(aromaClient, title, text, priority);
     }
@@ -84,8 +80,8 @@ final class RequestImpl implements Aroma.Request
     public Aroma.Request withBody(String message, @Optional Object... args)
     {
         checkThat(message)
-            .usingMessage("message cannot be null")
-            .is(notNull());
+                .usingMessage("message cannot be null")
+                .is(notNull());
 
         String combinedMessage = combineStringAndArgs(message, args);
         return new RequestImpl(aromaClient, title, combinedMessage, priority);
@@ -103,7 +99,7 @@ final class RequestImpl implements Aroma.Request
 
         Throwable ex = arrayFormat.getThrowable();
 
-        if(ex == null)
+        if (ex == null)
         {
             return formattedMessage;
         }
@@ -122,7 +118,7 @@ final class RequestImpl implements Aroma.Request
             ex.printStackTrace(printWriter);
             return stringWriter.toString();
         }
-        catch(IOException ioex)
+        catch (IOException ioex)
         {
             LOG.info("Failed to close String and Print Writers", ioex);
             return ex.getMessage();
@@ -133,8 +129,8 @@ final class RequestImpl implements Aroma.Request
     public Aroma.Request withPriority(@Required Priority priority) throws IllegalArgumentException
     {
         checkThat(priority)
-            .usingMessage("priority cannot be null")
-            .is(Assertions.notNull());
+                .usingMessage("priority cannot be null")
+                .is(Assertions.notNull());
 
         return new RequestImpl(aromaClient, title, text, priority);
     }

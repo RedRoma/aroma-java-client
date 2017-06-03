@@ -16,80 +16,71 @@
 
 package tech.aroma.client;
 
-import com.google.common.util.concurrent.MoreExecutors;
 import java.time.Instant;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Supplier;
+
+import com.google.common.util.concurrent.MoreExecutors;
 import org.apache.thrift.protocol.TProtocol;
 import org.apache.thrift.transport.TTransport;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.mockito.*;
 import tech.aroma.thrift.application.service.ApplicationService;
 import tech.aroma.thrift.application.service.SendMessageRequest;
 import tech.aroma.thrift.authentication.ApplicationToken;
 import tech.aroma.thrift.exceptions.OperationFailedException;
 import tech.sirwellington.alchemy.annotations.testing.TimeSensitive;
-import tech.sirwellington.alchemy.test.junit.runners.AlchemyTestRunner;
-import tech.sirwellington.alchemy.test.junit.runners.DontRepeat;
-import tech.sirwellington.alchemy.test.junit.runners.GeneratePojo;
-import tech.sirwellington.alchemy.test.junit.runners.GenerateString;
-import tech.sirwellington.alchemy.test.junit.runners.Repeat;
+import tech.sirwellington.alchemy.test.junit.runners.*;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.Matchers.instanceOf;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.*;
+import static tech.sirwellington.alchemy.arguments.Arguments.*;
 import static tech.sirwellington.alchemy.arguments.assertions.TimeAssertions.nowWithinDelta;
 import static tech.sirwellington.alchemy.generator.EnumGenerators.enumValueOf;
-import static tech.sirwellington.alchemy.test.junit.ThrowableAssertion.assertThrows;
+import static tech.sirwellington.alchemy.test.junit.ThrowableAssertion.*;
 
 /**
- *
  * @author SirWellington
  */
 @Repeat
 @RunWith(AlchemyTestRunner.class)
-public class AromaClientTest 
+public class AromaClientTest
 {
-    
+
     @Mock
     private TProtocol protocol;
-    
+
     @Mock
     private TTransport transport;
-    
+
     @Mock
     private ApplicationService.Client applicationService;
-    
+
     @GeneratePojo
     private ApplicationToken token;
-    
+
     private final ExecutorService executor = MoreExecutors.newDirectExecutorService();
-    
+
     @Captor
     private ArgumentCaptor<SendMessageRequest> requestCaptor;
-    
+
     private RequestImpl request;
-    
+
     private AromaClient instance;
-    
+
     @GenerateString
     private String body;
-    
+
     @GenerateString
     private String title;
-    
+
     private Priority priority;
-    
+
     @Before
     public void setUp()
     {
@@ -108,26 +99,26 @@ public class AromaClientTest
     {
 
         when(applicationService.getInputProtocol())
-            .thenReturn(protocol);
+                .thenReturn(protocol);
         when(applicationService.getOutputProtocol())
-            .thenReturn(protocol);
+                .thenReturn(protocol);
 
         when(protocol.getTransport())
-            .thenReturn(transport);
+                .thenReturn(transport);
     }
-    
+
     @DontRepeat
     @Test
     public void testConstructor()
     {
         assertThrows(() -> new AromaClient(() -> applicationService, null, null))
-            .isInstanceOf(IllegalArgumentException.class);
-        
+                .isInstanceOf(IllegalArgumentException.class);
+
         assertThrows(() -> new AromaClient(null, executor, null))
-            .isInstanceOf(IllegalArgumentException.class);
-        
+                .isInstanceOf(IllegalArgumentException.class);
+
         assertThrows(() -> new AromaClient(null, null, token))
-            .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -143,29 +134,29 @@ public class AromaClientTest
     public void testSendMessage() throws Exception
     {
         instance.sendMessage(request);
-        
+
         verify(applicationService).sendMessage(requestCaptor.capture());
-        
+
         SendMessageRequest requestMade = requestCaptor.getValue();
         assertThat(requestMade, notNullValue());
         assertThat(requestMade.body, is(body));
         assertThat(requestMade.title, is(title));
         assertThat(requestMade.urgency, is(priority.toThrift()));
         assertThat(requestMade.applicationToken, is(token));
-        
+
         Instant timeOfMessage = Instant.ofEpochMilli(requestMade.timeOfMessage);
         checkThat(timeOfMessage)
-            .is(nowWithinDelta(1000L));
-        
+                .is(nowWithinDelta(1000L));
+
         verify(transport, atLeastOnce()).close();
     }
-    
+
     @Test
     public void testSendMessageWhenOperationFails() throws Exception
     {
         when(applicationService.sendMessage(Mockito.any()))
-            .thenThrow(new OperationFailedException());
-            
+                .thenThrow(new OperationFailedException());
+
         instance.sendMessage(request);
     }
 
