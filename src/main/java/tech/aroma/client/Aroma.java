@@ -100,10 +100,7 @@ public interface Aroma
      *
      * @param title Title of the message
      */
-    default void sendLowPriorityMessage(@NonEmpty String title)
-    {
-        sendLowPriorityMessage(title, "");
-    }
+    void sendLowPriorityMessage(@NonEmpty String title);
 
     /**
      * Convenience method to send a message with {@linkplain Priority#LOW Low Priority}.
@@ -122,10 +119,7 @@ public interface Aroma
      *
      * @param title Title of the message
      */
-    default void sendMediumPriorityMessage(@NonEmpty String title)
-    {
-        sendMediumPriorityMessage(title, "");
-    }
+    void sendMediumPriorityMessage(@NonEmpty String title);
 
     /**
      * Convenience method to send a message with {@linkplain Priority#MEDIUM Medium Priority}.
@@ -134,20 +128,14 @@ public interface Aroma
      * @param body Body of the message
      * @param args Any arguments for the body
      */
-    default void sendMediumPriorityMessage(@NonEmpty String title, @NonEmpty String body, Object... args)
-    {
-        sendMessage(Priority.MEDIUM, title, body, args);
-    }
+    void sendMediumPriorityMessage(@NonEmpty String title, @NonEmpty String body, Object... args);
 
     /**
      * Convenience method to send a message with {@linkplain Priority#HIGH High Priority}.
      *
      * @param title Title of the message
      */
-    default void sendHighPriorityMessage(@NonEmpty String title)
-    {
-        sendHighPriorityMessage(title, "");
-    }
+    void sendHighPriorityMessage(@NonEmpty String title);
 
     /**
      * Convenience method to send a message with {@linkplain Priority#HIGH High Priority}.
@@ -156,10 +144,7 @@ public interface Aroma
      * @param body Body of the message
      * @param args Any arguments for the body
      */
-    default void sendHighPriorityMessage(@NonEmpty String title, @NonEmpty String body, Object... args)
-    {
-        sendMessage(Priority.HIGH, title, body, args);
-    }
+    void sendHighPriorityMessage(@NonEmpty String title, @NonEmpty String body, Object... args);
 
     /**
      * Convenience method to quickly send a method in one function call.
@@ -169,26 +154,8 @@ public interface Aroma
      * @param body The body of the message
      * @param args Any string arguments passed
      */
-    default void sendMessage(@Required Priority priority, @NonEmpty String title, @NonEmpty String body, Object... args)
-    {
-        checkThat(priority)
-                .is(notNull());
+    void sendMessage(@Required Priority priority, @NonEmpty String title, @NonEmpty String body, Object... args);
 
-        checkThat(title)
-                .usingMessage("title cannot be empty")
-                .is(nonEmptyString());
-
-        Request request = begin().withPriority(priority)
-                                .titled(title);
-
-        if (!Checks.Internal.isNullOrEmpty(body))
-        {
-            request = request.withBody(body, args);
-        }
-
-        request.send();
-    }
-    
     /**
      * Creates a default Aroma Client using the specified application token.
      * 

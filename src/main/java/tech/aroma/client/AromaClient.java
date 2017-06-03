@@ -30,6 +30,7 @@ import tech.aroma.thrift.application.service.SendMessageRequest;
 import tech.aroma.thrift.authentication.ApplicationToken;
 import tech.sirwellington.alchemy.annotations.arguments.Required;
 import tech.sirwellington.alchemy.annotations.concurrency.ThreadSafe;
+import tech.sirwellington.alchemy.arguments.Checks;
 import tech.sirwellington.alchemy.thrift.clients.Clients;
 
 import static java.time.Instant.now;
@@ -50,7 +51,7 @@ final class AromaClient implements Aroma
     private final Supplier<ApplicationService.Iface> applicationServiceProvider;
     private final ExecutorService executor;
     private final ApplicationToken token;
-    
+
     private final String operatingSystem = getNameOfOS();
     private final String hostname = getHostname();
     private final String deviceName = getHostname();
@@ -75,6 +76,58 @@ final class AromaClient implements Aroma
     public Request begin()
     {
         return new RequestImpl(this, "", "", Priority.LOW);
+    }
+
+    @Override
+    public void sendLowPriorityMessage(String title)
+    {
+        sendLowPriorityMessage(title, "");
+    }
+
+    @Override
+    public void sendMediumPriorityMessage(String title)
+    {
+        sendMediumPriorityMessage(title, "");
+    }
+
+    @Override
+    public void sendMediumPriorityMessage(String title, String body, Object... args)
+    {
+        sendMessage(Priority.MEDIUM, title, body, args);
+    }
+
+    @Override
+    public void sendHighPriorityMessage(String title)
+    {
+        sendHighPriorityMessage(title, "");
+    }
+
+    @Override
+    public void sendHighPriorityMessage(String title, String body, Object... args)
+    {
+        sendMessage(Priority.HIGH, title, body, args);
+
+    }
+
+    @Override
+    public void sendMessage(Priority priority, String title, String body, Object... args)
+    {
+        checkThat(priority)
+                .is(notNull());
+
+        checkThat(title)
+                .usingMessage("title cannot be empty")
+                .is(nonEmptyString());
+
+        Request request = begin().withPriority(priority)
+                                 .titled(title);
+
+        if (!Checks.Internal.isNullOrEmpty(body))
+        {
+            request = request.withBody(body, args);
+        }
+
+        request.send();
     }
 
     void sendMessage(@Required RequestImpl request)
@@ -144,7 +197,7 @@ final class AromaClient implements Aroma
             return "";
         }
     }
-    
+
     private String getNameOfOS()
     {
         String os = System.getProperty("os.name");
