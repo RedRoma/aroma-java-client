@@ -21,10 +21,10 @@ import java.net.UnknownHostException;
 import java.time.Instant;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Supplier;
+
 import org.apache.thrift.TException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import tech.aroma.client.Aroma.Request;
 import tech.aroma.thrift.application.service.ApplicationService;
 import tech.aroma.thrift.application.service.SendMessageRequest;
 import tech.aroma.thrift.authentication.ApplicationToken;
@@ -34,12 +34,11 @@ import tech.sirwellington.alchemy.arguments.Checks;
 import tech.sirwellington.alchemy.thrift.clients.Clients;
 
 import static java.time.Instant.now;
-import static tech.sirwellington.alchemy.arguments.Arguments.checkThat;
+import static tech.sirwellington.alchemy.arguments.Arguments.*;
 import static tech.sirwellington.alchemy.arguments.assertions.Assertions.notNull;
-import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.nonEmptyString;
+import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.*;
 
 /**
- *
  * @author SirWellington
  */
 @ThreadSafe
@@ -61,11 +60,11 @@ final class AromaClient implements Aroma
                 @Required ApplicationToken token)
     {
         checkThat(applicationServiceProvider, executor, token)
-            .are(notNull());
+                .are(notNull());
 
         checkThat(token.tokenId)
-            .usingMessage("token is missing")
-            .is(nonEmptyString());
+                .usingMessage("token is missing")
+                .is(nonEmptyString());
 
         this.applicationServiceProvider = applicationServiceProvider;
         this.executor = executor;
@@ -135,15 +134,15 @@ final class AromaClient implements Aroma
         Instant now = now();
 
         SendMessageRequest sendMessageRequest = new SendMessageRequest()
-            .setApplicationToken(token)
-            .setBody(request.getText())
-            .setTitle(request.getTitle())
-            .setUrgency(request.getPriority().toThrift())
-            .setHostname(hostname)
-            .setDeviceName(deviceName)
-            .setOperatingSystemName(operatingSystem)
-            .setIpv4Address(getIpv4Address())
-            .setTimeOfMessage(now.toEpochMilli());
+                .setApplicationToken(token)
+                .setBody(request.getText())
+                .setTitle(request.getTitle())
+                .setUrgency(request.getPriority().toThrift())
+                .setHostname(hostname)
+                .setDeviceName(deviceName)
+                .setOperatingSystemName(operatingSystem)
+                .setIpv4Address(getIpv4Address())
+                .setTimeOfMessage(now.toEpochMilli());
 
         executor.submit(() -> sendMessageAsync(sendMessageRequest));
     }
@@ -153,8 +152,8 @@ final class AromaClient implements Aroma
         ApplicationService.Iface client = applicationServiceProvider.get();
 
         checkThat(client)
-            .usingMessage("service provider returned null")
-            .is(notNull());
+                .usingMessage("service provider returned null")
+                .is(notNull());
 
         try
         {

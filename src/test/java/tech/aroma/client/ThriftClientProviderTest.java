@@ -21,35 +21,26 @@ import java.net.ServerSocket;
 import java.net.URL;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import tech.aroma.client.exceptions.AromaException;
 import tech.aroma.thrift.application.service.ApplicationService;
-import tech.aroma.thrift.endpoint.Endpoint;
-import tech.aroma.thrift.endpoint.HttpRestEndpoint;
-import tech.aroma.thrift.endpoint.HttpThriftEndpoint;
-import tech.aroma.thrift.endpoint.TcpEndpoint;
+import tech.aroma.thrift.endpoint.*;
 import tech.sirwellington.alchemy.annotations.testing.IntegrationTest;
-import tech.sirwellington.alchemy.test.junit.runners.AlchemyTestRunner;
-import tech.sirwellington.alchemy.test.junit.runners.DontRepeat;
-import tech.sirwellington.alchemy.test.junit.runners.GenerateInteger;
-import tech.sirwellington.alchemy.test.junit.runners.GenerateURL;
-import tech.sirwellington.alchemy.test.junit.runners.Repeat;
+import tech.sirwellington.alchemy.test.junit.runners.*;
 
 import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 import static tech.sirwellington.alchemy.generator.AlchemyGenerator.one;
 import static tech.sirwellington.alchemy.generator.BooleanGenerators.booleans;
 import static tech.sirwellington.alchemy.generator.StringGenerators.hexadecimalString;
-import static tech.sirwellington.alchemy.test.junit.ThrowableAssertion.assertThrows;
+import static tech.sirwellington.alchemy.test.junit.ThrowableAssertion.*;
 import static tech.sirwellington.alchemy.test.junit.runners.GenerateInteger.Type.RANGE;
 
 /**
- *
  * @author SirWellington
  */
 @IntegrationTest
@@ -139,10 +130,10 @@ public class ThriftClientProviderTest
     public void testConstructor() throws Exception
     {
         assertThrows(() -> new ThriftClientProvider(null))
-            .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
 
         assertThrows(() -> new ThriftClientProvider(() -> null))
-            .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -159,7 +150,7 @@ public class ThriftClientProviderTest
         endpoint.setHttpRest(rest);
 
         assertThrows(() -> instance.get())
-            .isInstanceOf(AromaException.class);
+                .isInstanceOf(AromaException.class);
     }
 
     @Test
@@ -170,7 +161,7 @@ public class ThriftClientProviderTest
         endpoint.setHttpThrift(http);
 
         assertThrows(() -> instance.get())
-            .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
 }

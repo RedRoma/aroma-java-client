@@ -18,7 +18,7 @@ package tech.aroma.client.exceptions;
 
 /**
  * Thrown when an Operation could not be completed.
- * 
+ *
  * @author SirWellington
  */
 public class AromaOperationFailedException extends AromaException

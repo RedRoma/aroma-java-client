@@ -20,7 +20,7 @@ import tech.aroma.client.Aroma;
 
 /**
  * Thrown when the {@linkplain Aroma Aroma Client} cannot access the network.
- * 
+ *
  * @author SirWellington
  */
 public class AromaNetworkException extends AromaOperationFailedException
