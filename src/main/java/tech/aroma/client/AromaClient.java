@@ -84,6 +84,12 @@ final class AromaClient implements Aroma
     }
 
     @Override
+    public void sendLowPriorityMessage(String title, String body, Object... args)
+    {
+        sendMessage(Priority.LOW, title, body, args);
+    }
+
+    @Override
     public void sendMediumPriorityMessage(String title)
     {
         sendMediumPriorityMessage(title, "");

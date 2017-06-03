@@ -42,6 +42,13 @@ import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.*
  * <p>
  * Begin a new message with {@link Aroma#begin() } and finish with {@link Aroma.Request#send() };
  *
+ * <p>
+ *     To create a new instance, see {@link Instances#create(String)},
+ *     or use the {@linkplain Builder#create() Builder}
+ * </p>
+ *
+ * @see Instances
+ * @see Builder
  * @author SirWellington
  */
 @ThreadSafe
@@ -109,10 +116,7 @@ public interface Aroma
      * @param body  Body of the message
      * @param args  Any arguments for the body.
      */
-    default void sendLowPriorityMessage(@NonEmpty String title, @NonEmpty String body, Object... args)
-    {
-        sendMessage(Priority.LOW, title, body, args);
-    }
+    void sendLowPriorityMessage(@NonEmpty String title, @NonEmpty String body, Object... args);
 
     /**
      * Convenience method to send a message with {@linkplain Priority#MEDIUM Medium Priority}.
@@ -156,53 +160,51 @@ public interface Aroma
      */
     void sendMessage(@Required Priority priority, @NonEmpty String title, @NonEmpty String body, Object... args);
 
-    /**
-     * Creates a default Aroma Client using the specified application token.
-     *
-     * @param applicationToken The unique Application Token created from the Aroma App.
-     * @return
-     * @see <a href="http://aroma.redroma.tech/how-to">http://aroma.redroma.tech/how-to</a>
-     * @see <a href="http://redroma.github.io/aroma-java-client/">http://redroma.github.io/aroma-java-client/</a>
-     */
-    static Aroma create(@NonEmpty String applicationToken)
-    {
-        checkThat(applicationToken)
-                .usingMessage("Application Token cannot be empty")
-                .is(nonEmptyString());
-
-        return newBuilder()
-                .withAsyncExecutorService(Executors.newSingleThreadExecutor())
-                .withApplicationToken(applicationToken)
-                .build();
-    }
 
     /**
-     * Creates an Aroma Client that does absolutely nothing with the messages sent.
-     * <p>
-     * This is useful for testing purposes when you don't want messages sent over the wire.
-     *
-     * @return
+     * Use to create instances of {@link Aroma}
      */
-    static Aroma createNoOpInstance()
+    public class Instances
     {
-        return AromaDoNothingClient.INSTANCE;
-    }
+        /**
+         * Creates a default Aroma Client using the specified application token.
+         *
+         * @param applicationToken The unique Application Token created from the Aroma App.
+         * @return
+         * @see <a href="http://aroma.redroma.tech/how-to">http://aroma.redroma.tech/how-to</a>
+         * @see <a href="http://redroma.github.io/aroma-java-client/">http://redroma.github.io/aroma-java-client/</a>
+         */
+        static Aroma create(@NonEmpty String applicationToken)
+        {
+            checkThat(applicationToken)
+                    .usingMessage("Application Token cannot be empty")
+                    .is(nonEmptyString());
 
-    /**
-     * Use a Builder to create a more fine-tuned {@linkplain Aroma Aroma Client}.
-     *
-     * @return
-     */
-    static Builder newBuilder()
-    {
-        return new Builder();
+            return Builder.create()
+                    .withAsyncExecutorService(Executors.newSingleThreadExecutor())
+                    .withApplicationToken(applicationToken)
+                    .build();
+        }
+
+        /**
+         * Creates an Aroma Client that does absolutely nothing with the messages sent.
+         * <p>
+         * This is useful for testing purposes when you don't want messages sent over the wire.
+         *
+         * @return
+         */
+        static Aroma createNoOpInstance()
+        {
+            return AromaDoNothingClient.INSTANCE;
+        }
+
     }
 
     /**
      * Use a Builder to create a more fine-tuned {@linkplain Aroma Aroma Client}.
      */
     @BuilderPattern(role = BUILDER)
-    static final class Builder
+    final class Builder
     {
         /**
          * Create a new Builder.
@@ -315,7 +317,9 @@ public interface Aroma
             ApplicationToken token = new ApplicationToken().setTokenId(applicationToken);
 
             ThriftClientProvider clientProvider = new ThriftClientProvider(() -> endpoint);
+
             AromaClient aroma = new AromaClient(() -> clientProvider.get(), async, token);
+
             return aroma;
 
         }
