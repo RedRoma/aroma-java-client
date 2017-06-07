@@ -57,11 +57,11 @@ internal class RequestImpl : Aroma.Request
     {
         checkThat(title)
                 .usingMessage("title cannot be empty")
-                .`is`(nonEmptyString())
+                .isA(nonEmptyString())
                 .usingMessage("title too short")
-                .`is`(stringWithLengthGreaterThanOrEqualTo(3))
+                .isA(stringWithLengthGreaterThanOrEqualTo(3))
                 .usingMessage("title too long")
-                .`is`(stringWithLengthLessThan(ApplicationServiceConstants.MAX_TITLE_LENGTH))
+                .isA(stringWithLengthLessThan(ApplicationServiceConstants.MAX_TITLE_LENGTH))
 
         return RequestImpl(aromaClient, title, text, priority)
     }
@@ -70,7 +70,7 @@ internal class RequestImpl : Aroma.Request
     {
         checkThat(message)
                 .usingMessage("message cannot be null")
-                .`is`(notNull())
+                .isA(notNull())
 
         val combinedMessage = combineStringAndArgs(message, *args)
         return RequestImpl(aromaClient, title, combinedMessage, priority)
@@ -123,7 +123,7 @@ internal class RequestImpl : Aroma.Request
     {
         checkThat(priority)
                 .usingMessage("priority cannot be null")
-                .`is`(notNull())
+                .isA(notNull())
 
         return RequestImpl(aromaClient, title, text, priority)
     }

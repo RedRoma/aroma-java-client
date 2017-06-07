@@ -54,7 +54,7 @@ internal class AromaClient: Aroma
 
         checkThat(token.tokenId)
                 .usingMessage("token is missing")
-                .`is`(nonEmptyString())
+                .isA(nonEmptyString())
 
         this.applicationServiceProvider = applicationServiceProvider
         this.executor = executor
@@ -90,7 +90,7 @@ internal class AromaClient: Aroma
 
         checkThat(client)
                 .usingMessage("service provider returned null")
-                .`is`(notNull())
+                .isA(notNull())
 
         try
         {

@@ -187,11 +187,11 @@ interface Aroma
      */
     fun sendMessage(@Required priority: Priority, @NonEmpty title: String, @NonEmpty body: String, vararg args: Any)
     {
-        checkThat(priority).`is`(notNull())
+        checkThat(priority).isA(notNull())
 
         checkThat(title)
                 .usingMessage("title cannot be empty")
-                .`is`(nonEmptyString())
+                .isA(nonEmptyString())
 
         var request = begin().withPriority(priority)
                 .titled(title)
@@ -229,7 +229,7 @@ interface Aroma
         fun withApplicationToken(@Required applicationToken: String): Builder
         {
             checkThat(applicationToken)
-                    .`is`(nonEmptyString())
+                    .isA(nonEmptyString())
 
             this.applicationToken = applicationToken
 
@@ -253,10 +253,10 @@ interface Aroma
         {
             checkThat(hostname)
                     .usingMessage("hostname cannot be empty")
-                    .`is`(nonEmptyString())
+                    .isA(nonEmptyString())
 
             checkThat(port)
-                    .`is`(validPort())
+                    .isA(validPort())
 
             this.hostname = hostname
             this.port = port
@@ -277,7 +277,7 @@ interface Aroma
         @Throws(IllegalArgumentException::class)
         fun withAsyncExecutorService(@Required executor: ExecutorService): Builder
         {
-            checkThat(executor).`is`(notNull())
+            checkThat(executor).isA(notNull())
 
             this.async = executor
 
@@ -295,18 +295,18 @@ interface Aroma
         fun build(): Aroma
         {
             checkThat(hostname)
-                    .throwing<IllegalStateException>(IllegalStateException::class.java)
+                    .throwing(IllegalStateException::class.java)
                     .usingMessage("missing hostname")
-                    .`is`(nonEmptyString())
+                    .isA(nonEmptyString())
 
             checkThat(applicationToken)
-                    .throwing<IllegalStateException>(IllegalStateException::class.java)
+                    .throwing(IllegalStateException::class.java)
                     .usingMessage("missing Application Token")
-                    .`is`(nonEmptyString())
+                    .isA(nonEmptyString())
 
             checkThat(port)
-                    .throwing<IllegalStateException>(IllegalStateException::class.java)
-                    .`is`(validPort())
+                    .throwing(IllegalStateException::class.java)
+                    .isA(validPort())
 
             val executor = async ?: Executors.newSingleThreadExecutor()
 
@@ -339,7 +339,8 @@ interface Aroma
 
              * @return
              */
-            internal fun create(): Builder
+            @JvmStatic
+            fun create(): Builder
             {
                 return Builder()
             }
@@ -347,7 +348,7 @@ interface Aroma
 
     }
 
-    companion object
+    companion object Factory
     {
 
         /**
@@ -365,7 +366,7 @@ interface Aroma
         {
             checkThat(applicationToken)
                     .usingMessage("Application Token cannot be empty")
-                    .`is`(nonEmptyString())
+                    .isA(nonEmptyString())
 
             return newBuilder()
                     .withAsyncExecutorService(Executors.newSingleThreadExecutor())
