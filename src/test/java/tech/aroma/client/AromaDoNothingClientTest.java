@@ -28,7 +28,7 @@ public class AromaDoNothingClientTest
     @Before
     public void setup()
     {
-        instance = AromaDoNothingClient.INSTANCE;
+        instance = AromaDoNothingClient.Companion.getINSTANCE();
     }
 
     @Test

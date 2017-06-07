@@ -18,9 +18,9 @@ package tech.aroma.client;
 
 import tech.aroma.thrift.Urgency;
 import tech.sirwellington.alchemy.annotations.arguments.Required;
+import tech.sirwellington.alchemy.arguments.assertions.Assertions;
 
 import static tech.sirwellington.alchemy.arguments.Arguments.*;
-import static tech.sirwellington.alchemy.arguments.assertions.Assertions.notNull;
 
 /*
  * This class exists to give some Schema Isolation to Clients from any changes that happen in the Thrift Specification.
@@ -56,7 +56,7 @@ public enum Priority
 
     private Priority(@Required Urgency thriftUrgency)
     {
-        checkThat(thriftUrgency).is(notNull());
+        checkThat(thriftUrgency).is(Assertions.<Urgency>notNull());
 
         this.thriftUrgency = thriftUrgency;
     }
