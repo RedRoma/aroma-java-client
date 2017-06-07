@@ -93,16 +93,13 @@
         <dependency>
             <groupId>tech.sirwellington.alchemy</groupId>
             <artifactId>alchemy-annotations</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>tech.sirwellington.alchemy</groupId>
-            <artifactId>alchemy-arguments</artifactId>
+            <version>1.7</version>
         </dependency>
 
         <dependency>
             <groupId>tech.sirwellington.alchemy</groupId>
             <artifactId>alchemy-thrift</artifactId>
+            <version>2.0</version>
         </dependency>
 
 
@@ -239,6 +236,7 @@
                     </execution>
                 </executions>
             </plugin>
+
         </plugins>
     </build>
 
