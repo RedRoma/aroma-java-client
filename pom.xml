@@ -42,8 +42,6 @@
         <!--Java Compiler Properties-->
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
-        <kotlin.version>1.1.3-eap-34</kotlin.version>
-        <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
     </properties>
 
     <!-- END OF POM METADATA -->
