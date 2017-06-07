@@ -41,15 +41,12 @@ import tech.aroma.thrift.exceptions.OperationFailedException
 import tech.sirwellington.alchemy.annotations.testing.TimeSensitive
 import tech.sirwellington.alchemy.arguments.Arguments.checkThat
 import tech.sirwellington.alchemy.arguments.assertions.*
-import tech.sirwellington.alchemy.generator.EnumGenerators
-import tech.sirwellington.alchemy.generator.EnumGenerators.Companion
 import tech.sirwellington.alchemy.generator.EnumGenerators.Companion.enumValueOf
 import tech.sirwellington.alchemy.generator.one
 import tech.sirwellington.alchemy.test.junit.runners.AlchemyTestRunner
 import tech.sirwellington.alchemy.test.junit.runners.GeneratePojo
 import tech.sirwellington.alchemy.test.junit.runners.GenerateString
 import tech.sirwellington.alchemy.test.junit.runners.Repeat
-import java.time.Instant
 
 /**
  * @author SirWellington
@@ -138,9 +135,8 @@ class AromaClientTest
         assertThat<Urgency>(requestMade.urgency, `is`<Urgency>(priority!!.toThrift()))
         assertThat(requestMade.applicationToken, `is`<ApplicationToken>(token))
 
-        val timeOfMessage = Instant.ofEpochMilli(requestMade.timeOfMessage)
-        checkThat(timeOfMessage)
-                .`is`(nowWithinDelta(1000L))
+        checkThat(requestMade.timeOfMessage)
+                .isA(epochNowWithinDelta(1000))
 
         verify<TTransport>(transport, atLeastOnce()).close()
     }

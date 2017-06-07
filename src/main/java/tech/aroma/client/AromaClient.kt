@@ -28,7 +28,6 @@ import tech.sirwellington.alchemy.arguments.assertions.*
 import tech.sirwellington.alchemy.thrift.clients.Clients
 import java.net.InetAddress
 import java.net.UnknownHostException
-import java.time.Instant.now
 import java.util.concurrent.ExecutorService
 
 /**
@@ -68,7 +67,7 @@ internal class AromaClient: Aroma
 
     fun sendMessage(@Required request: RequestImpl)
     {
-        val now = now()
+        val now = System.currentTimeMillis()
 
         val sendMessageRequest = SendMessageRequest()
                 .setApplicationToken(token)
@@ -79,7 +78,7 @@ internal class AromaClient: Aroma
                 .setDeviceName(deviceName)
                 .setOperatingSystemName(operatingSystem)
                 .setIpv4Address(ipv4Address)
-                .setTimeOfMessage(now.toEpochMilli())
+                .setTimeOfMessage(now)
 
         executor.submit { sendMessageAsync(sendMessageRequest) }
     }
