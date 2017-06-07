@@ -26,9 +26,12 @@ import tech.sirwellington.alchemy.test.junit.runners.*
 
 import org.hamcrest.Matchers.notNullValue
 import org.junit.Assert.assertThat
-import tech.sirwellington.alchemy.generator.AlchemyGenerator.one
-import tech.sirwellington.alchemy.generator.EnumGenerators.enumValueOf
-import tech.sirwellington.alchemy.generator.NumberGenerators.negativeIntegers
+import tech.sirwellington.alchemy.generator.EnumGenerators
+import tech.sirwellington.alchemy.generator.EnumGenerators.Companion
+import tech.sirwellington.alchemy.generator.EnumGenerators.Companion.enumValueOf
+import tech.sirwellington.alchemy.generator.NumberGenerators
+import tech.sirwellington.alchemy.generator.NumberGenerators.Companion.negativeIntegers
+import tech.sirwellington.alchemy.generator.one
 import tech.sirwellington.alchemy.test.junit.ThrowableAssertion.*
 import tech.sirwellington.alchemy.test.junit.runners.GenerateInteger.Type.RANGE
 import tech.sirwellington.alchemy.test.junit.runners.GenerateString.Type.UUID
@@ -146,7 +149,7 @@ class AromaTest
     fun sendMessage()
     {
 
-        val priority = enumValueOf(Priority::class.java).get()
+        val priority = one(enumValueOf<Priority>())
 
         instance.sendMessage(priority, title, body)
 

@@ -37,11 +37,11 @@ import tech.aroma.thrift.application.service.ApplicationServiceConstants
 import tech.aroma.thrift.application.service.SendMessageRequest
 import tech.aroma.thrift.authentication.ApplicationToken
 import tech.sirwellington.alchemy.arguments.Arguments.checkThat
-import tech.sirwellington.alchemy.arguments.assertions.TimeAssertions.epochNowWithinDelta
-import tech.sirwellington.alchemy.generator.AlchemyGenerator.one
-import tech.sirwellington.alchemy.generator.EnumGenerators.enumValueOf
-import tech.sirwellington.alchemy.generator.NumberGenerators.integers
-import tech.sirwellington.alchemy.generator.StringGenerators.alphabeticString
+import tech.sirwellington.alchemy.arguments.assertions.*
+import tech.sirwellington.alchemy.generator.EnumGenerators
+import tech.sirwellington.alchemy.generator.NumberGenerators.Companion.integers
+import tech.sirwellington.alchemy.generator.StringGenerators.Companion.alphabeticStrings
+import tech.sirwellington.alchemy.generator.one
 import tech.sirwellington.alchemy.test.junit.ThrowableAssertion.assertThrows
 import tech.sirwellington.alchemy.test.junit.runners.AlchemyTestRunner
 import tech.sirwellington.alchemy.test.junit.runners.DontRepeat
@@ -103,7 +103,7 @@ class RequestImplTest
     @Test
     fun testMessage()
     {
-        val newMessage = one(alphabeticString(100))
+        val newMessage = one(alphabeticStrings(100))
 
         val result = instance.withBody(newMessage)
 
@@ -118,9 +118,9 @@ class RequestImplTest
     @Test
     fun testMessageFormatting()
     {
-        val first = one(alphabeticString(5))
-        val second = one(alphabeticString(5))
-        val third = one(alphabeticString(5))
+        val first = one(alphabeticStrings(5))
+        val second = one(alphabeticStrings(5))
+        val third = one(alphabeticStrings(5))
 
         val formattedMessage = "First {} Second {} Third {}"
         val expected = "First $first Second $second Third $third"
@@ -143,7 +143,7 @@ class RequestImplTest
     @Test
     fun testWithPriority()
     {
-        val newPriority = enumValueOf(Priority::class.java).get()
+        val newPriority = EnumGenerators.enumValueOf<Priority>().get()
         val result = instance.withPriority(newPriority)
         assertThat(result, isA<RequestImpl>())
         assertThat(result, !(sameInstance<Any>(instance)))
@@ -169,7 +169,7 @@ class RequestImplTest
         assertThat(request.applicationToken, equalTo(token))
 
         checkThat(request.timeOfMessage)
-                .`is`(epochNowWithinDelta(1000L))
+                .isA(epochNowWithinDelta(1000L))
     }
 
     @Test
@@ -196,7 +196,7 @@ class RequestImplTest
     @Test
     fun testTitled()
     {
-        val newTitle = one(alphabeticString(10))
+        val newTitle = one(alphabeticStrings(10))
 
         val result = instance.titled(newTitle)
         assertThat(result, isA<RequestImpl>())
@@ -204,7 +204,7 @@ class RequestImplTest
 
         val newRequest = result as RequestImpl
         assertThat(newRequest.priority, equalTo(instance.priority))
-        assertThat(newRequest.text, equalTo<String>(body))
+        assertThat(newRequest.text, equalTo(body))
         assertThat(newRequest.title, equalTo(newTitle))
     }
 
@@ -214,7 +214,7 @@ class RequestImplTest
         val length = one(integers(ApplicationServiceConstants.MAX_TITLE_LENGTH + 1,
                                   ApplicationServiceConstants.MAX_TITLE_LENGTH * 2))
 
-        val longTitle = one(alphabeticString(length))
+        val longTitle = one(alphabeticStrings(length))
         assertThrows { instance.titled(longTitle) }
     }
 
@@ -223,7 +223,7 @@ class RequestImplTest
     {
         val length = one(integers(1, 2))
 
-        val shortTitle = one(alphabeticString(length))
+        val shortTitle = one(alphabeticStrings(length))
         assertThrows { instance.titled(shortTitle) }
     }
 

@@ -24,8 +24,7 @@ import tech.aroma.thrift.authentication.ApplicationToken
 import tech.sirwellington.alchemy.annotations.arguments.Required
 import tech.sirwellington.alchemy.annotations.concurrency.ThreadSafe
 import tech.sirwellington.alchemy.arguments.Arguments.checkThat
-import tech.sirwellington.alchemy.arguments.assertions.Assertions.notNull
-import tech.sirwellington.alchemy.arguments.assertions.StringAssertions.nonEmptyString
+import tech.sirwellington.alchemy.arguments.assertions.*
 import tech.sirwellington.alchemy.thrift.clients.Clients
 import java.net.InetAddress
 import java.net.UnknownHostException

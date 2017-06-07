@@ -40,8 +40,11 @@ import tech.aroma.thrift.authentication.ApplicationToken
 import tech.aroma.thrift.exceptions.OperationFailedException
 import tech.sirwellington.alchemy.annotations.testing.TimeSensitive
 import tech.sirwellington.alchemy.arguments.Arguments.checkThat
-import tech.sirwellington.alchemy.arguments.assertions.TimeAssertions.nowWithinDelta
-import tech.sirwellington.alchemy.generator.EnumGenerators.enumValueOf
+import tech.sirwellington.alchemy.arguments.assertions.*
+import tech.sirwellington.alchemy.generator.EnumGenerators
+import tech.sirwellington.alchemy.generator.EnumGenerators.Companion
+import tech.sirwellington.alchemy.generator.EnumGenerators.Companion.enumValueOf
+import tech.sirwellington.alchemy.generator.one
 import tech.sirwellington.alchemy.test.junit.runners.AlchemyTestRunner
 import tech.sirwellington.alchemy.test.junit.runners.GeneratePojo
 import tech.sirwellington.alchemy.test.junit.runners.GenerateString
@@ -88,7 +91,7 @@ class AromaClientTest
     @Before
     fun setUp()
     {
-        priority = enumValueOf(Priority::class.java).get()
+        priority = one(enumValueOf<Priority>())
 
         val serviceProvider = Provider<ApplicationService.Iface>{ applicationService }
 

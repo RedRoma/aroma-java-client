@@ -29,14 +29,11 @@ import tech.sirwellington.alchemy.annotations.arguments.*
 import tech.sirwellington.alchemy.annotations.concurrency.ThreadSafe
 import tech.sirwellington.alchemy.annotations.designs.FluidAPIDesign
 import tech.sirwellington.alchemy.annotations.designs.patterns.BuilderPattern
-import tech.sirwellington.alchemy.arguments.Checks
 
 import tech.sirwellington.alchemy.annotations.designs.patterns.BuilderPattern.Role.BUILDER
 import tech.sirwellington.alchemy.annotations.designs.patterns.BuilderPattern.Role.PRODUCT
 import tech.sirwellington.alchemy.arguments.Arguments.*
-import tech.sirwellington.alchemy.arguments.assertions.Assertions.notNull
-import tech.sirwellington.alchemy.arguments.assertions.NetworkAssertions.validPort
-import tech.sirwellington.alchemy.arguments.assertions.StringAssertions.*
+import tech.sirwellington.alchemy.arguments.assertions.*
 
 /**
  * Send Messages from your Application using this interface.
@@ -199,7 +196,7 @@ interface Aroma
         var request = begin().withPriority(priority)
                 .titled(title)
 
-        if (!Checks.Internal.isNullOrEmpty(body))
+        if (body.isNotEmpty())
         {
             request = request.withBody(body, *args)
         }
