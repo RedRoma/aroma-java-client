@@ -17,14 +17,12 @@
 package tech.aroma.client
 
 import com.google.common.util.concurrent.MoreExecutors
+import com.natpryce.hamkrest.assertion.assertThat
+import com.natpryce.hamkrest.equalTo
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.whenever
 import org.apache.thrift.protocol.TProtocol
 import org.apache.thrift.transport.TTransport
-import org.hamcrest.CoreMatchers.`is`
-import org.hamcrest.CoreMatchers.notNullValue
-import org.hamcrest.Matchers.instanceOf
-import org.junit.Assert.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -33,7 +31,6 @@ import org.mockito.Captor
 import org.mockito.Mock
 import org.mockito.Mockito.atLeastOnce
 import org.mockito.Mockito.verify
-import tech.aroma.thrift.Urgency
 import tech.aroma.thrift.application.service.ApplicationService
 import tech.aroma.thrift.application.service.SendMessageRequest
 import tech.aroma.thrift.authentication.ApplicationToken
@@ -43,10 +40,13 @@ import tech.sirwellington.alchemy.arguments.Arguments.checkThat
 import tech.sirwellington.alchemy.arguments.assertions.*
 import tech.sirwellington.alchemy.generator.EnumGenerators.Companion.enumValueOf
 import tech.sirwellington.alchemy.generator.one
+import tech.sirwellington.alchemy.test.hamcrest.notNull
 import tech.sirwellington.alchemy.test.junit.runners.AlchemyTestRunner
 import tech.sirwellington.alchemy.test.junit.runners.GeneratePojo
 import tech.sirwellington.alchemy.test.junit.runners.GenerateString
 import tech.sirwellington.alchemy.test.junit.runners.Repeat
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 /**
  * @author SirWellington
@@ -115,8 +115,8 @@ class AromaClientTest
     fun testBegin()
     {
         val result = instance.begin()
-        assertThat(result, notNullValue())
-        assertThat(result, instanceOf<Any>(RequestImpl::class.java))
+        assertThat(result, notNull)
+        assertTrue { result is RequestImpl }
     }
 
     @TimeSensitive
@@ -129,11 +129,11 @@ class AromaClientTest
         verify(applicationService).sendMessage(requestCaptor!!.capture())
 
         val requestMade = requestCaptor.value
-        assertThat(requestMade, notNullValue())
-        assertThat(requestMade.body, `is`<String>(body))
-        assertThat(requestMade.title, `is`<String>(title))
-        assertThat<Urgency>(requestMade.urgency, `is`<Urgency>(priority!!.toThrift()))
-        assertThat(requestMade.applicationToken, `is`<ApplicationToken>(token))
+        assertFalse { requestMade == null }
+        assertThat(requestMade.body, equalTo(body))
+        assertThat(requestMade.title, equalTo(title))
+        assertThat(requestMade.urgency, equalTo(priority.toThrift()))
+        assertThat(requestMade.applicationToken, equalTo(token))
 
         checkThat(requestMade.timeOfMessage)
                 .isA(epochNowWithinDelta(1000))
