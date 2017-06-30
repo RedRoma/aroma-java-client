@@ -16,9 +16,11 @@ package tech.aroma.client
  * limitations under the License.
  */
 
+import com.google.common.util.concurrent.MoreExecutors
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import tech.aroma.client.Priority.MEDIUM
 import tech.aroma.thrift.application.service.ApplicationServiceConstants
 import tech.sirwellington.alchemy.test.junit.runners.AlchemyTestRunner
 import tech.sirwellington.alchemy.test.junit.runners.GenerateString
@@ -30,7 +32,7 @@ class AromaIT
 {
     private val appToken = ""
     private val hostname = ApplicationServiceConstants.PRODUCTION_ENDPOINT.hostname
-    private val port = 7002
+    private val port = 80
 
     @GenerateString(ALPHABETIC)
     private lateinit var body: String
@@ -43,6 +45,7 @@ class AromaIT
         aroma = Aroma.newBuilder()
                 .withEndpoint(hostname, port)
                 .withApplicationToken(appToken)
+                .withAsyncExecutorService(MoreExecutors.newDirectExecutorService())
                 .build()
     }
 
@@ -51,6 +54,11 @@ class AromaIT
     fun testSendMessage()
     {
         aroma.sendLowPriorityMessage("Unit Test", body)
+
+        aroma.begin().titled("Unit Test")
+                .withBody(body)
+                .withPriority(MEDIUM)
+                .send()
     }
 
 }
