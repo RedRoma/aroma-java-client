@@ -20,6 +20,7 @@ import com.google.common.util.concurrent.MoreExecutors
 import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.equalTo
 import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.capture
 import com.nhaarman.mockito_kotlin.whenever
 import org.apache.thrift.protocol.TProtocol
 import org.apache.thrift.transport.TTransport
@@ -85,6 +86,12 @@ class AromaClientTest
 
     private lateinit var priority: Priority
 
+    @GenerateString
+    private lateinit var hostname: String
+
+    @GenerateString
+    private lateinit var deviceName: String
+
     @Before
     fun setUp()
     {
@@ -126,7 +133,7 @@ class AromaClientTest
     {
         instance.sendMessage(request)
 
-        verify(applicationService).sendMessage(requestCaptor!!.capture())
+        verify(applicationService).sendMessage(requestCaptor.capture())
 
         val requestMade = requestCaptor.value
         assertFalse { requestMade == null }
@@ -151,5 +158,46 @@ class AromaClientTest
         instance.sendMessage(request)
     }
 
+    @Test
+    fun testHostname()
+    {
+        instance.hostname = this.hostname
+
+        assertThat(instance.hostname, equalTo(this.hostname))
+    }
+
+    @Test
+    fun testHostnameIsIncludedInMessage()
+    {
+        instance.hostname = this.hostname
+
+        instance.sendMessage(request)
+
+        verify(applicationService).sendMessage(requestCaptor.capture())
+
+        val requestMade = requestCaptor.value
+        assertThat(requestMade.hostname, equalTo(hostname))
+    }
+
+
+    @Test
+    fun testDeviceName()
+    {
+        instance.deviceName = this.deviceName
+        assertThat(instance.deviceName, equalTo(this.deviceName))
+    }
+
+    @Test
+    fun testDeviceNameIsIncludedInMessage()
+    {
+        instance.deviceName = this.deviceName
+        instance.sendMessage(request)
+
+        verify(applicationService).sendMessage(capture(requestCaptor))
+
+        val requestMade = requestCaptor.value
+        assertThat(requestMade, notNull)
+        assertThat(requestMade.deviceName, equalTo(deviceName))
+    }
 
 }

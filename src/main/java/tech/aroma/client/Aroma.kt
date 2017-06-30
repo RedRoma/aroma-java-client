@@ -50,6 +50,19 @@ interface Aroma
 {
 
     /**
+     * Set your very own hostname for messages sent to Aroma.
+     * This defaults to the [name of the localhost][java.net.InetAddress.getLocalHost].
+     */
+    var hostname: String
+
+    /**
+     * SEt your very own device name for messages sent to Aroma.
+     * This defaults to the [name of the localhost][java.net.InetAddress.getLocalHost],
+     * just like [hostname].
+     */
+    var deviceName: String
+
+    /**
      * Begin a new Aroma Message.
 
      * @return

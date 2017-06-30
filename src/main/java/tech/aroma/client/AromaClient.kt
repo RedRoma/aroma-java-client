@@ -34,15 +34,15 @@ import java.util.concurrent.ExecutorService
  * @author SirWellington
  */
 @ThreadSafe
-internal class AromaClient: Aroma
+internal class AromaClient : Aroma
 {
     private val applicationServiceProvider: Provider<ApplicationService.Iface>
     private val executor: ExecutorService
     private val token: ApplicationToken
 
     private val operatingSystem = nameOfOS
-    private val hostname = getHostname()
-    private val deviceName = getHostname()
+    private var _hostname = getNetworkName()
+    private var _deviceName = getNetworkName()
 
     internal constructor(@Required applicationServiceProvider: Provider<ApplicationService.Iface>,
                          @Required executor: ExecutorService,
@@ -60,6 +60,23 @@ internal class AromaClient: Aroma
         this.token = token
     }
 
+    //Publicly facing names
+    override var hostname: String
+        get() = _hostname
+        set(value)
+        {
+            checkThat(value).isA(nonEmptyString())
+            _hostname = value
+        }
+
+    override var deviceName: String
+        get() = _deviceName
+        set(value)
+        {
+            checkThat(value).isA(nonEmptyString())
+            _deviceName = value
+        }
+
     override fun begin(): Aroma.Request
     {
         return RequestImpl(this, "", "", Priority.LOW)
@@ -74,8 +91,8 @@ internal class AromaClient: Aroma
                 .setBody(request.text)
                 .setTitle(request.title)
                 .setUrgency(request.priority.toThrift())
-                .setHostname(hostname)
-                .setDeviceName(deviceName)
+                .setHostname(_hostname)
+                .setDeviceName(_deviceName)
                 .setOperatingSystemName(operatingSystem)
                 .setIpv4Address(ipv4Address)
                 .setTimeOfMessage(now)
@@ -107,7 +124,7 @@ internal class AromaClient: Aroma
         }
     }
 
-    private fun getHostname(): String
+    private fun getNetworkName(): String
     {
         try
         {

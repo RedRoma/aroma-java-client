@@ -12,6 +12,9 @@ import tech.sirwellington.alchemy.annotations.designs.patterns.SingletonPattern
 internal class AromaDoNothingClient private constructor() : Aroma
 {
 
+    override var hostname: String = ""
+    override var deviceName: String = ""
+
     override fun begin(): Aroma.Request
     {
         return RequestDoNothing
