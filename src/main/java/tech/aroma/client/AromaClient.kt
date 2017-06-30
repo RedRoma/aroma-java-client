@@ -26,7 +26,10 @@ import tech.sirwellington.alchemy.annotations.concurrency.ThreadSafe
 import tech.sirwellington.alchemy.arguments.Arguments.checkThat
 import tech.sirwellington.alchemy.arguments.assertions.*
 import tech.sirwellington.alchemy.thrift.clients.Clients
+import java.net.Inet4Address
+import java.net.Inet6Address
 import java.net.InetAddress
+import java.net.NetworkInterface
 import java.net.UnknownHostException
 import java.util.concurrent.ExecutorService
 
@@ -128,7 +131,23 @@ internal class AromaClient : Aroma
     {
         try
         {
-            return InetAddress.getLocalHost().hostName
+            val addresses = NetworkInterface.getNetworkInterfaces()
+                    .asSequence()
+                    .flatMap { it.inetAddresses.asSequence() }
+                    .toMutableList()
+
+            addresses.add(InetAddress.getLocalHost())
+
+            val nonLocal = addresses
+                    .filter { !it.isLoopbackAddress }
+                    .filter { !it.isLinkLocalAddress }
+                    .filter { it is Inet4Address }
+                    .toList()
+
+            return (nonLocal.lastOrNull() ?:
+                    addresses.firstOrNull { it !is Inet6Address } ?:
+                    addresses.first()).hostAddress
+
         }
         catch (ex: UnknownHostException)
         {
