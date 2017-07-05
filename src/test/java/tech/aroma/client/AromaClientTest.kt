@@ -92,6 +92,12 @@ class AromaClientTest
     @GenerateString
     private lateinit var deviceName: String
 
+    @GenerateString
+    private lateinit var prefix: String
+
+    @GenerateString
+    private lateinit var suffix: String
+
     @Before
     fun setUp()
     {
@@ -200,4 +206,94 @@ class AromaClientTest
         assertThat(requestMade.deviceName, equalTo(deviceName))
     }
 
+    @Test
+    fun testWithPrefix()
+    {
+        instance.bodyPrefix = prefix
+        instance.sendMessage(request)
+
+        val expectedBody = "$prefix$body"
+        verify(applicationService).sendMessage(capture(requestCaptor))
+
+        val requestMade = requestCaptor.value
+        assertThat(requestMade, notNull)
+        assertThat(requestMade.body, equalTo(expectedBody))
+
+    }
+
+    @Test
+    fun testWithoutPrefix()
+    {
+        instance.bodyPrefix = ""
+        instance.sendMessage(request)
+
+        verify(applicationService).sendMessage(capture(requestCaptor))
+
+        val requestMade = requestCaptor.value
+        assertThat(requestMade, notNull)
+        assertThat(requestMade.body, equalTo(body))
+    }
+
+    @Test
+    fun testWithSuffix()
+    {
+        instance.bodySuffix = suffix
+        instance.sendMessage(request)
+
+        verify(applicationService).sendMessage(capture(requestCaptor))
+
+        val requestMade = requestCaptor.value
+        assertThat(requestMade, notNull)
+
+        val expectedBody = "$body$suffix"
+        assertThat(requestMade.body, equalTo(expectedBody))
+    }
+
+    @Test
+    fun testWithoutSuffix()
+    {
+        instance.bodySuffix = ""
+        instance.sendMessage(request)
+
+        verify(applicationService).sendMessage(capture(requestCaptor))
+
+        val requestMade = requestCaptor.value
+
+        assertThat(requestMade, notNull)
+        assertThat(requestMade.body, equalTo(body))
+    }
+
+    @Test
+    fun testWithPrefixAndSuffix()
+    {
+        instance.bodyPrefix = prefix
+        instance.bodySuffix = suffix
+        val expected = "$prefix$body$suffix"
+
+        instance.sendMessage(request)
+
+        verify(applicationService).sendMessage(capture(requestCaptor))
+
+        val requestMade = requestCaptor.value
+        assertThat(requestMade, notNull)
+
+        assertThat(requestMade.body, equalTo(expected))
+    }
+
+    @Test
+    fun testClearPrefix()
+    {
+        instance.bodyPrefix = prefix
+        instance.clearPrefix()
+
+        assertThat(instance.bodyPrefix, equalTo(""))
+    }
+
+    @Test
+    fun testClearSuffix()
+    {
+        instance.bodySuffix = suffix
+        instance.clearSuffix()
+        assertThat(instance.bodySuffix, equalTo(""))
+    }
 }

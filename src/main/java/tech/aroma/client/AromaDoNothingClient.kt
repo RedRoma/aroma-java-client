@@ -14,6 +14,8 @@ internal class AromaDoNothingClient private constructor() : Aroma
 
     override var hostname: String = ""
     override var deviceName: String = ""
+    override var bodyPrefix: String = ""
+    override var bodySuffix: String = ""
 
     override fun begin(): Aroma.Request
     {

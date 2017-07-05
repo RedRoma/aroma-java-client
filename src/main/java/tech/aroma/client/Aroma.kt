@@ -62,6 +62,20 @@ interface Aroma
      */
     var deviceName: String
 
+    var bodyPrefix: String
+
+    var bodySuffix: String
+
+    fun clearSuffix()
+    {
+        bodySuffix = ""
+    }
+
+    fun clearPrefix()
+    {
+        bodyPrefix = ""
+    }
+
     /**
      * Begin a new Aroma Message.
 

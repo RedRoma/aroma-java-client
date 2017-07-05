@@ -46,6 +46,9 @@ internal class AromaClient : Aroma
     private val operatingSystem = nameOfOS
     private var _hostname = getNetworkName()
     private var _deviceName = getNetworkName()
+    private var _suffix = ""
+    private var _prefix = ""
+
 
     internal constructor(@Required applicationServiceProvider: Provider<ApplicationService.Iface>,
                          @Required executor: ExecutorService,
@@ -80,6 +83,20 @@ internal class AromaClient : Aroma
             _deviceName = value
         }
 
+    override var bodyPrefix: String
+        get() = _prefix
+        set(value)
+        {
+            _prefix = value
+        }
+
+    override var bodySuffix: String
+        get() = _suffix
+        set(value)
+        {
+            _suffix = value
+        }
+
     override fun begin(): Aroma.Request
     {
         return RequestImpl(this, "", "", Priority.LOW)
@@ -89,9 +106,11 @@ internal class AromaClient : Aroma
     {
         val now = System.currentTimeMillis()
 
+        val body = "$_prefix${request.text}$_suffix"
+
         val sendMessageRequest = SendMessageRequest()
                 .setApplicationToken(token)
-                .setBody(request.text)
+                .setBody(body)
                 .setTitle(request.title)
                 .setUrgency(request.priority.toThrift())
                 .setHostname(_hostname)
