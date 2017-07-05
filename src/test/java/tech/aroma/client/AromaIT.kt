@@ -25,14 +25,17 @@ import tech.aroma.thrift.application.service.ApplicationServiceConstants
 import tech.sirwellington.alchemy.test.junit.runners.AlchemyTestRunner
 import tech.sirwellington.alchemy.test.junit.runners.GenerateString
 import tech.sirwellington.alchemy.test.junit.runners.GenerateString.Type.ALPHABETIC
+import tech.sirwellington.alchemy.test.junit.runners.GenerateString.Type.UUID
 import tech.sirwellington.alchemy.test.junit.runners.Repeat
 
 @RunWith(AlchemyTestRunner::class)
 class AromaIT
 {
-    private val appToken = ""
     private val hostname = ApplicationServiceConstants.PRODUCTION_ENDPOINT.hostname
     private val port = 80
+
+    @GenerateString(UUID)
+    private lateinit var appToken: String
 
     @GenerateString(ALPHABETIC)
     private lateinit var body: String
