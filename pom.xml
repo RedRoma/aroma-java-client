@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>aroma-java-client</artifactId>
-    <version>2.2-SNAPSHOT</version>
+    <version>2.2</version>
     <name>${project.artifactId}</name>
     <packaging>jar</packaging>
 
