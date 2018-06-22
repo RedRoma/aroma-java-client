@@ -46,22 +46,23 @@ class AromaIT
     fun setUp()
     {
         aroma = Aroma.newBuilder()
-                .withEndpoint(hostname, port)
-                .withApplicationToken(appToken)
-                .withAsyncExecutorService(MoreExecutors.newDirectExecutorService())
-                .build()
+                     .withEndpoint(hostname, port)
+                     .withApplicationToken(appToken)
+                     .withAsyncExecutorService(MoreExecutors.newDirectExecutorService())
+                     .build()
     }
 
-    @Repeat(25)
+    @Repeat(1000)
     @Test
     fun testSendMessage()
     {
         aroma.sendLowPriorityMessage("Unit Test", body)
 
-        aroma.begin().titled("Unit Test")
-                .withBody(body)
-                .withPriority(MEDIUM)
-                .send()
+        aroma.begin()
+             .titled("Unit Test")
+             .withBody(body)
+             .withPriority(MEDIUM)
+             .send()
     }
 
 }
