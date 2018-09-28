@@ -48,11 +48,11 @@ class AromaIT
         aroma = Aroma.newBuilder()
                      .withEndpoint(hostname, port)
                      .withApplicationToken(appToken)
-                     .withAsyncExecutorService(MoreExecutors.newDirectExecutorService())
+                     .withAsyncExecutor(MoreExecutors.newDirectExecutorService())
                      .build()
     }
 
-    @Repeat(1000)
+    @Repeat(100)
     @Test
     fun testSendMessage()
     {

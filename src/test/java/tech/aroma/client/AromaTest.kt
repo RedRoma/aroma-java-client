@@ -16,25 +16,20 @@
 
 package tech.aroma.client
 
-import java.util.concurrent.ExecutorService
-
 import com.google.common.util.concurrent.MoreExecutors
+import org.hamcrest.Matchers.notNullValue
+import org.junit.Assert.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import tech.sirwellington.alchemy.test.junit.runners.*
-
-import org.hamcrest.Matchers.notNullValue
-import org.junit.Assert.assertThat
-import tech.sirwellington.alchemy.generator.EnumGenerators
-import tech.sirwellington.alchemy.generator.EnumGenerators.Companion
 import tech.sirwellington.alchemy.generator.EnumGenerators.Companion.enumValueOf
-import tech.sirwellington.alchemy.generator.NumberGenerators
 import tech.sirwellington.alchemy.generator.NumberGenerators.Companion.negativeIntegers
 import tech.sirwellington.alchemy.generator.one
-import tech.sirwellington.alchemy.test.junit.ThrowableAssertion.*
+import tech.sirwellington.alchemy.test.junit.ThrowableAssertion.assertThrows
+import tech.sirwellington.alchemy.test.junit.runners.*
 import tech.sirwellington.alchemy.test.junit.runners.GenerateInteger.Type.RANGE
 import tech.sirwellington.alchemy.test.junit.runners.GenerateString.Type.UUID
+import java.util.concurrent.ExecutorService
 
 /**
  * @author SirWellington
@@ -200,15 +195,15 @@ class AromaTest
     @Test
     fun testBuilderWithExecutorService()
     {
-        val result = builder.withAsyncExecutorService(executor)
+        val result = builder.withAsyncExecutor(executor)
         assertThat(result, notNullValue())
     }
 
     @DontRepeat
     @Test
-    fun testBuilderWithExecutorServiceWithBadArgs()
+    fun testBuilderWithExecutorWithBadArgs()
     {
-        val result = builder.withAsyncExecutorService(executor)
+        val result = builder.withAsyncExecutor(executor)
         assertThat(result, notNullValue())
     }
 

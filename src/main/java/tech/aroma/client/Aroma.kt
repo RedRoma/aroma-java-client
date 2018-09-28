@@ -16,24 +16,27 @@
 
 package tech.aroma.client
 
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
-
 import tech.aroma.client.exceptions.AromaException
 import tech.aroma.thrift.application.service.ApplicationService
 import tech.aroma.thrift.application.service.ApplicationServiceConstants
 import tech.aroma.thrift.authentication.ApplicationToken
 import tech.aroma.thrift.endpoint.Endpoint
 import tech.aroma.thrift.endpoint.TcpEndpoint
-import tech.sirwellington.alchemy.annotations.arguments.*
+import tech.sirwellington.alchemy.annotations.arguments.NonEmpty
+import tech.sirwellington.alchemy.annotations.arguments.Optional
+import tech.sirwellington.alchemy.annotations.arguments.Required
 import tech.sirwellington.alchemy.annotations.concurrency.ThreadSafe
 import tech.sirwellington.alchemy.annotations.designs.FluidAPIDesign
 import tech.sirwellington.alchemy.annotations.designs.patterns.BuilderPattern
-
 import tech.sirwellington.alchemy.annotations.designs.patterns.BuilderPattern.Role.BUILDER
 import tech.sirwellington.alchemy.annotations.designs.patterns.BuilderPattern.Role.PRODUCT
-import tech.sirwellington.alchemy.arguments.Arguments.*
-import tech.sirwellington.alchemy.arguments.assertions.*
+import tech.sirwellington.alchemy.arguments.Arguments.checkThat
+import tech.sirwellington.alchemy.arguments.assertions.nonEmptyString
+import tech.sirwellington.alchemy.arguments.assertions.notNull
+import tech.sirwellington.alchemy.arguments.assertions.validPort
+import java.util.concurrent.Executor
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 /**
  * Send Messages from your Application using this interface.
@@ -241,7 +244,7 @@ interface Aroma
         private var hostname = ApplicationServiceConstants.PRODUCTION_ENDPOINT.getHostname()
         private var port = ApplicationServiceConstants.PRODUCTION_ENDPOINT.getPort()
         private var applicationToken = ""
-        private var async: ExecutorService? = null
+        private var async: Executor? = null
 
         /**
          * Set the Token ID created from the Aroma App.
@@ -292,7 +295,7 @@ interface Aroma
         }
 
         /**
-         * Set an [ExecutorService] to be used for making asynchronous requests. Note that if one isn't specified, a
+         * Set an [Executor] to be used for making asynchronous requests. Note that if one isn't specified, a
          * [Single-Threaded Executor][Executors.newSingleThreadExecutor] is used instead.
 
          * @param executor
@@ -302,13 +305,23 @@ interface Aroma
          * @throws IllegalArgumentException
          */
         @Throws(IllegalArgumentException::class)
-        fun withAsyncExecutorService(@Required executor: ExecutorService): Builder
+        fun withAsyncExecutor(@Required executor: Executor): Builder
         {
             checkThat(executor).isA(notNull())
 
             this.async = executor
 
             return this
+        }
+
+        /**
+         * @deprecated in favor of [withAsyncExecutor].
+         */
+        @Deprecated("Use 'withAsyncExecutor' instead", replaceWith = ReplaceWith("withAsyncExecutor"))
+        @Throws(IllegalArgumentException::class)
+        fun withAsyncExecutorService(@Required executor: ExecutorService): Builder
+        {
+            return this.withAsyncExecutor(executor)
         }
 
         /**
@@ -396,7 +409,7 @@ interface Aroma
                     .isA(nonEmptyString())
 
             return newBuilder()
-                    .withAsyncExecutorService(Executors.newSingleThreadExecutor())
+                    .withAsyncExecutor(Executors.newSingleThreadExecutor())
                     .withApplicationToken(applicationToken)
                     .build()
         }
