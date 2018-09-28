@@ -31,6 +31,7 @@ import java.net.Inet6Address
 import java.net.InetAddress
 import java.net.NetworkInterface
 import java.net.UnknownHostException
+import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 
 /**
@@ -40,7 +41,7 @@ import java.util.concurrent.ExecutorService
 internal class AromaClient : Aroma
 {
     private val applicationServiceProvider: Provider<ApplicationService.Iface>
-    private val executor: ExecutorService
+    private val executor: Executor
     private val token: ApplicationToken
 
     private val operatingSystem = nameOfOS
@@ -51,7 +52,7 @@ internal class AromaClient : Aroma
 
 
     internal constructor(@Required applicationServiceProvider: Provider<ApplicationService.Iface>,
-                         @Required executor: ExecutorService,
+                         @Required executor: Executor,
                          @Required token: ApplicationToken)
     {
         checkThat(applicationServiceProvider, executor, token)
@@ -119,7 +120,7 @@ internal class AromaClient : Aroma
                 .setIpv4Address(ipv4Address)
                 .setTimeOfMessage(now)
 
-        executor.submit { sendMessageAsync(sendMessageRequest) }
+        executor.execute { sendMessageAsync(sendMessageRequest) }
     }
 
     private fun sendMessageAsync(request: SendMessageRequest)

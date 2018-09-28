@@ -46,6 +46,7 @@ import tech.sirwellington.alchemy.test.junit.runners.AlchemyTestRunner
 import tech.sirwellington.alchemy.test.junit.runners.GeneratePojo
 import tech.sirwellington.alchemy.test.junit.runners.GenerateString
 import tech.sirwellington.alchemy.test.junit.runners.Repeat
+import java.util.concurrent.Executor
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -69,7 +70,7 @@ class AromaClientTest
     @GeneratePojo
     private lateinit var token: ApplicationToken
 
-    private val executor = MoreExecutors.newDirectExecutorService()
+    private val executor: Executor = MoreExecutors.newDirectExecutorService()
 
     @Captor
     private lateinit var requestCaptor: ArgumentCaptor<SendMessageRequest>
