@@ -1,11 +1,11 @@
 /*
- * Copyright 2017 RedRoma, Inc.
+ * Copyright 2018 RedRoma, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * You may not use this file except in compliance with the License.
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -24,15 +24,11 @@ import tech.aroma.thrift.authentication.ApplicationToken
 import tech.sirwellington.alchemy.annotations.arguments.Required
 import tech.sirwellington.alchemy.annotations.concurrency.ThreadSafe
 import tech.sirwellington.alchemy.arguments.Arguments.checkThat
-import tech.sirwellington.alchemy.arguments.assertions.*
+import tech.sirwellington.alchemy.arguments.assertions.nonEmptyString
+import tech.sirwellington.alchemy.arguments.assertions.notNull
 import tech.sirwellington.alchemy.thrift.clients.Clients
-import java.net.Inet4Address
-import java.net.Inet6Address
-import java.net.InetAddress
-import java.net.NetworkInterface
-import java.net.UnknownHostException
+import java.net.*
 import java.util.concurrent.Executor
-import java.util.concurrent.ExecutorService
 
 /**
  * @author SirWellington

@@ -1,11 +1,11 @@
 /*
- * Copyright 2017 RedRoma, Inc.
+ * Copyright 2018 RedRoma, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * You may not use this file except in compliance with the License.
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,12 +17,8 @@
 package tech.aroma.client
 
 import com.google.common.util.concurrent.MoreExecutors
-import com.natpryce.hamkrest.absent
+import com.natpryce.hamkrest.*
 import com.natpryce.hamkrest.assertion.assertThat
-import com.natpryce.hamkrest.containsSubstring
-import com.natpryce.hamkrest.equalTo
-import com.natpryce.hamkrest.isA
-import com.natpryce.hamkrest.sameInstance
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -37,19 +33,14 @@ import tech.aroma.thrift.application.service.ApplicationServiceConstants
 import tech.aroma.thrift.application.service.SendMessageRequest
 import tech.aroma.thrift.authentication.ApplicationToken
 import tech.sirwellington.alchemy.arguments.Arguments.checkThat
-import tech.sirwellington.alchemy.arguments.assertions.*
+import tech.sirwellington.alchemy.arguments.assertions.epochNowWithinDelta
 import tech.sirwellington.alchemy.generator.EnumGenerators
 import tech.sirwellington.alchemy.generator.NumberGenerators.Companion.integers
 import tech.sirwellington.alchemy.generator.StringGenerators.Companion.alphabeticStrings
 import tech.sirwellington.alchemy.generator.one
 import tech.sirwellington.alchemy.test.junit.ThrowableAssertion.assertThrows
-import tech.sirwellington.alchemy.test.junit.runners.AlchemyTestRunner
-import tech.sirwellington.alchemy.test.junit.runners.DontRepeat
-import tech.sirwellington.alchemy.test.junit.runners.GenerateEnum
-import tech.sirwellington.alchemy.test.junit.runners.GeneratePojo
-import tech.sirwellington.alchemy.test.junit.runners.GenerateString
+import tech.sirwellington.alchemy.test.junit.runners.*
 import tech.sirwellington.alchemy.test.junit.runners.GenerateString.Type.ALPHABETIC
-import tech.sirwellington.alchemy.test.junit.runners.Repeat
 import kotlin.test.assertTrue
 
 /**

@@ -1,11 +1,11 @@
 /*
- * Copyright 2017 RedRoma, Inc.
+ * Copyright 2018 RedRoma, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * You may not use this file except in compliance with the License.
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,11 +20,18 @@ import org.slf4j.LoggerFactory
 import org.slf4j.helpers.MessageFormatter
 import tech.aroma.thrift.application.service.ApplicationServiceConstants
 import tech.sirwellington.alchemy.annotations.access.Internal
-import tech.sirwellington.alchemy.annotations.arguments.*
+import tech.sirwellington.alchemy.annotations.arguments.NonEmpty
+import tech.sirwellington.alchemy.annotations.arguments.Optional
+import tech.sirwellington.alchemy.annotations.arguments.Required
 import tech.sirwellington.alchemy.annotations.concurrency.Immutable
 import tech.sirwellington.alchemy.arguments.Arguments.checkThat
-import tech.sirwellington.alchemy.arguments.assertions.*
-import java.io.*
+import tech.sirwellington.alchemy.arguments.assertions.nonEmptyString
+import tech.sirwellington.alchemy.arguments.assertions.notNull
+import tech.sirwellington.alchemy.arguments.assertions.stringWithLengthGreaterThanOrEqualTo
+import tech.sirwellington.alchemy.arguments.assertions.stringWithLengthLessThan
+import java.io.IOException
+import java.io.PrintWriter
+import java.io.StringWriter
 
 /**
  * @author SirWellington

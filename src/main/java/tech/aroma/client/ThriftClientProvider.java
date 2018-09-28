@@ -1,11 +1,11 @@
 /*
- * Copyright 2017 RedRoma, Inc.
+ * Copyright 2018 RedRoma, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * You may not use this file except in compliance with the License.
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,7 +17,6 @@
 package tech.aroma.client;
 
 import java.util.concurrent.TimeUnit;
-import java.util.function.Supplier;
 
 import org.apache.thrift.protocol.*;
 import org.apache.thrift.transport.*;
@@ -34,7 +33,6 @@ import tech.sirwellington.alchemy.arguments.assertions.Assertions;
 
 import static tech.sirwellington.alchemy.annotations.designs.patterns.FactoryPattern.Role.FACTORY;
 import static tech.sirwellington.alchemy.arguments.Arguments.*;
-import static tech.sirwellington.alchemy.arguments.assertions.Assertions.notNull;
 import static tech.sirwellington.alchemy.arguments.assertions.NetworkAssertions.validPort;
 import static tech.sirwellington.alchemy.arguments.assertions.NetworkAssertions.validURL;
 import static tech.sirwellington.alchemy.arguments.assertions.StringAssertions.*;
