@@ -127,6 +127,12 @@
         <dependency>
             <groupId>tech.sirwellington.alchemy</groupId>
             <artifactId>alchemy-thrift</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.thrift</groupId>
+                    <artifactId>libthrift</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
 
@@ -148,6 +154,14 @@
             <artifactId>slf4j-api</artifactId>
         </dependency>
 
+        <!--=======================-->
+        <!--THRIFT-->
+        <!--=======================-->
+        <dependency>
+            <groupId>org.apache.thrift</groupId>
+            <artifactId>libthrift</artifactId>
+            <version>0.11.0</version>
+        </dependency>
 
         <!--=======================-->
         <!--KOTLIN-->
