@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 RedRoma, Inc.
+ * Copyright 2019 RedRoma, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * You may not use this file except in compliance with the License.
@@ -106,6 +106,7 @@ final class ThriftClientProvider implements Provider<ApplicationService.Client>
         catch (TTransportException ex)
         {
             LOG.error("Failed to open TCP Port at {}", tcp, ex);
+            socket.close();
             throw new AromaNetworkException("Failed to connect to: " + tcp, ex);
         }
 
