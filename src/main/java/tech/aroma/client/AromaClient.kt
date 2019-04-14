@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 RedRoma, Inc.
+ * Copyright 2019 RedRoma, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * You may not use this file except in compliance with the License.
@@ -36,6 +36,7 @@ import java.util.concurrent.Executor
 @ThreadSafe
 internal class AromaClient : Aroma
 {
+
     private val applicationServiceProvider: Provider<ApplicationService.Iface>
     private val executor: Executor
     private val token: ApplicationToken
@@ -148,9 +149,9 @@ internal class AromaClient : Aroma
         try
         {
             val addresses = NetworkInterface.getNetworkInterfaces()
-                    .asSequence()
-                    .flatMap { it.inetAddresses.asSequence() }
-                    .toMutableList()
+                                            .asSequence()
+                                            .flatMap { it.inetAddresses.asSequence() }
+                                            .toMutableList()
 
             addresses.add(InetAddress.getLocalHost())
 
@@ -173,20 +174,15 @@ internal class AromaClient : Aroma
 
     }
 
-    private val ipv4Address: String
-        get()
-        {
-            try
-            {
-                return InetAddress.getLocalHost().hostAddress
-            }
-            catch (ex: UnknownHostException)
-            {
-                LOG.warn("Could not determine IPv4 Address", ex)
-                return ""
-            }
-
-        }
+    private val ipv4Address: String = try
+    {
+        InetAddress.getLocalHost().hostAddress
+    }
+    catch (ex: UnknownHostException)
+    {
+        LOG.warn("Could not determine IPv4 Address", ex)
+        ""
+    }
 
     private val nameOfOS: String
         get()
