@@ -22,7 +22,7 @@
     <parent>
         <groupId>tech.aroma</groupId>
         <artifactId>aroma</artifactId>
-        <version>3.2</version>
+        <version>3.3</version>
     </parent>
 
     <artifactId>aroma-java-client</artifactId>
@@ -160,7 +160,6 @@
         <dependency>
             <groupId>org.apache.thrift</groupId>
             <artifactId>libthrift</artifactId>
-            <version>0.12.0</version>
         </dependency>
 
         <!--=======================-->
